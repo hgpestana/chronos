@@ -1,0 +1,45 @@
+{% load i18n staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>{{ page_title }}</title>
+
+		<meta name="description" content="overview &amp; stats" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+        {% block header %}
+          {% include "core/header_styles.html" %}
+          {% include "core/header_js.html" %}
+        {% endblock %}
+    </head>
+    <body class="no-skin">
+        {% block navigation %}
+          {% include "core/nav_menu.html" %}
+        {% endblock %}
+        <div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.loadState('main-container')}catch(e){}
+			</script>
+            {% block siderbar %}
+              {% include "core/sidebar.html" %}
+            {% endblock %}
+            <div class="main-content">
+                <div class="main-content-inner">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+			</div><!-- /.main-content -->
+
+
+            {% block footer %}
+              {% include "core/footer.html" %}
+            {% endblock %}
+        </div><!-- /.main-container -->
+        {% block bottom %}
+            {% include "core/bottom_js.html" %}
+        {% endblock %}
+    </body>
+</html>
