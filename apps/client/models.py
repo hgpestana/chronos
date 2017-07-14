@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 class TClient (models.Model):
@@ -28,3 +29,9 @@ class TClient (models.Model):
 
         # Translators: This string is used to identify the TClient table name in plural form
         verbose_name_plural = _('Clients')
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('view', kwargs={'pk': self.pk})

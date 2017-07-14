@@ -1,11 +1,13 @@
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from apps.client.models import TClient
+
 
 class IndexView(ListView):
     template_name = 'client/client.html'
@@ -23,12 +25,12 @@ class IndexView(ListView):
 
         return context
 
-class AddView(ListView):
+
+class AddView(CreateView):
     template_name = 'client/client_form.html'
     model = TClient
-
-    def get_queryset(self):
-        return self.model.objects.all()
+    fields = ['name', 'vat', 'is_visible', 'description', 'comments', 'street', 'postal_code', 'city', 'country',
+              'contact_person', 'email', 'mobile', 'phone', 'website']
 
     def get_context_data(self, **kwargs):
         context = super(AddView, self).get_context_data(**kwargs)

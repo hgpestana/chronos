@@ -1,0 +1,6 @@
+
+/*CSS override Bootstrap input-group-addon*/
+.input-group-addon {
+    width: 3%;
+    padding: 9px 12px;
+}
