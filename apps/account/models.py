@@ -4,12 +4,12 @@ from django.utils.translation import ugettext_lazy as _
 
 class TUser (models.Model):
     """
-    User table to be used by the timsheet platform. Adds an additional field to the already defined fields
+    User table to be used by the Chronos platform. Adds an additional field to the already defined fields
     in the django auth User table.
     TODO: Develop this table
     """
-    description = models.CharField(max_length=250)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    description = models.CharField(_('description'), max_length=250)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, db_column=_('User'))
 
     class Meta:
 

@@ -130,6 +130,10 @@ INSTALLED_APPS = [
     # Chronos Apps
     'apps.core',
     'apps.account',
+    'apps.client',
+    'apps.project',
+    'apps.task',
+    'apps.entry',
 ]
 
 MIDDLEWARE = [

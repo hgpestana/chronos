@@ -6,7 +6,8 @@ from django.template import loader
 def index(request):
     template = loader.get_template('core/dashboard.html')
     context = {
-        'page_title': 'CHRONOS',
+        'page_title': 'Dashboard - CHRONOS',
+        'dashboard_active': 'active',
     }
     return HttpResponse(template.render(context, request))
 

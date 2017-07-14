@@ -1,0 +1,194 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+		<ul class="breadcrumb">
+			<li>
+				<i class="ace-icon fa fa-home home-icon"></i>
+				<a href="{% url "index:index" %}">{% trans "Home" %}</a>
+			</li>
+			<li class="active">{% trans "Add new client" %}</li>
+		</ul><!-- /.breadcrumb -->
+	</div>
+    <div class="page-content">
+		<div class="page-header">
+			<h1>
+				{% trans "Add a new client" %}
+			</h1>
+		</div><!-- /.page-header -->
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <form class="form-horizontal" role="form">
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="widget-title">Basic details</h4>
+
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Name </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="form-field-1" placeholder="Client name" class="col-xs-10 col-sm-5" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-2">VAT </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="form-field-2" placeholder="VAT number" class="col-xs-10 col-sm-5" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-0">Is visible? </label>
+                                    <div class="col-sm-9">
+                                        <label><input id="form-field-0" name="switch-field-1" class="ace ace-switch ace-switch-2" type="checkbox"><span class="lbl"></span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="widget-title">Contact details</h4>
+
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-3">Contact person </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="form-field-3" placeholder="Contact person name" class="col-xs-10 col-sm-5" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-4">Phone<small class="text-warning">(+999) 999 999 999</small></label>
+                                    <div class="col-sm-9">
+                                        <span class="input-group-addon"><i class="ace-icon fa fa-phone"></i></span>
+                                        <input class="col-xs-10 col-sm-5 input-mask-phone" type="text" id="form-field-4"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-5">Mobile<small class="text-warning">(+999) 999 999 999</small></label>
+                                    <div class="col-sm-9">
+                                        <span class="input-group-addon"><i class="ace-icon fa fa-mobile"></i></span>
+                                        <input class="form-control input-mask-phone" type="text" id="form-field-5" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-6">Email<small class="text-warning">abc@xyz.local</small></label>
+                                    <div class="col-sm-9">
+                                        <span class="input-group-addon"><i class="ace-icon fa fa-email"></i></span>
+                                        <input class="form-control input-mask-email" type="text" id="form-field-6" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-7">Website </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="form-field-7" placeholder="Website URL" class="col-xs-10 col-sm-5" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="widget-title">Main address details</h4>
+
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-8">Address </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="form-field-8" placeholder="Street name, number, block number, apartment, etc" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-9">City </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="form-field-9" placeholder="City name" class="col-xs-10 col-sm-5" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-10">Postal code <small class="text-warning">9999-999</small> </label>
+                                    <div class="col-sm-9">
+                                        <span class="input-group-addon"><i class="ace-icon fa fa-phone"></i></span>
+                                        <input class="form-control input-mask-postalcode" type="text" id="form-field-10" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-11">Country </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="form-field-11" placeholder="Country name" class="col-xs-10 col-sm-5" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="widget-title">Additional information</h4>
+
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-12">Description </label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control" id="form-field-12" placeholder="Enter your description here"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-13">Comments </label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control" id="form-field-13" placeholder="Enter your comments here"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix form-actions">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button class="btn btn-info" type="button">
+                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                Submit
+                            </button>
+
+                            &nbsp; &nbsp; &nbsp;
+                            <button class="btn" type="reset">
+                                <i class="ace-icon fa fa-undo bigger-110"></i>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </form><!-- PAGE CONTENT ENDS -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+{% endblock %}
+
+{% block bottom %}
+	{% include "client/client_form_bottom_js.html" %}
+{% endblock %}
