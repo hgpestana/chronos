@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from apps.client.models import TClient
+from apps.client.forms import ClientForm
 
 
 class IndexView(ListView):
@@ -27,10 +28,9 @@ class IndexView(ListView):
 
 
 class AddView(CreateView):
-    template_name = 'client/client_form.html'
     model = TClient
-    fields = ['name', 'vat', 'is_visible', 'description', 'comments', 'street', 'postal_code', 'city', 'country',
-              'contact_person', 'email', 'mobile', 'phone', 'website']
+    form_class = ClientForm
+    template_name = 'client/client_form.html'
 
     def get_context_data(self, **kwargs):
         context = super(AddView, self).get_context_data(**kwargs)

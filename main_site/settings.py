@@ -127,6 +127,9 @@ INSTALLED_APPS = [
     # Compressor
     "compressor",
 
+    #Widget tweaks (templating)
+    'widget_tweaks',
+
     # Chronos Apps
     'apps.core',
     'apps.account',
