@@ -1,4 +1,4 @@
-{% load staticfiles compress %}
+{% load staticfiles compress i18n %}
 
 {% compress js %}
 		<!-- page specific plugin scripts -->
@@ -232,8 +232,8 @@
 				var onDelete = function(){
 				    var url = this.href;
 					$.confirm({
-						title: 'Client deletion!',
-						content: 'Are you sure you want to delete the client information? This cannot be undone!',
+						title: '{% trans "Client deletion!" %}',
+						content: '{% trans "Are you sure you want to delete the client information? This cannot be undone!" %}',
 						buttons: {
 							confirm: function () {
 							    $.post(url, function (data) {
