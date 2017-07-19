@@ -122,9 +122,11 @@ class ClientDeleteView(DeleteView):
 
     def dispatch(self, *args, **kwargs):
 
+        id = self.get_object().id
+
         response = super(ClientDeleteView, self).dispatch(*args, **kwargs)
         if self.request.is_ajax():
-            response_data = {"result": "ok"}
+            response_data = {"result": "ok", "id": id}
             return JsonResponse(response_data)
         else:
             # POST request (not ajax) will do a redirect to success_url

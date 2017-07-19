@@ -4,7 +4,6 @@
 		<!-- page specific plugin scripts -->
 		<script src='{% static "core/js/jquery.dataTables.min.js" %}'></script>
 		<script src='{% static "core/js/jquery.dataTables.bootstrap.min.js" %}'></script>
-		<script src='{% static "core/js/jquery.form.min.js" %}'></script>
 		<script src='{% static "core/js/dataTables.buttons.min.js" %}'></script>
 		<script src='{% static "core/js/buttons.flash.min.js" %}'></script>
 		<script src='{% static "core/js/buttons.html5.min.js" %}'></script>
@@ -21,7 +20,7 @@
 			jQuery(function($) {
 				//initiate dataTables plugin
 				var myTable =
-				$('#dynamic-table')
+				$('#client-table')
 				.DataTable( {
 					bAutoWidth: false,
 					"aoColumns": [
@@ -125,10 +124,10 @@
 				$('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
 
 				//select/deselect all rows according to table header checkbox
-				$('#dynamic-table > thead > tr > th input[type=checkbox], #dynamic-table_wrapper input[type=checkbox]').eq(0).on('click', function(){
+				$('#client-table > thead > tr > th input[type=checkbox], #client-table_wrapper input[type=checkbox]').eq(0).on('click', function(){
 					var th_checked = this.checked;//checkbox inside "TH" table header
 
-					$('#dynamic-table').find('tbody > tr').each(function(){
+					$('#client-table').find('tbody > tr').each(function(){
 						var row = this;
 						if(th_checked) myTable.row(row).select();
 						else  myTable.row(row).deselect();
@@ -136,13 +135,13 @@
 				});
 
 				//select/deselect a row when the checkbox is checked/unchecked
-				$('#dynamic-table').on('click', 'td input[type=checkbox]' , function(){
+				$('#client-table').on('click', 'td input[type=checkbox]' , function(){
 					var row = $(this).closest('tr').get(0);
 					if(this.checked) myTable.row(row).deselect();
 					else myTable.row(row).select();
 				});
 
-				$(document).on('click', '#dynamic-table .dropdown-toggle', function(e) {
+				$(document).on('click', '#client-table .dropdown-toggle', function(e) {
 					e.stopImmediatePropagation();
 					e.stopPropagation();
 					e.preventDefault();
@@ -231,21 +230,26 @@
 				});
 
 				var onDelete = function(){
-
-				    if (confirm("Are you sure?")) {
-
-                        $.post(this.href, function (data) {
-                            if (data.result == "ok") {
-                                location.reload();
-                            } else {
-                                // handle error processed by server here
-                                alert("smth goes wrong");
-                            }
-                        }).fail(function () {
-                            // handle unexpected error here
-                            alert("error");
-                        });
-                    }
+				    var url = this.href;
+					$.confirm({
+						title: 'Client deletion!',
+						content: 'Are you sure you want to delete the client information? This cannot be undone!',
+						buttons: {
+							confirm: function () {
+							    $.post(url, function (data) {
+                            		if (data.result == "ok") {
+                                		location.reload();
+                            		} else {
+                                		alert("smth goes wrong");
+                            		}
+                        		}).fail(function () {
+                            		alert("error");
+                        		});
+							},
+							cancel: function () {
+							},
+						}
+					});
 					return false;
 				}
 
