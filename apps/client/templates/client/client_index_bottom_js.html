@@ -4,6 +4,7 @@
 		<!-- page specific plugin scripts -->
 		<script src='{% static "core/js/jquery.dataTables.min.js" %}'></script>
 		<script src='{% static "core/js/jquery.dataTables.bootstrap.min.js" %}'></script>
+		<script src='{% static "core/js/jquery.form.min.js" %}'></script>
 		<script src='{% static "core/js/dataTables.buttons.min.js" %}'></script>
 		<script src='{% static "core/js/buttons.flash.min.js" %}'></script>
 		<script src='{% static "core/js/buttons.html5.min.js" %}'></script>
@@ -194,5 +195,61 @@
 				});
 				/***************/
 			})
+		</script>
+		<script type="text/javascript">
+			function getCookie(name) {
+				var cookieValue = null;
+				if (document.cookie && document.cookie != '') {
+					var cookies = document.cookie.split(';');
+					for (var i = 0; i < cookies.length; i++) {
+						var cookie = jQuery.trim(cookies[i]);
+						// Does this cookie string begin with the name we want?
+						if (cookie.substring(0, name.length + 1) == (name + '=')) {
+							cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+							break;
+						}
+					}
+				}
+				return cookieValue;
+			}
+
+			$(document).ready(function() {
+
+				var csrftoken = getCookie('csrftoken');
+
+				function csrfSafeMethod(method) {
+					// these HTTP methods do not require CSRF protection
+					return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+				}
+				$.ajaxSetup({
+					crossDomain: false, // obviates need for sameOrigin test
+					beforeSend: function(xhr, settings) {
+						if (!csrfSafeMethod(settings.type)) {
+							xhr.setRequestHeader("X-CSRFToken", csrftoken);
+						}
+					}
+				});
+
+				var onDelete = function(){
+
+				    if (confirm("Are you sure?")) {
+
+                        $.post(this.href, function (data) {
+                            if (data.result == "ok") {
+                                location.reload();
+                            } else {
+                                // handle error processed by server here
+                                alert("smth goes wrong");
+                            }
+                        }).fail(function () {
+                            // handle unexpected error here
+                            alert("error");
+                        });
+                    }
+					return false;
+				}
+
+				$(".delete").click(onDelete);
+			});
 		</script>
 {% endcompress %}

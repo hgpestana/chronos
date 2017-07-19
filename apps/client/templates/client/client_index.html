@@ -55,7 +55,7 @@
 
 								<tbody>
 
-									{% for client in client_list %}
+									{% for client in object_list %}
 										<tr>
 											<td class="center">
 												<label class="pos-rel">
@@ -70,54 +70,20 @@
 											<td>{{client.country}}</td>
 											<td>{{client.email}}</td>
 											<td class="hidden-480">{{client.website}}</td>
-											<td>{{client.isvisible}}</td>
+											<td>{{client.is_visible}}</td>
 											<td>
 												<div class="hidden-sm hidden-xs action-buttons">
-													<a class="blue" href="#">
+													<a class="blue" href="{% url 'client:view' pk=client.id %}">
 														<i class="ace-icon fa fa-eye bigger-130"></i>
 													</a>
 
-													<a class="green" href="#">
+													<a class="green" href="{% url 'client:edit' pk=client.id %}">
 														<i class="ace-icon fa fa-pencil bigger-130"></i>
 													</a>
 
-													<a class="red" href="#">
+													<a class="delete red" href="{% url 'client:delete' pk=client.id %}" title="delete client" data-tooltip>
 														<i class="ace-icon fa fa-trash-o bigger-130"></i>
 													</a>
-												</div>
-
-												<div class="hidden-md hidden-lg">
-													<div class="inline pos-rel">
-														<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
-															<i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
-														</button>
-
-														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-															<li>
-																<a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-																	<span class="blue">
-																		<i class="ace-icon fa fa-eye bigger-120"></i>
-																	</span>
-																</a>
-															</li>
-
-															<li>
-																<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
-																	<span class="green">
-																		<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-																	</span>
-																</a>
-															</li>
-
-															<li>
-																<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-																	<span class="red">
-																		<i class="ace-icon fa fa-trash-o bigger-120"></i>
-																	</span>
-																</a>
-															</li>
-														</ul>
-													</div>
 												</div>
 											</td>
 										</tr>
@@ -134,5 +100,5 @@
 {% endblock %}
 
 {% block bottom %}
-	{% include "client/client_bottom_js.html" %}
+	{% include "client/client_index_bottom_js.html" %}
 {% endblock %}
