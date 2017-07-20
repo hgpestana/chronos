@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
+
 class TClient (models.Model):
     """
     Client table to be used by the Chronos platform.

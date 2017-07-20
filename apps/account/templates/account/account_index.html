@@ -1,0 +1,113 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+		<ul class="breadcrumb">
+			<li>
+				<i class="ace-icon fa fa-home home-icon"></i>
+				<a href="{% url "index:index" %}">{% trans "Home" %}</a>
+			</li>
+			<li class="active">{% trans "Users" %}</li>
+		</ul><!-- /.breadcrumb -->
+	</div>
+   <div class="page-content">
+		<div class="page-header">
+			<h1>
+				{% trans "User list" %}
+			</h1>
+		</div><!-- /.page-header -->
+	   {% if result %}
+	  	<div class="row">
+		   <div class="col-xs-12">
+			   <div class="alert alert-success">
+					<button type="button" class="close" data-dismiss="alert">
+						<i class="ace-icon fa fa-times"></i>
+					</button>
+					<i class="ace-icon fa fa-check"></i> {{ result }}
+					<br>
+				</div>
+		   </div>
+	   	</div>
+	   {% endif %}
+		<div class="row">
+			<div class="col-xs-12">
+				<!-- PAGE CONTENT BEGINS -->
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="clearfix">
+							<div class="pull-right tableTools-container"></div>
+						</div>
+						<div class="table-header">
+							{% trans "Results for User listing" %}
+						</div>
+
+						<!-- div.table-responsive -->
+
+						<!-- div.dataTables_borderWrap -->
+						<div>
+							<table id="account-table" class="table table-striped table-bordered table-hover">
+								<thead>
+									<tr>
+										<th class="center">
+											<label class="pos-rel">
+												<input type="checkbox" class="ace" />
+												<span class="lbl"></span>
+											</label>
+										</th>
+										<th>{% trans "Username" %}</th>
+										<th class="hidden-480">{% trans "First name" %}</th>
+										<th class="hidden-480">{% trans "Last name" %}</th>
+										<th>{% trans "Email" %}</th>
+										<th>{% trans "Is active?" %}</th>
+										<th></th>
+									</tr>
+								</thead>
+
+								<tbody id="account-table-body">
+
+									{% for account in object_list %}
+										<tr id="pk-{{account.id}}">
+											<td class="center">
+												<label class="pos-rel">
+													<input type="checkbox" class="ace" />
+													<span class="lbl"></span>
+												</label>
+											</td>
+
+											<td><a href="#">{{account.username}}</a></td>
+											<td class="hidden-480">{{account.first_name}}</td>
+											<td class="hidden-480">{{account.last_name}}</td>
+											<td>{{account.email}}</td>
+											<td>{{account.is_active}}</td>
+											<td>
+												<div class="hidden-sm hidden-xs action-buttons">
+													<a class="blue" href="{% url 'account:view' pk=account.id %}">
+														<i class="ace-icon fa fa-eye bigger-130"></i>
+													</a>
+
+													<a class="green" href="{% url 'account:edit' pk=account.id %}">
+														<i class="ace-icon fa fa-pencil bigger-130"></i>
+													</a>
+
+													<a class="delete red" href="{% url 'account:delete' pk=account.id %}" title="Delete account information" data-tooltip>
+														<i class="ace-icon fa fa-trash-o bigger-130"></i>
+													</a>
+												</div>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- PAGE CONTENT ENDS -->
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.page-content -->
+{% endblock %}
+
+{% block bottom %}
+	{% include "account/account_index_bottom_js.html" %}
+{% endblock %}

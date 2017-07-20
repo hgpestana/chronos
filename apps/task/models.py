@@ -7,10 +7,10 @@ class TTask (models.Model):
     TODO: Develop this table
     """
     name = models.CharField(_('Name'), max_length=255)
-    description = models.TextField(_('Description'))
-    comments = models.TextField(_('Comments'))
-    price = models.IntegerField(_('Price'))
-    parenttask = models.ForeignKey('self', on_delete=models.CASCADE, db_column=_('Parent task'))
+    description = models.TextField(_('Description'), blank=True)
+    comments = models.TextField(_('Comments'), blank=True)
+    price = models.DecimalField(_('Price'), blank=True, null=True, default=0, max_digits=4, decimal_places=2)
+    parenttask = models.ForeignKey('self', on_delete=models.SET_NULL, db_column=_('Parent task'), blank=True, null=True)
     is_visible = models.BooleanField(_('Is Visible'))
 
     class Meta:

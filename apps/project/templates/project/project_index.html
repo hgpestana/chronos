@@ -8,15 +8,28 @@
 				<i class="ace-icon fa fa-home home-icon"></i>
 				<a href="{% url "index:index" %}">{% trans "Home" %}</a>
 			</li>
-			<li class="active">Clients</li>
+			<li class="active">{% trans "Projects" %}</li>
 		</ul><!-- /.breadcrumb -->
 	</div>
    <div class="page-content">
 		<div class="page-header">
 			<h1>
-				{% trans "Task list" %}
+				{% trans "Project list" %}
 			</h1>
 		</div><!-- /.page-header -->
+	   {% if result %}
+	  	<div class="row">
+		   <div class="col-xs-12">
+			   <div class="alert alert-success">
+					<button type="button" class="close" data-dismiss="alert">
+						<i class="ace-icon fa fa-times"></i>
+					</button>
+					<i class="ace-icon fa fa-check"></i> {{ result }}
+					<br>
+				</div>
+		   </div>
+	   	</div>
+	   {% endif %}
 		<div class="row">
 			<div class="col-xs-12">
 				<!-- PAGE CONTENT BEGINS -->
@@ -26,14 +39,14 @@
 							<div class="pull-right tableTools-container"></div>
 						</div>
 						<div class="table-header">
-							{% trans "Results for Task listing" %}
+							{% trans "Results for Project listing" %}
 						</div>
 
 						<!-- div.table-responsive -->
 
 						<!-- div.dataTables_borderWrap -->
 						<div>
-							<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+							<table id="project-table" class="table table-striped table-bordered table-hover">
 								<thead>
 									<tr>
 										<th class="center">
@@ -43,15 +56,17 @@
 											</label>
 										</th>
 										<th>{% trans "Name" %}</th>
-										<th>{% trans "Price" %}</th>
+										<th class="hidden-480">{% trans "Description" %}</th>
+										<th class="hidden-480">{% trans "Comments" %}</th>
+										<th>{% trans "Is Visible?" %}</th>
 										<th></th>
 									</tr>
 								</thead>
 
-								<tbody>
+								<tbody id="project-table-body">
 
-									{% for task in task_list %}
-										<tr>
+									{% for project in object_list %}
+										<tr id="pk-{{project.id}}">
 											<td class="center">
 												<label class="pos-rel">
 													<input type="checkbox" class="ace" />
@@ -59,55 +74,23 @@
 												</label>
 											</td>
 
-											<td><a href="#">{{task.name}}</a></td>
-											<td>{{task.price}}</td>
+											<td><a href="#">{{project.name}}</a></td>
+											<td class="hidden-480">{{project.description}}</td>
+											<td class="hidden-480">{{project.comments}}</td>
+											<td>{{project.is_visible}}</td>
 											<td>
 												<div class="hidden-sm hidden-xs action-buttons">
-													<a class="blue" href="#">
+													<a class="blue" href="{% url 'project:view' pk=project.id %}">
 														<i class="ace-icon fa fa-eye bigger-130"></i>
 													</a>
 
-													<a class="green" href="#">
+													<a class="green" href="{% url 'project:edit' pk=project.id %}">
 														<i class="ace-icon fa fa-pencil bigger-130"></i>
 													</a>
 
-													<a class="red" href="#">
+													<a class="delete red" href="{% url 'project:delete' pk=project.id %}" title="Delete project information" data-tooltip>
 														<i class="ace-icon fa fa-trash-o bigger-130"></i>
 													</a>
-												</div>
-
-												<div class="hidden-md hidden-lg">
-													<div class="inline pos-rel">
-														<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
-															<i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
-														</button>
-
-														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-															<li>
-																<a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-																	<span class="blue">
-																		<i class="ace-icon fa fa-eye bigger-120"></i>
-																	</span>
-																</a>
-															</li>
-
-															<li>
-																<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
-																	<span class="green">
-																		<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-																	</span>
-																</a>
-															</li>
-
-															<li>
-																<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-																	<span class="red">
-																		<i class="ace-icon fa fa-trash-o bigger-120"></i>
-																	</span>
-																</a>
-															</li>
-														</ul>
-													</div>
 												</div>
 											</td>
 										</tr>
@@ -124,5 +107,5 @@
 {% endblock %}
 
 {% block bottom %}
-	{% include "client/client_bottom_js.html" %}
+	{% include "project/project_index_bottom_js.html" %}
 {% endblock %}

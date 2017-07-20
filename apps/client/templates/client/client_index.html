@@ -17,6 +17,19 @@
 				{% trans "Client list" %}
 			</h1>
 		</div><!-- /.page-header -->
+	   {% if result %}
+	  	<div class="row">
+		   <div class="col-xs-12">
+			   <div class="alert alert-success">
+					<button type="button" class="close" data-dismiss="alert">
+						<i class="ace-icon fa fa-times"></i>
+					</button>
+					<i class="ace-icon fa fa-check"></i> {{ result }}
+					<br>
+				</div>
+		   </div>
+	   	</div>
+	   {% endif %}
 		<div class="row">
 			<div class="col-xs-12">
 				<!-- PAGE CONTENT BEGINS -->
@@ -43,7 +56,7 @@
 											</label>
 										</th>
 										<th>{% trans "Name" %}</th>
-										<th class="hidden-480"> <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> {% trans "VAT" %}</th>
+										<th class="hidden-480">{% trans "VAT" %}</th>
 										<th class="hidden-480">{% trans "City" %}</th>
 										<th>{% trans "Country" %}</th>
 										<th>{% trans "Email" %}</th>

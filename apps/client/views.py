@@ -11,19 +11,41 @@ from datetime import datetime
 from apps.client.models import TClient
 from apps.client.forms import ClientForm
 
+"""
+Client views created to manage the client CRUD operation.
+"""
+
+
 class ClientIndexView(ListView):
     """
     View that is used to show all the clients that exist in the Chronos platform.
+    Receives optional parameters to show alert functions:
+    @param result (optional) - Shows alert functions accordingly
+
+        Client added - YWRkZWQ=
+        Client edited - ZWRpdGVk
+        Client deleted - ZGVsZXRlZA==
+
     TODO: Develop this view
     """
     template_name = 'client/client_index.html'
     model = TClient
+
+    def get_alert_information(self):
+        if 'result' in self.kwargs:
+            if self.kwargs['result'] == 'YWRkZWQ=':
+                return _("A new client was added with success!")
+            if self.kwargs['result'] == 'ZWRpdGVk':
+                return _("The client information was edited with success!")
+            if self.kwargs['result'] == 'ZGVsZXRlZA==':
+                return _("The client information was deleted with success!")
 
     def get_context_data(self, **kwargs):
         context = super(ClientIndexView, self).get_context_data(**kwargs)
         context['page_title'] = _('Client list - CHRONOS')
         context['client_active'] = 'active open'
         context['client_viewall_active'] = 'active'
+        context['result'] = self.get_alert_information()
 
         return context
 
@@ -85,7 +107,7 @@ class ClientAddView(CreateView):
         return super(ClientAddView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('client:index')
+        return reverse_lazy('client:index', kwargs={'result': 'YWRkZWQ='})
 
 
 class ClientEditView(UpdateView):
@@ -112,7 +134,7 @@ class ClientEditView(UpdateView):
         return super(ClientEditView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('client:index')
+        return reverse_lazy('client:index', kwargs={'result': 'ZWRpdGVk'})
 
 
 class ClientDeleteView(DeleteView):
@@ -133,4 +155,4 @@ class ClientDeleteView(DeleteView):
             return response
 
     def get_success_url(self):
-        return reverse_lazy('client:index')
+        return reverse_lazy('client:index', kwargs={'result': 'ZGVsZXRlZA=='})

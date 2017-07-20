@@ -5,7 +5,7 @@
         try{ace.settings.loadState('sidebar')}catch(e){}
     </script>
 
-    <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+    <!--<div class="sidebar-shortcuts" id="sidebar-shortcuts">
         <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
             <button class="btn btn-success">
                 <i class="ace-icon fa fa-signal"></i>
@@ -42,6 +42,29 @@
                 <span class="menu-text"> {% trans "Dashboard" %} </span>
             </a>
             <b class="arrow"></b>
+        </li>
+
+        <li class="{{ account_active }}">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-users"></i>
+                <span class="menu-text"> {% trans "Users" %} </span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                <li class="{{ account_viewall_active }}">
+                    <a href="{% url "account:index" %}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        <span class="menu-text"> {% trans "View all" %} </span>
+                    </a>
+                </li>
+                <li class="{{ client_add_active }}">
+                    <a href="{% url "account:add" %}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        <span class="menu-text"> {% trans "Add user" %} </span>
+                    </a>
+                </li>
+            </ul>
         </li>
 
         <li class="{{ client_active }}">
@@ -82,7 +105,7 @@
                     </a>
                 </li>
                 <li class="{{ project_add_active }}">
-                    <a href="{% url "project:index" %}">
+                    <a href="{% url "project:add" %}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         <span class="menu-text"> {% trans "Add project" %} </span>
                     </a>
@@ -106,7 +129,7 @@
                     </a>
                 </li>
                 <li class="{{ task_add_active }}">
-                    <a href="{% url "task:index" %}">
+                    <a href="{% url "task:add" %}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         <span class="menu-text"> {% trans "Add task" %} </span>
                     </a>

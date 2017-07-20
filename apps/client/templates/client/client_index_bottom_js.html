@@ -40,6 +40,13 @@
 				new $.fn.dataTable.Buttons( myTable, {
 					buttons: [
 					  {
+					    "text": "<i class='fa fa-plus-circle bigger-110 purple'></i> <span class='hidden'>{% trans "Add new client" %}</span>",
+						"className": "btn btn-white btn-primary btn-bold",
+						"action": function () {
+										window.location.href = "{% url 'client:add' %}";
+								  }
+					  },
+					  {
 						"extend": "colvis",
 						"text": "<i class='fa fa-eye bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
 						"className": "btn btn-white btn-primary btn-bold",
@@ -77,22 +84,22 @@
 				myTable.buttons().container().appendTo( $('.tableTools-container') );
 
 				//style the message box
-				var defaultCopyAction = myTable.button(1).action();
-				myTable.button(1).action(function (e, dt, button, config) {
+				var defaultCopyAction = myTable.button(2).action();
+				myTable.button(2).action(function (e, dt, button, config) {
 					defaultCopyAction(e, dt, button, config);
 					$('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
 				});
 
 
-				var defaultColvisAction = myTable.button(0).action();
-				myTable.button(0).action(function (e, dt, button, config) {
+				var defaultColvisAction = myTable.button(1).action();
+				myTable.button(1).action(function (e, dt, button, config) {
 
 					defaultColvisAction(e, dt, button, config);
 
 
 					if($('.dt-button-collection > .dropdown-menu').length == 0) {
 						$('.dt-button-collection')
-						.wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
+						.wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" style="margin-left: 45px;"/>')
 						.find('a').attr('href', '#').wrap("<li />")
 					}
 					$('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
@@ -232,21 +239,32 @@
 				var onDelete = function(){
 				    var url = this.href;
 					$.confirm({
+						closeIcon: true,
+						columnClass: 'medium',
+						icon: 'fa fa-warning',
 						title: '{% trans "Client deletion!" %}',
-						content: '{% trans "Are you sure you want to delete the client information? This cannot be undone!" %}',
+						content: '{% trans "<br/>Are you sure you want to <span class=\"text-danger\"> delete the client information</span>?<br/>This cannot be undone!" %}',
+						type: 'red',
 						buttons: {
-							confirm: function () {
-							    $.post(url, function (data) {
-                            		if (data.result == "ok") {
-                                		location.reload();
-                            		} else {
-                                		alert("smth goes wrong");
-                            		}
-                        		}).fail(function () {
-                            		alert("error");
-                        		});
-							},
-							cancel: function () {
+							confirm: {
+							    text: '{% trans "Delete" %}',
+                                btnClass: 'btn-red',
+                                action: function () {
+                                    $.post(url, function (data) {
+                                        if (data.result == "ok") {
+                                            window.location.href = window.location.href.replace( /.*|$/, "ZGVsZXRlZA==" );
+                                        } else {
+                                            alert("smth goes wrong");
+                                        }
+                                    }).fail(function () {
+                                        alert("error");
+                                    });
+                                },
+                            },
+							cancel:{
+								text: '{% trans "Cancel" %}',
+								action: function () {
+										},
 							},
 						}
 					});

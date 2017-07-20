@@ -1,0 +1,140 @@
+{% extends "core/base.html" %}
+{% load i18n widget_tweaks %}
+
+{% block content %}
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+		<ul class="breadcrumb">
+			<li>
+				<i class="ace-icon fa fa-home home-icon"></i>
+				<a href="{% url "index:index" %}">{% trans "Home" %}</a>
+			</li>
+            <li>
+				<a href="{% url "account:index" %}">{% trans "Users" %}</a>
+			</li>
+			<li class="active">{% trans "View detail" %}</li>
+		</ul><!-- /.breadcrumb -->
+	</div>
+    <div class="page-content">
+		<div class="page-header">
+			<h1>
+				{% trans "View detailed information for user " %} {{ object.name }}
+			</h1>
+		</div><!-- /.page-header -->
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="">
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs" id="accountTabs">
+                            <li class="active">
+                                <a data-toggle="tab" href="#basic" aria-expanded="true">
+                                    <i class="green ace-icon fa fa-info bigger-120"></i>
+                                    {% trans "Basic details" %}
+                                </a>
+                            </li>
+
+                            <li class="">
+                                <a data-toggle="tab" href="#contact" aria-expanded="false">
+                                    <i class="yellow ace-icon fa fa-phone bigger-120"></i>
+                                    {% trans "Profile details" %}
+                                </a>
+                            </li>
+
+                            <li class="">
+                                <a data-toggle="tab" href="#additional" aria-expanded="false">
+                                    <i class="blue ace-icon fa fa-list-alt bigger-120"></i>
+                                    {% trans "Additional details" %}
+                                </a>
+                            </li>
+
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="basic" class="tab-pane fade active in">
+                                <div class="profile-user-info">
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">{% trans "Username" %} </div>
+                                        <div class="profile-info-value">{{ object.username }} </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">{% trans "First name" %} </div>
+                                        <div class="profile-info-value">{{ object.first_name }} </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">{% trans "Last name" %} </div>
+                                        <div class="profile-info-value">{{ object.last_name }} </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">{% trans "Email" %} </div>
+                                        <div class="profile-info-value">{{ object.email }} </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="contact" class="tab-pane fade">
+                                <div class="profile-user-info">
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">{% trans "Is staff?" %} </div>
+                                        <div class="profile-info-value">{{ object.is_staff }} </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">{% trans "Is superuser?" %} </div>
+                                        <div class="profile-info-value">{{ object.is_superuser }} </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">{% trans "Is active?" %} </div>
+                                        <div class="profile-info-value">{{ object.is_active }} </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">{% trans "Date created?" %} </div>
+                                        <div class="profile-info-value">{{ object.date_joined }} </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">{% trans "Last login" %} </div>
+                                        <div class="profile-info-value">{{ object.last_login }} </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="additional" class="tab-pane fade">
+                               <div class="profile-user-infod">
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">{% trans "Description" %} </div>
+                                        <div class="profile-info-value">{{ object.tuser.description }} </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="well well-lg">
+                        <div class="inline middle blue bigger-110"> User profile completion: </div>
+                        <br/><br/>
+                        <div style="width:100%;" data-percent="{{ progress }}%" class="inline middle no-margin progress progress-striped pos-rel">
+                            <div class="progress-bar progress-bar-success" style="width:{{ progress }}%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix form-actions">
+                        <div class="col-md-offset-3 col-md-9">
+                            <a class="btn btn-info" href="{% url 'account:edit' pk=object.id %}">
+                                <i class="ace-icon fa fa-pencil bigger-110"></i>
+                                {% trans "Edit" %}
+                            </a>
+                             &nbsp; &nbsp; &nbsp;
+                            <a class="btn btn-danger" href="{% url 'account:index' %}">
+                                <i class="ace-icon fa fa-times bigger-110"></i>
+                                {% trans "Close" %}
+                            </a>
+                        </div>
+                    </div>
+                <!-- PAGE CONTENT ENDS -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+{% endblock %}
+
+{% block bottom %}
+	{% include "account/account_form_bottom_js.html" %}
+{% endblock %}
