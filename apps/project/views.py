@@ -8,7 +8,7 @@ from math import floor
 
 from datetime import datetime
 
-from apps.project.models import TProject
+from apps.project.models import Project
 from apps.project.forms import ProjectForm
 
 """
@@ -29,7 +29,7 @@ class ProjectIndexView(ListView):
     TODO: Develop this view
     """
     template_name = 'project/project_index.html'
-    model = TProject
+    model = Project
 
     def get_alert_information(self):
         if 'result' in self.kwargs:
@@ -56,7 +56,7 @@ class ProjectDetailView(DetailView):
     TODO: Develop this view
     """
     template_name = "project/project_base.html"
-    model = TProject
+    model = Project
 
     def get_context_data(self, **kwargs):
         context = super(ProjectDetailView, self).get_context_data(**kwargs)
@@ -87,7 +87,7 @@ class ProjectAddView(CreateView):
     View that is used to add a new project in the Chronos platform.
     TODO: Develop this view
     """
-    model = TProject
+    model = Project
     form_class = ProjectForm
     template_name = 'project/project_form.html'
 
@@ -115,7 +115,7 @@ class ProjectEditView(UpdateView):
     View that is used to add a new project in the Chronos platform.
     TODO: Develop this view
     """
-    model = TProject
+    model = Project
     form_class = ProjectForm
     template_name = 'project/project_form.html'
 
@@ -139,7 +139,7 @@ class ProjectEditView(UpdateView):
 
 class ProjectDeleteView(DeleteView):
 
-    model = TProject
+    model = Project
     template_name = 'project/project_delete_modal.html'
 
     def dispatch(self, *args, **kwargs):

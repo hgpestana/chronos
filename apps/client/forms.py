@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 
-from apps.client.models import TClient
+from apps.client.models import Client
 
 
 class ClientForm(ModelForm):
@@ -9,6 +9,6 @@ class ClientForm(ModelForm):
     TODO: Develop this form
     """
     class Meta:
-        model = TClient
+        model = Client
         fields = ['name', 'description', 'comments', 'vat', 'street', 'postal_code', 'city', 'country',
                   'contact_person', 'email', 'phone', 'mobile', 'website', 'is_visible']

@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 
-from apps.project.models import TProject
+from apps.project.models import Project
 
 
 class ProjectForm(ModelForm):
@@ -9,5 +9,5 @@ class ProjectForm(ModelForm):
     TODO: Develop this form
     """
     class Meta:
-        model = TProject
+        model = Project
         fields = ['name', 'description', 'comments', 'is_visible']

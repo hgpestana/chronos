@@ -8,7 +8,7 @@ from math import floor
 
 from datetime import datetime
 
-from apps.task.models import TTask
+from apps.task.models import Task
 from apps.task.forms import TaskForm
 
 """
@@ -29,7 +29,7 @@ class TaskIndexView(ListView):
     TODO: Develop this view
     """
     template_name = 'task/task_index.html'
-    model = TTask
+    model = Task
 
     def get_alert_information(self):
         if 'result' in self.kwargs:
@@ -56,7 +56,7 @@ class TaskDetailView(DetailView):
     TODO: Develop this view
     """
     template_name = "task/task_base.html"
-    model = TTask
+    model = Task
 
     def get_context_data(self, **kwargs):
         context = super(TaskDetailView, self).get_context_data(**kwargs)
@@ -87,7 +87,7 @@ class TaskAddView(CreateView):
     View that is used to add a new task in the Chronos platform.
     TODO: Develop this view
     """
-    model = TTask
+    model = Task
     form_class = TaskForm
     template_name = 'task/task_form.html'
 
@@ -99,7 +99,7 @@ class TaskAddView(CreateView):
         context['task_add_active'] = 'active'
         context['task_list'] = self.get_queryset()
         context['is_new_task'] = True
-        context['tasks'] = TTask.objects.values_list('id', 'name').order_by('name')
+        context['tasks'] = Task.objects.values_list('id', 'name').order_by('name')
 
         return context
 
@@ -116,7 +116,7 @@ class TaskEditView(UpdateView):
     View that is used to add a new task in the Chronos platform.
     TODO: Develop this view
     """
-    model = TTask
+    model = Task
     form_class = TaskForm
     template_name = 'task/task_form.html'
 
@@ -140,7 +140,7 @@ class TaskEditView(UpdateView):
 
 class TaskDeleteView(DeleteView):
 
-    model = TTask
+    model = Task
     template_name = 'task/task_delete_modal.html'
 
     def dispatch(self, *args, **kwargs):

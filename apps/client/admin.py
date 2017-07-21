@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import TClient
+from .models import Client
 
 # Register your models here.
 
-admin.site.register(TClient)
+admin.site.register(Client)

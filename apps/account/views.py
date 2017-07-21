@@ -1,3 +1,4 @@
+from django.contrib.auth.password_validation import password_validators_help_texts
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -7,7 +8,7 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from math import floor
 
-from apps.account.forms import UserForm, AccountInlineFormSet
+from apps.account.forms import UserForm, AccountForm
 
 """
 Account views created to manage the account CRUD operation.
@@ -97,11 +98,12 @@ class AccountAddView(CreateView):
         context['account_add_active'] = 'active'
         context['account_list'] = self.get_queryset()
         context['is_new_account'] = True
+        context['help_text'] = password_validators_help_texts()
 
         if self.request.POST:
-            context['accountform'] = AccountInlineFormSet(self.request.POST)
+            context['accountform'] = AccountForm(self.request.POST)
         else:
-            context['accountform'] = AccountInlineFormSet()
+            context['accountform'] = AccountForm()
 
         return context
 
@@ -111,7 +113,9 @@ class AccountAddView(CreateView):
         accountform = context['accountform']
 
         if accountform.is_valid() and form.is_valid():
-            form.save()
+
+            user = form.save(commit=False)
+            accountform.instance.user = user
             accountform.save()
 
         return super(AccountAddView, self).form_valid(form)
@@ -136,11 +140,12 @@ class AccountEditView(UpdateView):
         context['account_active'] = 'active open'
         context['account_viewall_active'] = 'active'
         context['is_new_account'] = False
+        context['help_text'] = password_validators_help_texts()
 
         if self.request.POST:
-            context['accountform'] = AccountInlineFormSet(self.request.POST)
+            context['accountform'] = AccountForm(self.request.POST, instance=self.get_object().account)
         else:
-            context['accountform'] = AccountInlineFormSet()
+            context['accountform'] = AccountForm(instance=self.get_object().account)
 
         return context
 
@@ -150,7 +155,9 @@ class AccountEditView(UpdateView):
         accountform = context['accountform']
 
         if accountform.is_valid() and form.is_valid():
-            form.save()
+
+            user = form.save(commit=False)
+            accountform.instance.user = user
             accountform.save()
 
         return super(AccountEditView, self).form_valid(form)

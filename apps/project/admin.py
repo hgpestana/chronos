@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import TProject
+from .models import Project
 
 # Register your models here.
 
-admin.site.register(TProject)
+admin.site.register(Project)

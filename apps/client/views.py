@@ -8,7 +8,7 @@ from math import floor
 
 from datetime import datetime
 
-from apps.client.models import TClient
+from apps.client.models import Client
 from apps.client.forms import ClientForm
 
 """
@@ -29,7 +29,7 @@ class ClientIndexView(ListView):
     TODO: Develop this view
     """
     template_name = 'client/client_index.html'
-    model = TClient
+    model = Client
 
     def get_alert_information(self):
         if 'result' in self.kwargs:
@@ -56,7 +56,7 @@ class ClientDetailView(DetailView):
     TODO: Develop this view
     """
     template_name = "client/client_base.html"
-    model = TClient
+    model = Client
 
     def get_context_data(self, **kwargs):
         context = super(ClientDetailView, self).get_context_data(**kwargs)
@@ -87,7 +87,7 @@ class ClientAddView(CreateView):
     View that is used to add a new client in the Chronos platform.
     TODO: Develop this view
     """
-    model = TClient
+    model = Client
     form_class = ClientForm
     template_name = 'client/client_form.html'
 
@@ -115,7 +115,7 @@ class ClientEditView(UpdateView):
     View that is used to add a new client in the Chronos platform.
     TODO: Develop this view
     """
-    model = TClient
+    model = Client
     form_class = ClientForm
     template_name = 'client/client_form.html'
 
@@ -139,7 +139,7 @@ class ClientEditView(UpdateView):
 
 class ClientDeleteView(DeleteView):
 
-    model = TClient
+    model = Client
     template_name = 'client/client_delete_modal.html'
 
     def dispatch(self, *args, **kwargs):

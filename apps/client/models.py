@@ -4,7 +4,7 @@ from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
 
-class TClient (models.Model):
+class Client (models.Model):
     """
     Client table to be used by the Chronos platform.
     TODO: Develop this table
@@ -27,10 +27,10 @@ class TClient (models.Model):
 
     class Meta:
 
-        # Translators: This string is used to identify the TClient table name
+        # Translators: This string is used to identify the Client table name
         verbose_name = _('Client')
 
-        # Translators: This string is used to identify the TClient table name in plural form
+        # Translators: This string is used to identify the Client table name in plural form
         verbose_name_plural = _('Clients')
 
     def __str__(self):

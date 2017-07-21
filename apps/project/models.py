@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 
-class TProject (models.Model):
+class Project (models.Model):
     """
     Project table to be used by the Chronos platform.
     TODO: Develop this table
@@ -14,8 +14,8 @@ class TProject (models.Model):
 
     class Meta:
 
-        # Translators: This string is used to identify the TClient table name
+        # Translators: This string is used to identify the Client table name
         verbose_name = _('Project')
 
-        # Translators: This string is used to identify the TClient table name in plural form
+        # Translators: This string is used to identify the Client table name in plural form
         verbose_name_plural = _('Projects')

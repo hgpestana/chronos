@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import TUser
+from .models import Account
 
 # Register your models here.
 
-admin.site.register(TUser)
+admin.site.register(Account)

@@ -25,10 +25,23 @@
                 <!-- PAGE CONTENT BEGINS -->
                 <form method='POST' class="form-horizontal" role="form" action=''>
                     {% csrf_token %}
-                    {{ form.non_field_errors }}
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">
+                            <i class="ace-icon fa fa-times"></i>
+                        </button>
+                        {% for error in form.non_field_errors %}
+                            <i class="ace-icon fa fa-times"></i> {{ error }}
+                            <br>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                     {% for form in accountform %}
                         {{ form.non_field_errors }}
                     {% endfor %}
+                    {% if is_new_account %}
+                        {% render_field form.is_new_account value=is_new_account %}
+                    {% endif %}
                     <div class="widget-box">
                         <div class="widget-header">
                             <h4 class="widget-title">{% trans "Basic details" %}</h4>
@@ -63,13 +76,32 @@
                                         {% trans "Last name" as last_name %}
                                         {% render_field form.last_name placeholder=last_name class="col-xs-10 col-sm-5" %}
                                         {{ form.last_name.errors }}
-                                    </di
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label no-padding-right" for='{{ form.password.id_for_label }}'>{% trans "Password" %} </label>
                                     <div class="col-sm-9">
-                                        {% trans "Password" as password %}
+                                        {% trans "Input password" as password %}
                                         {% render_field form.password placeholder=password class="col-xs-10 col-sm-5" %}
                                         {{ form.password.errors }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.password_repeat.id_for_label }}'>{% trans "Password repeat" %} </label>
+                                    <div class="col-sm-9">
+                                        {% trans "Repeat password" as password_repeat %}
+                                        {% render_field form.password_repeat placeholder=password_repeat class="col-xs-10 col-sm-5" %}
+                                        {{ form.password_repeat.errors }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-3 control-label no-padding-right"></div>
+                                    <div class="col-sm-9">
+                                        <ul class="list-unstyled spaced">
+                                            {% for text in help_text %}
+                                                <li class="text-warning"><i class="ace-icon fa fa-angle-right bigger-110 purple"></i>{{ text }} </li>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -142,17 +174,14 @@
                         </div>
                         <div class="widget-body">
                             <div class="widget-main">
-                                {{ accountform.management_form }}
-                                {% for form in accountform %}
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label no-padding-right" for="{{ form.description.id_for_label }}">{% trans "Description" %} </label>
-                                        <div class="col-sm-9">
-                                            {% trans "Enter your description here" as description %}
-                                            {% render_field form.description placeholder=description class="form-control" %}
-                                            {{ form.description.errors }}
-                                        </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="{{ accountform.description.id_for_label }}">{% trans "Description" %} </label>
+                                    <div class="col-sm-9">
+                                        {% trans "Enter your description here" as description %}
+                                        {% render_field accountform.description placeholder=description class="form-control" %}
+                                        {{ accountform.description.errors }}
                                     </div>
-                                {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>

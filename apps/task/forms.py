@@ -1,7 +1,7 @@
 from django.forms import ModelForm, ModelChoiceField
 from django.utils.translation import ugettext_lazy as _
 
-from apps.task.models import TTask
+from apps.task.models import Task
 
 
 class FormChoiceField(ModelChoiceField):
@@ -16,8 +16,8 @@ class TaskForm(ModelForm):
     """
 
     class Meta:
-        model = TTask
+        model = Task
         fields = ['name', 'description', 'comments', 'price', 'parenttask', 'is_visible']
 
-    parenttask = FormChoiceField(queryset=TTask.objects.all().order_by('name'),
+    parenttask = FormChoiceField(queryset=Task.objects.all().order_by('name'),
                                  empty_label=_('Please select an option'), required=False,)
