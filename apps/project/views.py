@@ -2,6 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from math import floor
@@ -16,7 +17,7 @@ Project views created to manage the project CRUD operation.
 """
 
 
-class ProjectIndexView(ListView):
+class ProjectIndexView(LoginRequiredMixin, ListView):
     """
     View that is used to show all the projects that exist in the Chronos platform.
     Receives optional parameters to show alert functions:
@@ -50,7 +51,7 @@ class ProjectIndexView(ListView):
         return context
 
 
-class ProjectDetailView(DetailView):
+class ProjectDetailView(LoginRequiredMixin, DetailView):
     """
     View that is used to show the project information that exists in the Chronos platform.
     TODO: Develop this view
@@ -82,7 +83,7 @@ class ProjectDetailView(DetailView):
         return progression
 
 
-class ProjectAddView(CreateView):
+class ProjectAddView(LoginRequiredMixin, CreateView):
     """
     View that is used to add a new project in the Chronos platform.
     TODO: Develop this view
@@ -110,7 +111,7 @@ class ProjectAddView(CreateView):
         return reverse_lazy('project:index', kwargs={'result': 'YWRkZWQ='})
 
 
-class ProjectEditView(UpdateView):
+class ProjectEditView(LoginRequiredMixin, UpdateView):
     """
     View that is used to add a new project in the Chronos platform.
     TODO: Develop this view
@@ -137,7 +138,7 @@ class ProjectEditView(UpdateView):
         return reverse_lazy('project:index', kwargs={'result': 'ZWRpdGVk'})
 
 
-class ProjectDeleteView(DeleteView):
+class ProjectDeleteView(LoginRequiredMixin, DeleteView):
 
     model = Project
     template_name = 'project/project_delete_modal.html'

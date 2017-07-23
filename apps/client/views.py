@@ -2,10 +2,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.urls import reverse_lazy
-from math import floor
 
+from math import floor
 from datetime import datetime
 
 from apps.client.models import Client
@@ -16,7 +17,7 @@ Client views created to manage the client CRUD operation.
 """
 
 
-class ClientIndexView(ListView):
+class ClientIndexView(LoginRequiredMixin, ListView):
     """
     View that is used to show all the clients that exist in the Chronos platform.
     Receives optional parameters to show alert functions:
@@ -50,7 +51,7 @@ class ClientIndexView(ListView):
         return context
 
 
-class ClientDetailView(DetailView):
+class ClientDetailView(LoginRequiredMixin, DetailView):
     """
     View that is used to show the client information that exists in the Chronos platform.
     TODO: Develop this view
@@ -82,7 +83,7 @@ class ClientDetailView(DetailView):
         return progression
 
 
-class ClientAddView(CreateView):
+class ClientAddView(LoginRequiredMixin, CreateView):
     """
     View that is used to add a new client in the Chronos platform.
     TODO: Develop this view
@@ -110,7 +111,7 @@ class ClientAddView(CreateView):
         return reverse_lazy('client:index', kwargs={'result': 'YWRkZWQ='})
 
 
-class ClientEditView(UpdateView):
+class ClientEditView(LoginRequiredMixin, UpdateView):
     """
     View that is used to add a new client in the Chronos platform.
     TODO: Develop this view
@@ -137,7 +138,7 @@ class ClientEditView(UpdateView):
         return reverse_lazy('client:index', kwargs={'result': 'ZWRpdGVk'})
 
 
-class ClientDeleteView(DeleteView):
+class ClientDeleteView(LoginRequiredMixin, DeleteView):
 
     model = Client
     template_name = 'client/client_delete_modal.html'

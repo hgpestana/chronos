@@ -2,6 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from math import floor
@@ -16,7 +17,7 @@ Task views created to manage the task CRUD operation.
 """
 
 
-class TaskIndexView(ListView):
+class TaskIndexView(LoginRequiredMixin, ListView):
     """
     View that is used to show all the tasks that exist in the Chronos platform.
     Receives optional parameters to show alert functions:
@@ -50,7 +51,7 @@ class TaskIndexView(ListView):
         return context
 
 
-class TaskDetailView(DetailView):
+class TaskDetailView(LoginRequiredMixin, DetailView):
     """
     View that is used to show the task information that exists in the Chronos platform.
     TODO: Develop this view
@@ -82,7 +83,7 @@ class TaskDetailView(DetailView):
         return progression
 
 
-class TaskAddView(CreateView):
+class TaskAddView(LoginRequiredMixin, CreateView):
     """
     View that is used to add a new task in the Chronos platform.
     TODO: Develop this view
@@ -111,7 +112,7 @@ class TaskAddView(CreateView):
         return reverse_lazy('task:index', kwargs={'result': 'YWRkZWQ='})
 
 
-class TaskEditView(UpdateView):
+class TaskEditView(LoginRequiredMixin, UpdateView):
     """
     View that is used to add a new task in the Chronos platform.
     TODO: Develop this view
@@ -138,7 +139,7 @@ class TaskEditView(UpdateView):
         return reverse_lazy('task:index', kwargs={'result': 'ZWRpdGVk'})
 
 
-class TaskDeleteView(DeleteView):
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
 
     model = Task
     template_name = 'task/task_delete_modal.html'

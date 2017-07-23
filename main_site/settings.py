@@ -133,12 +133,14 @@ INSTALLED_APPS = [
     'widget_tweaks',
 
     # Chronos Apps
-    'apps.core',
     'apps.account',
     'apps.client',
+    'apps.core',
+    'apps.entry',
+    'apps.login',
     'apps.project',
     'apps.task',
-    'apps.entry',
+
 ]
 
 MIDDLEWARE = [

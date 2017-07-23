@@ -1,0 +1,72 @@
+{% extends "core/base.html" %}
+{% load i18n widget_tweaks %}
+
+{% block content %}
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+		<ul class="breadcrumb">
+			<li>
+				<i class="ace-icon fa fa-home home-icon"></i>
+				<a href="{% url "login:index" %}">{% trans "Login" %}</a>
+			</li>
+		</ul><!-- /.breadcrumb -->
+	</div>
+    <div class="page-content">
+		<div class="page-header">
+			<h1>
+				{% trans "Login" %}
+			</h1>
+		</div><!-- /.page-header -->
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <form method='POST' class="form-horizontal" role="form" action=''>
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="widget-title">{% trans "Login details" %}</h4>
+
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.username.id_for_label }}'>{% trans "Username" %} </label>
+                                    <div class="col-sm-9">
+                                        {% trans "Username" as username %}
+                                        {% render_field form.username placeholder=username class="col-xs-10 col-sm-5" %}
+                                        {{ form.username.errors }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.password.id_for_label }}'>{% trans "Password" %} </label>
+                                    <div class="col-sm-9">
+                                        {% trans "Password" as password %}
+                                        {% render_field form.password placeholder=password class="col-xs-10 col-sm-5" type="password"%}
+                                        {{ form.password.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix form-actions">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button class="btn btn-info" type="submit">
+                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                    {% trans "Submit" %}
+                            </button>
+                        </div>
+                    </div>
+                </form><!-- PAGE CONTENT ENDS -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+{% endblock %}
+
+{% block bottom %}
+	{% include "login/login_form_bottom_js.html" %}
+{% endblock %}

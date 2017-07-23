@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.urls import reverse_lazy
@@ -15,7 +16,7 @@ Account views created to manage the account CRUD operation.
 """
 
 
-class AccountIndexView(ListView):
+class AccountIndexView(LoginRequiredMixin, ListView):
     """
     View that is used to show all the accounts that exist in the Chronos platform.
     Receives optional parameters to show alert functions:
@@ -49,7 +50,7 @@ class AccountIndexView(ListView):
         return context
 
 
-class AccountDetailView(DetailView):
+class AccountDetailView(LoginRequiredMixin, DetailView):
     """
     View that is used to show the account information that exists in the Chronos platform.
     TODO: Develop this view
@@ -81,7 +82,7 @@ class AccountDetailView(DetailView):
         return progression
 
 
-class AccountAddView(CreateView):
+class AccountAddView(LoginRequiredMixin, CreateView):
     """
     View that is used to add a new account in the Chronos platform.
     TODO: Develop this view
@@ -124,7 +125,7 @@ class AccountAddView(CreateView):
         return reverse_lazy('account:index', kwargs={'result': 'YWRkZWQ='})
 
 
-class AccountEditView(UpdateView):
+class AccountEditView(LoginRequiredMixin, UpdateView):
     """
     View that is used to add a new account in the Chronos platform.
     TODO: Develop this view
@@ -166,7 +167,7 @@ class AccountEditView(UpdateView):
         return reverse_lazy('account:index', kwargs={'result': 'ZWRpdGVk'})
 
 
-class AccountDeleteView(DeleteView):
+class AccountDeleteView(LoginRequiredMixin, DeleteView):
 
     model = User
     template_name = 'account/account_delete_modal.html'
