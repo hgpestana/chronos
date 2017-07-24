@@ -36,9 +36,6 @@
                         {% endfor %}
                     </div>
                     {% endif %}
-                    {% for form in accountform %}
-                        {{ form.non_field_errors }}
-                    {% endfor %}
                     {% if is_new_account %}
                         {% render_field form.is_new_account value=is_new_account %}
                     {% endif %}
