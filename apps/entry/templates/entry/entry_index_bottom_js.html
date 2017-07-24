@@ -1,4 +1,4 @@
-{% load staticfiles compress %}
+{% load staticfiles compress i18n %}
 
 {% compress js %}
 		<!-- page specific plugin scripts -->
@@ -20,12 +20,12 @@
 			jQuery(function($) {
 				//initiate dataTables plugin
 				var myTable =
-				$('#dynamic-table')
+				$('#entry-table')
 				.DataTable( {
 					bAutoWidth: false,
 					"aoColumns": [
 					  { "bSortable": false },
-					  null, null,null, null, null, null, null,
+					  null, null,null, null, null, null, null, null, null, null,
 					  { "bSortable": false }
 					],
 					"aaSorting": [],
@@ -39,6 +39,13 @@
 
 				new $.fn.dataTable.Buttons( myTable, {
 					buttons: [
+					  {
+					    "text": "<i class='fa fa-plus-circle bigger-110 purple'></i> <span class='hidden'>{% trans "Add new client" %}</span>",
+						"className": "btn btn-white btn-primary btn-bold",
+						"action": function () {
+										window.location.href = "{% url 'entry:add' %}";
+								  }
+					  },
 					  {
 						"extend": "colvis",
 						"text": "<i class='fa fa-eye bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
@@ -77,22 +84,22 @@
 				myTable.buttons().container().appendTo( $('.tableTools-container') );
 
 				//style the message box
-				var defaultCopyAction = myTable.button(1).action();
-				myTable.button(1).action(function (e, dt, button, config) {
+				var defaultCopyAction = myTable.button(2).action();
+				myTable.button(2).action(function (e, dt, button, config) {
 					defaultCopyAction(e, dt, button, config);
 					$('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
 				});
 
 
-				var defaultColvisAction = myTable.button(0).action();
-				myTable.button(0).action(function (e, dt, button, config) {
+				var defaultColvisAction = myTable.button(1).action();
+				myTable.button(1).action(function (e, dt, button, config) {
 
 					defaultColvisAction(e, dt, button, config);
 
 
 					if($('.dt-button-collection > .dropdown-menu').length == 0) {
 						$('.dt-button-collection')
-						.wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
+						.wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" style="margin-left: 45px;"/>')
 						.find('a').attr('href', '#').wrap("<li />")
 					}
 					$('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
@@ -124,10 +131,10 @@
 				$('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
 
 				//select/deselect all rows according to table header checkbox
-				$('#dynamic-table > thead > tr > th input[type=checkbox], #dynamic-table_wrapper input[type=checkbox]').eq(0).on('click', function(){
+				$('#entry-table > thead > tr > th input[type=checkbox], #entry-table_wrapper input[type=checkbox]').eq(0).on('click', function(){
 					var th_checked = this.checked;//checkbox inside "TH" table header
 
-					$('#dynamic-table').find('tbody > tr').each(function(){
+					$('#entry-table').find('tbody > tr').each(function(){
 						var row = this;
 						if(th_checked) myTable.row(row).select();
 						else  myTable.row(row).deselect();
@@ -135,13 +142,13 @@
 				});
 
 				//select/deselect a row when the checkbox is checked/unchecked
-				$('#dynamic-table').on('click', 'td input[type=checkbox]' , function(){
+				$('#entry-table').on('click', 'td input[type=checkbox]' , function(){
 					var row = $(this).closest('tr').get(0);
 					if(this.checked) myTable.row(row).deselect();
 					else myTable.row(row).select();
 				});
 
-				$(document).on('click', '#dynamic-table .dropdown-toggle', function(e) {
+				$(document).on('click', '#entry-table .dropdown-toggle', function(e) {
 					e.stopImmediatePropagation();
 					e.stopPropagation();
 					e.preventDefault();
@@ -194,5 +201,77 @@
 				});
 				/***************/
 			})
+		</script>
+		<script type="text/javascript">
+			function getCookie(name) {
+				var cookieValue = null;
+				if (document.cookie && document.cookie != '') {
+					var cookies = document.cookie.split(';');
+					for (var i = 0; i < cookies.length; i++) {
+						var cookie = jQuery.trim(cookies[i]);
+						// Does this cookie string begin with the name we want?
+						if (cookie.substring(0, name.length + 1) == (name + '=')) {
+							cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+							break;
+						}
+					}
+				}
+				return cookieValue;
+			}
+
+			$(document).ready(function() {
+
+				var csrftoken = getCookie('csrftoken');
+
+				function csrfSafeMethod(method) {
+					// these HTTP methods do not require CSRF protection
+					return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+				}
+				$.ajaxSetup({
+					crossDomain: false, // obviates need for sameOrigin test
+					beforeSend: function(xhr, settings) {
+						if (!csrfSafeMethod(settings.type)) {
+							xhr.setRequestHeader("X-CSRFToken", csrftoken);
+						}
+					}
+				});
+
+				var onDelete = function(){
+				    var url = this.href;
+					$.confirm({
+						closeIcon: true,
+						columnClass: 'medium',
+						icon: 'fa fa-warning',
+						title: '{% trans "Entry deletion!" %}',
+						content: '{% trans "<br/>Are you sure you want to <span class=\"text-danger\"> delete the entry information</span>?<br/>This cannot be undone!" %}',
+						type: 'red',
+						buttons: {
+							confirm: {
+							    text: '{% trans "Delete" %}',
+                                btnClass: 'btn-red',
+                                action: function () {
+                                    $.post(url, function (data) {
+                                        if (data.result == "ok") {
+                                            window.location.href = window.location.href.replace( /.*|$/, "ZGVsZXRlZA==" );
+                                        } else {
+                                            alert("smth goes wrong");
+                                        }
+                                    }).fail(function () {
+                                        alert("error");
+                                    });
+                                },
+                            },
+							cancel:{
+								text: '{% trans "Cancel" %}',
+								action: function () {
+										},
+							},
+						}
+					});
+					return false;
+				}
+
+				$(".delete").click(onDelete);
+			});
 		</script>
 {% endcompress %}

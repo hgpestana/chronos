@@ -12,10 +12,10 @@ class Entry (models.Model):
     TODO: Develop this table
     """
     description = models.TextField(_('Description'))
-    starttime = models.DateTimeField(_('Start date / time'))
-    endtime = models.DateTimeField(_('End date / time'))
+    starttime = models.CharField(_('Start date / time'), max_length=20)
+    endtime = models.CharField(_('End date / time'), max_length=20)
     duration = models.IntegerField(_('Duration'))
-    comments = models.TextField(_('Comments'))
+    comments = models.TextField(_('Comments'), blank=True, null=True)
     project = models.ForeignKey(Project, on_delete=models.SET_NULL, db_column='Project', blank=True, null=True)
     client = models.ForeignKey(Client, on_delete=models.SET_NULL, db_column='Client', blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, db_column='User', blank=True, null=True)

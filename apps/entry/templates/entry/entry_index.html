@@ -1,0 +1,123 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+		<ul class="breadcrumb">
+			<li>
+				<i class="ace-icon fa fa-home home-icon"></i>
+				<a href="{% url "index:index" %}">{% trans "Home" %}</a>
+			</li>
+			<li class="active">{% trans "Entries" %}</li>
+		</ul><!-- /.breadcrumb -->
+	</div>
+   <div class="page-content">
+		<div class="page-header">
+			<h1>
+				{% trans "Entry list" %}
+			</h1>
+		</div><!-- /.page-header -->
+	   {% if result %}
+	  	<div class="row">
+		   <div class="col-xs-12">
+			   <div class="alert alert-success">
+					<button type="button" class="close" data-dismiss="alert">
+						<i class="ace-icon fa fa-times"></i>
+					</button>
+					<i class="ace-icon fa fa-check"></i> {{ result }}
+					<br>
+				</div>
+		   </div>
+	   	</div>
+	   {% endif %}
+		<div class="row">
+			<div class="col-xs-12">
+				<!-- PAGE CONTENT BEGINS -->
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="clearfix">
+							<div class="pull-right tableTools-container"></div>
+						</div>
+						<div class="table-header">
+							{% trans "Results for Entry listing" %}
+						</div>
+
+						<!-- div.table-responsive -->
+
+						<!-- div.dataTables_borderWrap -->
+						<div>
+							<table id="entry-table" class="table table-striped table-bordered table-hover">
+								<thead>
+									<tr>
+										<th class="center">
+											<label class="pos-rel">
+												<input type="checkbox" class="ace" />
+												<span class="lbl"></span>
+											</label>
+										</th>
+										<th>{% trans "ID" %}</th>
+										<th>{% trans "Description" %}</th>
+										<th class="hidden-480">{% trans "Start time" %}</th>
+										<th class="hidden-480">{% trans "End time" %}</th>
+										<th>{% trans "Duration" %}</th>
+										<th class="hidden-480">{% trans "Comments" %}</th>
+										<th>{% trans "Project" %}</th>
+										<th>{% trans "Client" %}</th>
+										<th>{% trans "User" %}</th>
+										<th>{% trans "Task" %}</th>
+										<th></th>
+									</tr>
+								</thead>
+
+								<tbody id="entry-table-body">
+
+									{% for entry in object_list %}
+										<tr id="pk-{{entry.id}}">
+											<td class="center">
+												<label class="pos-rel">
+													<input type="checkbox" class="ace" />
+													<span class="lbl"></span>
+												</label>
+											</td>
+
+											<td><a href="#">{{entry.id}}</a></td>
+											<td><a href="#">{{entry.description}}</a></td>
+											<td class="hidden-480">{{entry.starttime}}</td>
+											<td class="hidden-480">{{entry.endtime}}</td>
+											<td>{{entry.duration}}</td>
+											<td class="hidden-480">{{entry.comments}}</td>
+											<td>{{entry.project.name}}</td>
+											<td>{{entry.client.name}}</td>
+											<td>{{entry.user.name}}</td>
+											<td>{{entry.task.name}}</td>
+											<td>
+												<div class="hidden-sm hidden-xs action-buttons">
+													<a class="blue" href="{% url 'entry:view' pk=entry.id %}">
+														<i class="ace-icon fa fa-eye bigger-130"></i>
+													</a>
+
+													<a class="green" href="{% url 'entry:edit' pk=entry.id %}">
+														<i class="ace-icon fa fa-pencil bigger-130"></i>
+													</a>
+
+													<a class="delete red" href="{% url 'entry:delete' pk=entry.id %}" title="Delete entry information" data-tooltip>
+														<i class="ace-icon fa fa-trash-o bigger-130"></i>
+													</a>
+												</div>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- PAGE CONTENT ENDS -->
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.page-content -->
+{% endblock %}
+
+{% block bottom %}
+	{% include "entry/entry_index_bottom_js.html" %}
+{% endblock %}

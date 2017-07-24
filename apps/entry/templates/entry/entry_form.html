@@ -1,0 +1,157 @@
+{% extends "core/base.html" %}
+{% load i18n widget_tweaks %}
+
+{% block content %}
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+		<ul class="breadcrumb">
+			<li>
+				<i class="ace-icon fa fa-home home-icon"></i>
+				<a href="{% url "index:index" %}">{% trans "Home" %}</a>
+			</li>
+            <li>
+				<a href="{% url "entry:index" %}">{% trans "Entrys" %}</a>
+			</li>
+			<li class="active">{{ title }}</li>
+		</ul><!-- /.breadcrumb -->
+	</div>
+    <div class="page-content">
+		<div class="page-header">
+			<h1>
+				{{ title }}
+			</h1>
+		</div><!-- /.page-header -->
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <form method='POST' class="form-horizontal" role="form" action=''>
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="widget-title">{% trans "Basic details" %}</h4>
+
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.task.id_for_label }}'>{% trans "Task" %} </label>
+                                    <div class="col-sm-9">
+                                        {% render_field form.task class="col-xs-10 col-sm-5" %}
+                                        {{ form.task.errors }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.description.id_for_label }}'>{% trans "Description" %} </label>
+                                    <div class="col-sm-9">
+                                        {% trans "Enter a description" as description %}
+                                        {% render_field form.description placeholder=description class="col-xs-10 col-sm-5" %}
+                                        {{ form.description.errors }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.starttime.id_for_label }}'>{% trans "Start time" %} </label>
+                                    <div class="col-sm-9">
+                                        {% trans "Start time" as starttime %}
+                                        {% render_field form.starttime placeholder=starttime class="col-xs-10 col-sm-5 datepicker" %}
+                                        {{ form.starttime.errors }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.endtime.id_for_label }}'>{% trans "End time" %} </label>
+                                    <div class="col-sm-9">
+                                        {% trans "End time" as endtime %}
+                                        {% render_field form.endtime placeholder=endtime class="col-xs-10 col-sm-5 datepicker" %}
+                                        {{ form.endtime.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="widget-title">{% trans "Project details" %}</h4>
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="{{ form.client.id_for_label }}">{% trans "Client" %} </label>
+                                    <div class="col-sm-9">
+                                        {% render_field form.client class="col-xs-10 col-sm-5" %}
+                                        {{ form.client.errors }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="{{ form.project.id_for_label }}">{% trans "Project" %} </label>
+                                    <div class="col-sm-9">
+                                        {% render_field form.project class="col-xs-10 col-sm-5" %}
+                                        {{ form.project.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h4 class="widget-title">{% trans "Additional information" %}</h4>
+
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label no-padding-right" for="{{ form.comments.id_for_label }}">{% trans "Comments" %} </label>
+                                    <div class="col-sm-9">
+                                        {% trans "Enter your comments here" as comments %}
+                                        {% render_field form.comments placeholder=comments class="form-control" %}
+                                        {{ form.comments.errors }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix form-actions">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button class="btn btn-info" type="submit">
+                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                {% if is_new_entry %}
+                                    {% trans "Submit" %}
+                                {% else %}
+                                    {% trans "Update" %}
+                                {% endif %}
+                            </button>
+                            {% if is_new_entry %}
+                            &nbsp; &nbsp; &nbsp;
+                            <button class="btn" type="reset">
+                                <i class="ace-icon fa fa-undo bigger-110"></i>
+                                {% trans "Reset" %}
+                            </button>
+                            {% endif %}
+                             &nbsp; &nbsp; &nbsp;
+                            <a class="btn btn-danger" href="{% url 'entry:index' %}">
+                                <i class="ace-icon fa fa-times bigger-110"></i>
+                                {% trans "Cancel" %}
+                            </a>
+                        </div>
+                    </div>
+                </form><!-- PAGE CONTENT ENDS -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+{% endblock %}
+
+{% block bottom %}
+	{% include "entry/entry_form_bottom_js.html" %}
+{% endblock %}

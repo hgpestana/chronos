@@ -2,7 +2,6 @@ from django.forms import ModelForm, CharField, PasswordInput, ValidationError, H
 from django.contrib.auth.password_validation import validate_password
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
-from django.forms import inlineformset_factory
 
 from apps.account.models import Account
 
