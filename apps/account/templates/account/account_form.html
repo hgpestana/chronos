@@ -2,216 +2,235 @@
 {% load i18n widget_tweaks %}
 
 {% block content %}
-    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
-		<ul class="breadcrumb">
-			<li>
-				<i class="ace-icon fa fa-home home-icon"></i>
-				<a href="{% url "index:index" %}">{% trans "Home" %}</a>
-			</li>
-            <li>
-				<a href="{% url "account:index" %}">{% trans "Users" %}</a>
-			</li>
-			<li class="active">{{ title }}</li>
-		</ul><!-- /.breadcrumb -->
-	</div>
-    <div class="page-content">
-		<div class="page-header">
-			<h1>
-				{{ title }}
-			</h1>
-		</div><!-- /.page-header -->
-        <div class="row">
-            <div class="col-xs-12">
-                <!-- PAGE CONTENT BEGINS -->
-                <form method='POST' class="form-horizontal" role="form" action=''>
-                    {% csrf_token %}
-                    {% if form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        <button type="button" class="close" data-dismiss="alert">
-                            <i class="ace-icon fa fa-times"></i>
-                        </button>
-                        {% for error in form.non_field_errors %}
-                            <i class="ace-icon fa fa-times"></i> {{ error }}
-                            <br>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                    {% if is_new_account %}
-                        {% render_field form.is_new_account value=is_new_account %}
-                    {% endif %}
-                    <div class="widget-box">
-                        <div class="widget-header">
-                            <h4 class="widget-title">{% trans "Basic details" %}</h4>
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="{% url 'index:index' %}">{% trans "Home" %}</a>
+        </li>
+        <li>
+            <a href="{% url 'account:index' %}">{% trans "Users" %}</a>
+        </li>
+        <li class="active">{{ title }}</li>
+    </ul><!-- /.breadcrumb -->
+</div>
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            {{ title }}
+        </h1>
+    </div><!-- /.page-header -->
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <form method='POST' class="form-horizontal" role="form" action=''>
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <i class="ace-icon fa fa-times"></i>
+                    </button>
+                    {% for error in form.non_field_errors %}
+                    <i class="ace-icon fa fa-times"></i> {{ error }}
+                    <br>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% if is_new_account %}
+                {% render_field form.is_new_account value=is_new_account %}
+                {% endif %}
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="widget-title">{% trans "Basic details" %}</h4>
 
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.username.id_for_label }}'>{% trans "Username" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "Username" as username %}
-                                        {% render_field form.username placeholder=username class="col-xs-10 col-sm-5" %}
-                                        {{ form.username.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.first_name.id_for_label }}'>{% trans "First name" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "First name" as first_name %}
-                                        {% render_field form.first_name placeholder=first_name class="col-xs-10 col-sm-5" %}
-                                        {{ form.first_name.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.last_name.id_for_label }}'>{% trans "Last name" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "Last name" as last_name %}
-                                        {% render_field form.last_name placeholder=last_name class="col-xs-10 col-sm-5" %}
-                                        {{ form.last_name.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.password.id_for_label }}'>{% trans "Password" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "Input password" as password %}
-                                        {% render_field form.password placeholder=password class="col-xs-10 col-sm-5" %}
-                                        {{ form.password.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.password_repeat.id_for_label }}'>{% trans "Password repeat" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "Repeat password" as password_repeat %}
-                                        {% render_field form.password_repeat placeholder=password_repeat class="col-xs-10 col-sm-5" %}
-                                        {{ form.password_repeat.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-3 control-label no-padding-right"></div>
-                                    <div class="col-sm-9">
-                                        <ul class="list-unstyled spaced">
-                                            {% for text in help_text %}
-                                                <li class="text-warning"><i class="ace-icon fa fa-angle-right bigger-110 purple"></i>{{ text }} </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.email.id_for_label }}'>{% trans "Email" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "Email" as email %}
-                                        {% render_field form.email placeholder=email class="col-xs-10 col-sm-5" %}
-                                        {{ form.email.errors }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="widget-box">
-                        <div class="widget-header">
-                            <h4 class="widget-title">{% trans "Profile details" %}</h4>
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.is_staff.id_for_label }}'>{% trans "Is staff?" %} </label>
-                                    <div class="col-sm-9">
-                                        <label>
-                                            {% trans "Is staff?" as is_staff %}
-                                            {% render_field form.is_staff type="checkbox" class="ace ace-switch ace-switch-2" %}
-                                            <span class="lbl"></span>
-                                        </label>
-                                        {{ form.is_staff.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.is_superuser.id_for_label }}'>{% trans "Is superuser?" %} </label>
-                                    <div class="col-sm-9">
-                                        <label>
-                                            {% trans "Is superuser?" as is_superuser %}
-                                            {% render_field form.is_superuser type="checkbox" class="ace ace-switch ace-switch-2" %}
-                                            <span class="lbl"></span>
-                                        </label>
-                                        {{ form.is_superuser.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.is_active.id_for_label }}'>{% trans "Is active?" %} </label>
-                                    <div class="col-sm-9">
-                                        <label>
-                                            {% trans "Is active?" as is_active %}
-                                            {% render_field form.is_active type="checkbox" class="ace ace-switch ace-switch-2" %}
-                                            <span class="lbl"></span>
-                                        </label>
-                                        {{ form.is_active.errors }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="widget-box">
-                        <div class="widget-header">
-                            <h4 class="widget-title">{% trans "Additional details" %}</h4>
-
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="{{ accountform.description.id_for_label }}">{% trans "Description" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "Enter your description here" as description %}
-                                        {% render_field accountform.description placeholder=description class="form-control" %}
-                                        {{ accountform.description.errors }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clearfix form-actions">
-                        <div class="col-md-offset-3 col-md-9">
-                            <button class="btn btn-info" type="submit">
-                                <i class="ace-icon fa fa-check bigger-110"></i>
-                                {% if is_new_account %}
-                                    {% trans "Submit" %}
-                                {% else %}
-                                    {% trans "Update" %}
-                                {% endif %}
-                            </button>
-                            {% if is_new_account %}
-                            &nbsp; &nbsp; &nbsp;
-                            <button class="btn" type="reset">
-                                <i class="ace-icon fa fa-undo bigger-110"></i>
-                                {% trans "Reset" %}
-                            </button>
-                            {% endif %}
-                             &nbsp; &nbsp; &nbsp;
-                            <a class="btn btn-danger" href="{% url 'account:index' %}">
-                                <i class="ace-icon fa fa-times bigger-110"></i>
-                                {% trans "Cancel" %}
+                        <div class="widget-toolbar">
+                            <a href="#" data-action="collapse">
+                                <i class="ace-icon fa fa-chevron-up"></i>
                             </a>
                         </div>
                     </div>
-                </form><!-- PAGE CONTENT ENDS -->
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.page-content -->
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for='{{ form.username.id_for_label }}'>{% trans "Username" %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "Username" as username %}
+                                    {% render_field form.username placeholder=username class="col-xs-10 col-sm-5" %}
+                                    {{ form.username.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for='{{ form.first_name.id_for_label }}'>{% trans "First name" %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "First name" as first_name %}
+                                    {% render_field form.first_name placeholder=first_name class="col-xs-10 col-sm-5" %}
+                                    {{ form.first_name.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for='{{ form.last_name.id_for_label }}'>{% trans "Last name" %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "Last name" as last_name %}
+                                    {% render_field form.last_name placeholder=last_name class="col-xs-10 col-sm-5" %}
+                                    {{ form.last_name.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for='{{ form.password.id_for_label }}'>{% trans "Password" %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "Input password" as password %}
+                                    {% render_field form.password placeholder=password class="col-xs-10 col-sm-5" %}
+                                    {{ form.password.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for='{{ form.password_repeat.id_for_label }}'>{% trans "Password repeat"
+                                    %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "Repeat password" as password_repeat %}
+                                    {% render_field form.password_repeat placeholder=password_repeat class="col-xs-10
+                                    col-sm-5" %}
+                                    {{ form.password_repeat.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3 control-label no-padding-right"></div>
+                                <div class="col-sm-9">
+                                    <ul class="list-unstyled spaced">
+                                        {% for text in help_text %}
+                                        <li class="text-warning"><i
+                                                class="ace-icon fa fa-angle-right bigger-110 purple"></i>{{ text }}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for='{{ form.email.id_for_label }}'>{% trans "Email" %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "Email" as email %}
+                                    {% render_field form.email placeholder=email class="col-xs-10 col-sm-5" %}
+                                    {{ form.email.errors }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="widget-title">{% trans "Profile details" %}</h4>
+                        <div class="widget-toolbar">
+                            <a href="#" data-action="collapse">
+                                <i class="ace-icon fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for='{{ form.is_staff.id_for_label }}'>{% trans "Is staff?" %} </label>
+                                <div class="col-sm-9">
+                                    <label>
+                                        {% trans "Is staff?" as is_staff %}
+                                        {% render_field form.is_staff type="checkbox" class="ace ace-switch
+                                        ace-switch-2" %}
+                                        <span class="lbl"></span>
+                                    </label>
+                                    {{ form.is_staff.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for='{{ form.is_superuser.id_for_label }}'>{% trans "Is superuser?" %} </label>
+                                <div class="col-sm-9">
+                                    <label>
+                                        {% trans "Is superuser?" as is_superuser %}
+                                        {% render_field form.is_superuser type="checkbox" class="ace ace-switch
+                                        ace-switch-2" %}
+                                        <span class="lbl"></span>
+                                    </label>
+                                    {{ form.is_superuser.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for='{{ form.is_active.id_for_label }}'>{% trans "Is active?" %} </label>
+                                <div class="col-sm-9">
+                                    <label>
+                                        {% trans "Is active?" as is_active %}
+                                        {% render_field form.is_active type="checkbox" class="ace ace-switch
+                                        ace-switch-2" %}
+                                        <span class="lbl"></span>
+                                    </label>
+                                    {{ form.is_active.errors }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="widget-title">{% trans "Additional details" %}</h4>
+
+                        <div class="widget-toolbar">
+                            <a href="#" data-action="collapse">
+                                <i class="ace-icon fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="{{ accountform.description.id_for_label }}">{% trans "Description"
+                                    %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "Enter your description here" as description %}
+                                    {% render_field accountform.description placeholder=description class="form-control"
+                                    %}
+                                    {{ accountform.description.errors }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-info" type="submit">
+                            <i class="ace-icon fa fa-check bigger-110"></i>
+                            {% if is_new_account %}
+                            {% trans "Submit" %}
+                            {% else %}
+                            {% trans "Update" %}
+                            {% endif %}
+                        </button>
+                        {% if is_new_account %}
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn" type="reset">
+                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                            {% trans "Reset" %}
+                        </button>
+                        {% endif %}
+                        &nbsp; &nbsp; &nbsp;
+                        <a class="btn btn-danger" href="{% url 'account:index' %}">
+                            <i class="ace-icon fa fa-times bigger-110"></i>
+                            {% trans "Cancel" %}
+                        </a>
+                    </div>
+                </div>
+            </form><!-- PAGE CONTENT ENDS -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.page-content -->
 {% endblock %}
 
 {% block bottom %}
-	{% include "account/account_form_bottom_js.html" %}
+{% include "account/account_form_bottom_js.html" %}
 {% endblock %}

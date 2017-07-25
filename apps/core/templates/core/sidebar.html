@@ -2,7 +2,10 @@
 
 <div id="sidebar" class="sidebar                  responsive                    ace-save-state">
     <script type="text/javascript">
-        try{ace.settings.loadState('sidebar')}catch(e){}
+        try {
+            ace.settings.loadState('sidebar')
+        } catch (e) {
+        }
     </script>
 
     <!--<div class="sidebar-shortcuts" id="sidebar-shortcuts">
@@ -37,9 +40,9 @@
 
     <ul class="nav nav-list">
         <li class="{{ dashboard_active }}">
-            <a href="{% url "index:index" %}">
-                <i class="menu-icon fa fa-tachometer"></i>
-                <span class="menu-text"> {% trans "Dashboard" %} </span>
+            <a href="{% url 'index:index' %}">
+            <i class="menu-icon fa fa-tachometer"></i>
+            <span class="menu-text"> {% trans "Dashboard" %} </span>
             </a>
             <b class="arrow"></b>
         </li>
@@ -53,15 +56,15 @@
             <b class="arrow"></b>
             <ul class="submenu">
                 <li class="{{ account_viewall_active }}">
-                    <a href="{% url "account:index" %}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        <span class="menu-text"> {% trans "View all" %} </span>
+                    <a href="{% url 'account:index' %}">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    <span class="menu-text"> {% trans "View all" %} </span>
                     </a>
                 </li>
                 <li class="{{ client_add_active }}">
-                    <a href="{% url "account:add" %}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        <span class="menu-text"> {% trans "Add user" %} </span>
+                    <a href="{% url 'account:add' %}">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    <span class="menu-text"> {% trans "Add user" %} </span>
                     </a>
                 </li>
             </ul>
@@ -76,15 +79,15 @@
             <b class="arrow"></b>
             <ul class="submenu">
                 <li class="{{ client_viewall_active }}">
-                    <a href="{% url "client:index" %}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        <span class="menu-text"> {% trans "View all" %} </span>
+                    <a href="{% url 'client:index' %}">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    <span class="menu-text"> {% trans "View all" %} </span>
                     </a>
                 </li>
                 <li class="{{ client_add_active }}">
-                    <a href="{% url "client:add" %}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        <span class="menu-text"> {% trans "Add client" %} </span>
+                    <a href="{% url 'client:add' %}">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    <span class="menu-text"> {% trans "Add client" %} </span>
                     </a>
                 </li>
             </ul>
@@ -99,15 +102,15 @@
             <b class="arrow"></b>
             <ul class="submenu">
                 <li class="{{ project_viewall_active }}">
-                    <a href="{% url "project:index" %}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        <span class="menu-text"> {% trans "View all" %} </span>
+                    <a href="{% url 'project:index' %}">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    <span class="menu-text"> {% trans "View all" %} </span>
                     </a>
                 </li>
                 <li class="{{ project_add_active }}">
-                    <a href="{% url "project:add" %}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        <span class="menu-text"> {% trans "Add project" %} </span>
+                    <a href="{% url 'project:add' %}">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    <span class="menu-text"> {% trans "Add project" %} </span>
                     </a>
                 </li>
             </ul>
@@ -123,24 +126,24 @@
             <b class="arrow"></b>
             <ul class="submenu">
                 <li class="{{ task_viewall_active }}">
-                    <a href="{% url "task:index" %}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        <span class="menu-text"> {% trans "View all" %} </span>
+                    <a href="{% url 'task:index' %}">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    <span class="menu-text"> {% trans "View all" %} </span>
                     </a>
                 </li>
                 <li class="{{ task_add_active }}">
-                    <a href="{% url "task:add" %}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        <span class="menu-text"> {% trans "Add task" %} </span>
+                    <a href="{% url 'task:add' %}">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    <span class="menu-text"> {% trans "Add task" %} </span>
                     </a>
                 </li>
             </ul>
         </li>
 
         <li class="{{ entry_active }}">
-            <a href="{% url "entry:index" %}">
-                <i class="menu-icon fa fa-calendar"></i>
-                <span class="menu-text"> {% trans "Entries" %} </span>
+            <a href="{% url 'entry:index' %}">
+            <i class="menu-icon fa fa-calendar"></i>
+            <span class="menu-text"> {% trans "Entries" %} </span>
             </a>
 
             <b class="arrow"></b>
@@ -149,6 +152,7 @@
     </ul><!-- /.nav-list -->
 
     <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
-        <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+        <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state"
+           data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
     </div>
 </div>

@@ -2,240 +2,268 @@
 {% load i18n widget_tweaks %}
 
 {% block content %}
-    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
-		<ul class="breadcrumb">
-			<li>
-				<i class="ace-icon fa fa-home home-icon"></i>
-				<a href="{% url "index:index" %}">{% trans "Home" %}</a>
-			</li>
-            <li>
-				<a href="{% url "client:index" %}">{% trans "Clients" %}</a>
-			</li>
-			<li class="active">{{ title }}</li>
-		</ul><!-- /.breadcrumb -->
-	</div>
-    <div class="page-content">
-		<div class="page-header">
-			<h1>
-				{{ title }}
-			</h1>
-		</div><!-- /.page-header -->
-        <div class="row">
-            <div class="col-xs-12">
-                <!-- PAGE CONTENT BEGINS -->
-                <form method='POST' class="form-horizontal" role="form" action=''>
-                    {% csrf_token %}
-                    {{ form.non_field_errors }}
-                    <div class="widget-box">
-                        <div class="widget-header">
-                            <h4 class="widget-title">{% trans "Basic details" %}</h4>
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="{% url 'index:index' %}">{% trans "Home" %}</a>
+        </li>
+        <li>
+            <a href="{% url 'client:index' %}">{% trans "Clients" %}</a>
+        </li>
+        <li class="active">{{ title }}</li>
+    </ul><!-- /.breadcrumb -->
+</div>
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            {{ title }}
+        </h1>
+    </div><!-- /.page-header -->
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <form method='POST' class="form-horizontal" role="form" action=''>
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="widget-title">{% trans "Basic details" %}</h4>
 
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.name.id_for_label }}'>{% trans "Name" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "Client name" as client_name %}
-                                        {% render_field form.name placeholder=client_name class="col-xs-10 col-sm-5" %}
-                                        {{ form.name.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.vat.id_for_label }}'>{% trans "VAT" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "VAT number" as vat_number %}
-                                        {% render_field form.vat placeholder=vat_number class="col-xs-10 col-sm-5" %}
-                                        {{ form.vat.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.is_visible.id_for_label }}'>{% trans "Is visible" %} </label>
-                                    <div class="col-sm-9">
-                                        <label>
-                                            {% trans "Is visible?" as visibility %}
-                                            {% render_field form.is_visible type="checkbox" class="ace ace-switch ace-switch-2" %}
-                                            <span class="lbl"></span>
-                                        </label>
-                                        {{ form.is_visible.errors }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="widget-box">
-                        <div class="widget-header">
-                            <h4 class="widget-title">{% trans "Contact details" %}</h4>
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="{{ form.contact_person.id_for_label }}">{% trans "Contact person" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "Contact person name" as contact_person_name %}
-                                        {% render_field form.contact_person placeholder=contact_person_name class="col-xs-10 col-sm-5" %}
-                                        {{ form.contact_person.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="{{ form.phone.id_for_label }}">{% trans "Phone" %} </label>
-                                    <div class="col-sm-9">
-                                        <span class="input-group-addon col-xs-10 col-sm-5"><i class="ace-icon fa fa-phone"></i></span>
-                                        {% render_field form.phone class="col-xs-10 col-sm-2 input-mask-phone" %}
-                                        <br/><br/><small class="text-warning">(+000) 000 000 000</small>
-                                        {{ form.phone.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="{{ form.mobile.id_for_label }}">{% trans "Mobile" %} </label>
-                                    <div class="col-sm-9">
-                                        <span class="input-group-addon col-xs-10 col-sm-5"><i class="ace-icon fa fa-mobile"></i></span>
-                                        {% render_field form.mobile class="col-xs-10 col-sm-2 input-mask-phone" %}
-                                        <br/><br/><small class="text-warning">(+000) 000 000 000</small>
-                                        {{ form.mobile.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="{{ form.email.id_for_label }}">{% trans "Email" %}</label>
-                                    <div class="col-sm-9">
-                                        <span class="input-group-addon col-xs-10 col-sm-5"><i class="ace-icon fa fa-envelope"></i></span>
-                                        {% trans "Enter email address" as email_address %}
-                                        {% render_field form.email placeholder=email_address class="col-xs-10 col-sm-2" type="email" %}
-                                        <br/><br/><small class="text-warning">johndoe@email.com</small>
-                                        {{ form.email.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="{{ form.website.id_for_label }}">{% trans "Website" %} </label>
-                                    <div class="col-sm-9">
-                                        <span class="input-group-addon col-xs-10 col-sm-5"><i class="ace-icon fa fa-cloud"></i></span>
-                                        {% trans "Website URL" as website_url %}
-                                        {% render_field form.website placeholder=website_url class="col-xs-10 col-sm-2" type="url" %}
-                                        <br/><br/><small class="text-warning">www.yourcompanyurl.com</small>
-                                        {{ form.website.errors }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="widget-box">
-                        <div class="widget-header">
-                            <h4 class="widget-title">{% trans "Main address details" %}</h4>
-
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="{{ form.street.id_for_label }}">{% trans "Address" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "Street name, number, block number, apartment, etc" as address %}
-                                        {% render_field form.street placeholder=address class="form-control" %}
-                                        {{ form.street.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="{{ form.city.id_for_label }}">{% trans "City" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "City name" as city_name %}
-                                        {% render_field form.city placeholder=city_name class="col-xs-10 col-sm-5" %}
-                                        {{ form.city.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="{{ form.country.id_for_label }}">{% trans "Country" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "Country name" as country_name %}
-                                        {% render_field form.country placeholder=country_name class="col-xs-10 col-sm-5" %}
-                                        {{ form.country.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="{{ form.postal_code.id_for_label }}0">{%trans "Postal code" %} </label>
-                                    <div class="col-sm-9">
-                                        {% render_field form.postal_code class="col-xs-10 col-sm-2 input-mask-postalcode" %}
-                                        <br/><br/><small class="text-warning">0000-000</small>
-                                        {{ form.postal_code.errors }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="widget-box">
-                        <div class="widget-header">
-                            <h4 class="widget-title">{% trans "Additional information" %}</h4>
-
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="{{ form.description.id_for_label }}">{% trans "Description" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "Enter your description here" as description %}
-                                        {% render_field form.description placeholder=description class="form-control" %}
-                                        {{ form.description.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="{{ form.comments.id_for_label }}">{% trans "Comments" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "Enter your comments here" as comments %}
-                                        {% render_field form.comments placeholder=comments class="form-control" %}
-                                        {{ form.comments.errors }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clearfix form-actions">
-                        <div class="col-md-offset-3 col-md-9">
-                            <button class="btn btn-info" type="submit">
-                                <i class="ace-icon fa fa-check bigger-110"></i>
-                                {% if is_new_client %}
-                                    {% trans "Submit" %}
-                                {% else %}
-                                    {% trans "Update" %}
-                                {% endif %}
-                            </button>
-                            {% if is_new_client %}
-                            &nbsp; &nbsp; &nbsp;
-                            <button class="btn" type="reset">
-                                <i class="ace-icon fa fa-undo bigger-110"></i>
-                                {% trans "Reset" %}
-                            </button>
-                            {% endif %}
-                             &nbsp; &nbsp; &nbsp;
-                            <a class="btn btn-danger" href="{% url 'client:index' %}">
-                                <i class="ace-icon fa fa-times bigger-110"></i>
-                                {% trans "Cancel" %}
+                        <div class="widget-toolbar">
+                            <a href="#" data-action="collapse">
+                                <i class="ace-icon fa fa-chevron-up"></i>
                             </a>
                         </div>
                     </div>
-                </form><!-- PAGE CONTENT ENDS -->
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.page-content -->
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for='{{ form.name.id_for_label }}'>{% trans "Name" %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "Client name" as client_name %}
+                                    {% render_field form.name placeholder=client_name class="col-xs-10 col-sm-5" %}
+                                    {{ form.name.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for='{{ form.vat.id_for_label }}'>{% trans "VAT" %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "VAT number" as vat_number %}
+                                    {% render_field form.vat placeholder=vat_number class="col-xs-10 col-sm-5" %}
+                                    {{ form.vat.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for='{{ form.is_visible.id_for_label }}'>{% trans "Is visible" %} </label>
+                                <div class="col-sm-9">
+                                    <label>
+                                        {% trans "Is visible?" as visibility %}
+                                        {% render_field form.is_visible type="checkbox" class="ace ace-switch
+                                        ace-switch-2" %}
+                                        <span class="lbl"></span>
+                                    </label>
+                                    {{ form.is_visible.errors }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="widget-title">{% trans "Contact details" %}</h4>
+                        <div class="widget-toolbar">
+                            <a href="#" data-action="collapse">
+                                <i class="ace-icon fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="{{ form.contact_person.id_for_label }}">{% trans "Contact person"
+                                    %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "Contact person name" as contact_person_name %}
+                                    {% render_field form.contact_person placeholder=contact_person_name class="col-xs-10
+                                    col-sm-5" %}
+                                    {{ form.contact_person.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="{{ form.phone.id_for_label }}">{% trans "Phone" %} </label>
+                                <div class="col-sm-9">
+                                    <span class="input-group-addon col-xs-10 col-sm-5"><i
+                                            class="ace-icon fa fa-phone"></i></span>
+                                    {% render_field form.phone class="col-xs-10 col-sm-2 input-mask-phone" %}
+                                    <br/><br/>
+                                    <small class="text-warning">(+000) 000 000 000</small>
+                                    {{ form.phone.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="{{ form.mobile.id_for_label }}">{% trans "Mobile" %} </label>
+                                <div class="col-sm-9">
+                                    <span class="input-group-addon col-xs-10 col-sm-5"><i
+                                            class="ace-icon fa fa-mobile"></i></span>
+                                    {% render_field form.mobile class="col-xs-10 col-sm-2 input-mask-phone" %}
+                                    <br/><br/>
+                                    <small class="text-warning">(+000) 000 000 000</small>
+                                    {{ form.mobile.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="{{ form.email.id_for_label }}">{% trans "Email" %}</label>
+                                <div class="col-sm-9">
+                                    <span class="input-group-addon col-xs-10 col-sm-5"><i
+                                            class="ace-icon fa fa-envelope"></i></span>
+                                    {% trans "Enter email address" as email_address %}
+                                    {% render_field form.email placeholder=email_address class="col-xs-10 col-sm-2"
+                                    type="email" %}
+                                    <br/><br/>
+                                    <small class="text-warning">johndoe@email.com</small>
+                                    {{ form.email.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="{{ form.website.id_for_label }}">{% trans "Website" %} </label>
+                                <div class="col-sm-9">
+                                    <span class="input-group-addon col-xs-10 col-sm-5"><i
+                                            class="ace-icon fa fa-cloud"></i></span>
+                                    {% trans "Website URL" as website_url %}
+                                    {% render_field form.website placeholder=website_url class="col-xs-10 col-sm-2"
+                                    type="url" %}
+                                    <br/><br/>
+                                    <small class="text-warning">www.yourcompanyurl.com</small>
+                                    {{ form.website.errors }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="widget-title">{% trans "Main address details" %}</h4>
+
+                        <div class="widget-toolbar">
+                            <a href="#" data-action="collapse">
+                                <i class="ace-icon fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="{{ form.street.id_for_label }}">{% trans "Address" %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "Street name, number, block number, apartment, etc" as address %}
+                                    {% render_field form.street placeholder=address class="form-control" %}
+                                    {{ form.street.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="{{ form.city.id_for_label }}">{% trans "City" %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "City name" as city_name %}
+                                    {% render_field form.city placeholder=city_name class="col-xs-10 col-sm-5" %}
+                                    {{ form.city.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="{{ form.country.id_for_label }}">{% trans "Country" %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "Country name" as country_name %}
+                                    {% render_field form.country placeholder=country_name class="col-xs-10 col-sm-5" %}
+                                    {{ form.country.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="{{ form.postal_code.id_for_label }}0">{%trans "Postal code" %} </label>
+                                <div class="col-sm-9">
+                                    {% render_field form.postal_code class="col-xs-10 col-sm-2 input-mask-postalcode" %}
+                                    <br/><br/>
+                                    <small class="text-warning">0000-000</small>
+                                    {{ form.postal_code.errors }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="widget-title">{% trans "Additional information" %}</h4>
+
+                        <div class="widget-toolbar">
+                            <a href="#" data-action="collapse">
+                                <i class="ace-icon fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="{{ form.description.id_for_label }}">{% trans "Description" %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "Enter your description here" as description %}
+                                    {% render_field form.description placeholder=description class="form-control" %}
+                                    {{ form.description.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="{{ form.comments.id_for_label }}">{% trans "Comments" %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "Enter your comments here" as comments %}
+                                    {% render_field form.comments placeholder=comments class="form-control" %}
+                                    {{ form.comments.errors }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-info" type="submit">
+                            <i class="ace-icon fa fa-check bigger-110"></i>
+                            {% if is_new_client %}
+                            {% trans "Submit" %}
+                            {% else %}
+                            {% trans "Update" %}
+                            {% endif %}
+                        </button>
+                        {% if is_new_client %}
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn" type="reset">
+                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                            {% trans "Reset" %}
+                        </button>
+                        {% endif %}
+                        &nbsp; &nbsp; &nbsp;
+                        <a class="btn btn-danger" href="{% url 'client:index' %}">
+                            <i class="ace-icon fa fa-times bigger-110"></i>
+                            {% trans "Cancel" %}
+                        </a>
+                    </div>
+                </div>
+            </form><!-- PAGE CONTENT ENDS -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.page-content -->
 {% endblock %}
 
 {% block bottom %}
-	{% include "client/client_form_bottom_js.html" %}
+{% include "client/client_form_bottom_js.html" %}
 {% endblock %}

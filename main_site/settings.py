@@ -13,8 +13,9 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-from unipath import Path
+
 from django.core.urlresolvers import reverse_lazy
+from unipath import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,6 +28,9 @@ ADMINS = (
 MANAGERS = ADMINS
 
 SITE_NAME = 'Chronos'
+
+# Time format string
+TIME_FORMAT = '%Y/%m/%d %H:%M'
 
 # This is how you can define name of your site
 SITE_DIR = 'main_site'
@@ -132,7 +136,7 @@ INSTALLED_APPS = [
     # Compressor
     "compressor",
 
-    #Widget tweaks (templating)
+    # Widget tweaks (templating)
     'widget_tweaks',
 
     # Chronos Apps
@@ -180,7 +184,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = '{}.wsgi.application'.format('main_site')
 
-
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
@@ -190,7 +193,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -219,7 +221,6 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
     'django.contrib.auth.hashers.BCryptPasswordHasher',
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/

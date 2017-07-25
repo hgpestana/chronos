@@ -1,29 +1,29 @@
 {% load staticfiles compress %}
 
 {% compress js %}
-		<!-- basic scripts -->
+<!-- basic scripts -->
 
-		<!--[if !IE]> -->
-		<script src='{% static "core/js/jquery-2.1.4.min.js" %}'></script>
+<!--[if !IE]> -->
+<script src='{% static "core/js/jquery-2.1.4.min.js" %}'></script>
 
-		<!-- <![endif]-->
+<!-- <![endif]-->
 
-		<!--[if IE]>
-		<script src='{% static "core/js/jquery-1.11.3.min.js" %}'></script>
-		<![endif]-->
-		<script type="text/javascript">
-			if('ontouchstart' in document.documentElement) document.write('<script src=\'{% static "core/js/jquery.mobile.custom.min.js" %}\'>'+'<'+'/script>');
-		</script>
+<!--[if IE]>
+<script src='{% static "core/js/jquery-1.11.3.min.js" %}'></script>
+<![endif]-->
+<script type="text/javascript">
+    if ('ontouchstart' in document.documentElement) document.write('<script src=\'{% static "core/js/jquery.mobile.custom.min.js" %}\'>' + '<' + '/script>');
+</script>
 
-		<!-- inline scripts related to this page -->
-		<script type="text/javascript">
-			jQuery(function($) {
-			 $(document).on('click', '.toolbar a[data-target]', function(e) {
-				e.preventDefault();
-				var target = $(this).data('target');
-				$('.widget-box.visible').removeClass('visible');//hide others
-				$(target).addClass('visible');//show target
-			 });
-			});
-		</script>
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    jQuery(function ($) {
+        $(document).on('click', '.toolbar a[data-target]', function (e) {
+            e.preventDefault();
+            var target = $(this).data('target');
+            $('.widget-box.visible').removeClass('visible');//hide others
+            $(target).addClass('visible');//show target
+        });
+    });
+</script>
 {% endcompress %}

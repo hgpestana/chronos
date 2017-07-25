@@ -1,277 +1,278 @@
 {% load staticfiles compress i18n %}
 
 {% compress js %}
-		<!-- page specific plugin scripts -->
-		<script src='{% static "core/js/jquery.dataTables.min.js" %}'></script>
-		<script src='{% static "core/js/jquery.dataTables.bootstrap.min.js" %}'></script>
-		<script src='{% static "core/js/dataTables.buttons.min.js" %}'></script>
-		<script src='{% static "core/js/buttons.flash.min.js" %}'></script>
-		<script src='{% static "core/js/buttons.html5.min.js" %}'></script>
-		<script src='{% static "core/js/buttons.print.min.js" %}'></script>
-		<script src='{% static "core/js/buttons.colVis.min.js" %}'></script>
-		<script src='{% static "core/js/dataTables.select.min.js" %}'></script>
+<!-- page specific plugin scripts -->
+<script src='{% static "core/js/jquery.dataTables.min.js" %}'></script>
+<script src='{% static "core/js/jquery.dataTables.bootstrap.min.js" %}'></script>
+<script src='{% static "core/js/dataTables.buttons.min.js" %}'></script>
+<script src='{% static "core/js/buttons.flash.min.js" %}'></script>
+<script src='{% static "core/js/buttons.html5.min.js" %}'></script>
+<script src='{% static "core/js/buttons.print.min.js" %}'></script>
+<script src='{% static "core/js/buttons.colVis.min.js" %}'></script>
+<script src='{% static "core/js/dataTables.select.min.js" %}'></script>
 
-		<!-- ace scripts -->
-		<script src='{% static "core/js/ace-elements.min.js" %}'></script>
-		<script src='{% static "core/js/ace.min.js" %}'></script>
+<!-- ace scripts -->
+<script src='{% static "core/js/ace-elements.min.js" %}'></script>
+<script src='{% static "core/js/ace.min.js" %}'></script>
 
-		<!-- inline scripts related to this page -->
-		<script type="text/javascript">
-			jQuery(function($) {
-				//initiate dataTables plugin
-				var myTable =
-				$('#account-table')
-				.DataTable( {
-					bAutoWidth: false,
-					"aoColumns": [
-					  { "bSortable": false },
-					  null, null,null, null, null,
-					  { "bSortable": false }
-					],
-					"aaSorting": [],
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    jQuery(function ($) {
+        //initiate dataTables plugin
+        var myTable =
+            $('#account-table')
+                .DataTable({
+                    bAutoWidth: false,
+                    "aoColumns": [
+                        {"bSortable": false},
+                        null, null, null, null, null,
+                        {"bSortable": false}
+                    ],
+                    "aaSorting": [],
 
-					select: {
-						style: 'multi'
-					}
-			    } );
+                    select: {
+                        style: 'multi'
+                    }
+                });
 
-				$.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
+        $.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
 
-				new $.fn.dataTable.Buttons( myTable, {
-					buttons: [
-					  {
-					    "text": "<i class='fa fa-plus-circle bigger-110 purple'></i> <span class='hidden'>{% trans "Add new account" %}</span>",
-						"className": "btn btn-white btn-primary btn-bold",
-						"action": function () {
-										window.location.href = "{% url 'account:add' %}";
-								  }
-					  },
-					  {
-						"extend": "colvis",
-						"text": "<i class='fa fa-eye bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
-						"className": "btn btn-white btn-primary btn-bold",
-						columns: ':not(:first):not(:last)'
-					  },
-					  {
-						"extend": "copy",
-						"text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
-						"className": "btn btn-white btn-primary btn-bold"
-					  },
-					  {
-						"extend": "csv",
-						"text": "<i class='fa fa-database bigger-110 orange'></i> <span class='hidden'>Export to CSV</span>",
-						"className": "btn btn-white btn-primary btn-bold"
-					  },
-					  {
-						"extend": "excel",
-						"text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
-						"className": "btn btn-white btn-primary btn-bold"
-					  },
-					  {
-						"extend": "pdf",
-						"text": "<i class='fa fa-file-pdf-o bigger-110 red'></i> <span class='hidden'>Export to PDF</span>",
-						"className": "btn btn-white btn-primary btn-bold"
-					  },
-					  {
-						"extend": "print",
-						"text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
-						"className": "btn btn-white btn-primary btn-bold",
-						autoPrint: false,
-						message: 'This print was produced using the Print button for DataTables'
-					  }
-					]
-				} );
-				myTable.buttons().container().appendTo( $('.tableTools-container') );
+        new $.fn.dataTable.Buttons(myTable, {
+            buttons: [
+                {
+                    "text": "<i class='fa fa-plus-circle bigger-110 purple'></i> <span class='hidden'>{% trans 'Add new account' %}</span>",
+                    "className": "btn btn-white btn-primary btn-bold",
+                    "action": function () {
+                        window.location.href = "{% url 'account:add' %}";
+                    }
+                },
+                {
+                    "extend": "colvis",
+                    "text": "<i class='fa fa-eye bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
+                    "className": "btn btn-white btn-primary btn-bold",
+                    columns: ':not(:first):not(:last)'
+                },
+                {
+                    "extend": "copy",
+                    "text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
+                    "className": "btn btn-white btn-primary btn-bold"
+                },
+                {
+                    "extend": "csv",
+                    "text": "<i class='fa fa-database bigger-110 orange'></i> <span class='hidden'>Export to CSV</span>",
+                    "className": "btn btn-white btn-primary btn-bold"
+                },
+                {
+                    "extend": "excel",
+                    "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
+                    "className": "btn btn-white btn-primary btn-bold"
+                },
+                {
+                    "extend": "pdf",
+                    "text": "<i class='fa fa-file-pdf-o bigger-110 red'></i> <span class='hidden'>Export to PDF</span>",
+                    "className": "btn btn-white btn-primary btn-bold"
+                },
+                {
+                    "extend": "print",
+                    "text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
+                    "className": "btn btn-white btn-primary btn-bold",
+                    autoPrint: false,
+                    message: 'This print was produced using the Print button for DataTables'
+                }
+            ]
+        });
+        myTable.buttons().container().appendTo($('.tableTools-container'));
 
-				//style the message box
-				var defaultCopyAction = myTable.button(2).action();
-				myTable.button(2).action(function (e, dt, button, config) {
-					defaultCopyAction(e, dt, button, config);
-					$('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
-				});
-
-
-				var defaultColvisAction = myTable.button(1).action();
-				myTable.button(1).action(function (e, dt, button, config) {
-
-					defaultColvisAction(e, dt, button, config);
+        //style the message box
+        var defaultCopyAction = myTable.button(2).action();
+        myTable.button(2).action(function (e, dt, button, config) {
+            defaultCopyAction(e, dt, button, config);
+            $('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
+        });
 
 
-					if($('.dt-button-collection > .dropdown-menu').length == 0) {
-						$('.dt-button-collection')
-						.wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" style="margin-left: 45px;"/>')
-						.find('a').attr('href', '#').wrap("<li />")
-					}
-					$('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
-				});
+        var defaultColvisAction = myTable.button(1).action();
+        myTable.button(1).action(function (e, dt, button, config) {
 
-				////
+            defaultColvisAction(e, dt, button, config);
 
-				setTimeout(function() {
-					$($('.tableTools-container')).find('a.dt-button').each(function() {
-						var div = $(this).find(' > div').first();
-						if(div.length == 1) div.tooltip({container: 'body', title: div.parent().text()});
-						else $(this).tooltip({container: 'body', title: $(this).text()});
-					});
-				}, 500);
 
-				myTable.on( 'select', function ( e, dt, type, index ) {
-					if ( type === 'row' ) {
-						$( myTable.row( index ).node() ).find('input:checkbox').prop('checked', true);
-					}
-				} );
-				myTable.on( 'deselect', function ( e, dt, type, index ) {
-					if ( type === 'row' ) {
-						$( myTable.row( index ).node() ).find('input:checkbox').prop('checked', false);
-					}
-				} );
+            if ($('.dt-button-collection > .dropdown-menu').length == 0) {
+                $('.dt-button-collection')
+                    .wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" style="margin-left: 45px;"/>')
+                    .find('a').attr('href', '#').wrap("<li />")
+            }
+            $('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
+        });
 
-				/////////////////////////////////
-				//table checkboxes
-				$('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
+        ////
 
-				//select/deselect all rows according to table header checkbox
-				$('#account-table > thead > tr > th input[type=checkbox], #account-table_wrapper input[type=checkbox]').eq(0).on('click', function(){
-					var th_checked = this.checked;//checkbox inside "TH" table header
+        setTimeout(function () {
+            $($('.tableTools-container')).find('a.dt-button').each(function () {
+                var div = $(this).find(' > div').first();
+                if (div.length == 1) div.tooltip({container: 'body', title: div.parent().text()});
+                else $(this).tooltip({container: 'body', title: $(this).text()});
+            });
+        }, 500);
 
-					$('#account-table').find('tbody > tr').each(function(){
-						var row = this;
-						if(th_checked) myTable.row(row).select();
-						else  myTable.row(row).deselect();
-					});
-				});
+        myTable.on('select', function (e, dt, type, index) {
+            if (type === 'row') {
+                $(myTable.row(index).node()).find('input:checkbox').prop('checked', true);
+            }
+        });
+        myTable.on('deselect', function (e, dt, type, index) {
+            if (type === 'row') {
+                $(myTable.row(index).node()).find('input:checkbox').prop('checked', false);
+            }
+        });
 
-				//select/deselect a row when the checkbox is checked/unchecked
-				$('#account-table').on('click', 'td input[type=checkbox]' , function(){
-					var row = $(this).closest('tr').get(0);
-					if(this.checked) myTable.row(row).deselect();
-					else myTable.row(row).select();
-				});
+        /////////////////////////////////
+        //table checkboxes
+        $('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
 
-				$(document).on('click', '#account-table .dropdown-toggle', function(e) {
-					e.stopImmediatePropagation();
-					e.stopPropagation();
-					e.preventDefault();
-				});
+        //select/deselect all rows according to table header checkbox
+        $('#account-table > thead > tr > th input[type=checkbox], #account-table_wrapper input[type=checkbox]').eq(0).on('click', function () {
+            var th_checked = this.checked;//checkbox inside "TH" table header
 
-				//And for the first simple table, which doesn't have TableTools or dataTables
-				//select/deselect all rows according to table header checkbox
-				var active_class = 'active';
-				$('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
-					var th_checked = this.checked;//checkbox inside "TH" table header
+            $('#account-table').find('tbody > tr').each(function () {
+                var row = this;
+                if (th_checked) myTable.row(row).select();
+                else  myTable.row(row).deselect();
+            });
+        });
 
-					$(this).closest('table').find('tbody > tr').each(function(){
-						var row = this;
-						if(th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
-						else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
-					});
-				});
+        //select/deselect a row when the checkbox is checked/unchecked
+        $('#account-table').on('click', 'td input[type=checkbox]', function () {
+            var row = $(this).closest('tr').get(0);
+            if (this.checked) myTable.row(row).deselect();
+            else myTable.row(row).select();
+        });
 
-				//select/deselect a row when the checkbox is checked/unchecked
-				$('#simple-table').on('click', 'td input[type=checkbox]' , function(){
-					var $row = $(this).closest('tr');
-					if($row.is('.detail-row ')) return;
-					if(this.checked) $row.addClass(active_class);
-					else $row.removeClass(active_class);
-				});
+        $(document).on('click', '#account-table .dropdown-toggle', function (e) {
+            e.stopImmediatePropagation();
+            e.stopPropagation();
+            e.preventDefault();
+        });
 
-				/********************************/
-				//add tooltip for small view action buttons in dropdown menu
-				$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+        //And for the first simple table, which doesn't have TableTools or dataTables
+        //select/deselect all rows according to table header checkbox
+        var active_class = 'active';
+        $('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function () {
+            var th_checked = this.checked;//checkbox inside "TH" table header
 
-				//tooltip placement on right or left
-				function tooltip_placement(context, source) {
-					var $source = $(source);
-					var $parent = $source.closest('table')
-					var off1 = $parent.offset();
-					var w1 = $parent.width();
+            $(this).closest('table').find('tbody > tr').each(function () {
+                var row = this;
+                if (th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
+                else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
+            });
+        });
 
-					var off2 = $source.offset();
-					//var w2 = $source.width();
+        //select/deselect a row when the checkbox is checked/unchecked
+        $('#simple-table').on('click', 'td input[type=checkbox]', function () {
+            var $row = $(this).closest('tr');
+            if ($row.is('.detail-row ')) return;
+            if (this.checked) $row.addClass(active_class);
+            else $row.removeClass(active_class);
+        });
 
-					if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
-					return 'left';
-				}
+        /********************************/
+        //add tooltip for small view action buttons in dropdown menu
+        $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
 
-				/***************/
-				$('.show-details-btn').on('click', function(e) {
-					e.preventDefault();
-					$(this).closest('tr').next().toggleClass('open');
-					$(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
-				});
-				/***************/
-			})
-		</script>
-		<script type="text/javascript">
-			function getCookie(name) {
-				var cookieValue = null;
-				if (document.cookie && document.cookie != '') {
-					var cookies = document.cookie.split(';');
-					for (var i = 0; i < cookies.length; i++) {
-						var cookie = jQuery.trim(cookies[i]);
-						// Does this cookie string begin with the name we want?
-						if (cookie.substring(0, name.length + 1) == (name + '=')) {
-							cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-							break;
-						}
-					}
-				}
-				return cookieValue;
-			}
+        //tooltip placement on right or left
+        function tooltip_placement(context, source) {
+            var $source = $(source);
+            var $parent = $source.closest('table');
+            var off1 = $parent.offset();
+            var w1 = $parent.width();
 
-			$(document).ready(function() {
+            var off2 = $source.offset();
+            //var w2 = $source.width();
 
-				var csrftoken = getCookie('csrftoken');
+            if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
+            return 'left';
+        }
 
-				function csrfSafeMethod(method) {
-					// these HTTP methods do not require CSRF protection
-					return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-				}
-				$.ajaxSetup({
-					crossDomain: false, // obviates need for sameOrigin test
-					beforeSend: function(xhr, settings) {
-						if (!csrfSafeMethod(settings.type)) {
-							xhr.setRequestHeader("X-CSRFToken", csrftoken);
-						}
-					}
-				});
+        /***************/
+        $('.show-details-btn').on('click', function (e) {
+            e.preventDefault();
+            $(this).closest('tr').next().toggleClass('open');
+            $(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
+        });
+        /***************/
+    })
+</script>
+<script type="text/javascript">
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 
-				var onDelete = function(){
-				    var url = this.href;
-					$.confirm({
-						closeIcon: true,
-						columnClass: 'medium',
-						icon: 'fa fa-warning',
-						title: '{% trans "User deletion!" %}',
-						content: '{% trans "<br/>Are you sure you want to <span class=\"text-danger\"> delete the user information</span>?<br/>This cannot be undone!" %}',
-						type: 'red',
-						buttons: {
-							confirm: {
-							    text: '{% trans "Delete" %}',
-                                btnClass: 'btn-red',
-                                action: function () {
-                                    $.post(url, function (data) {
-                                        if (data.result == "ok") {
-                                            window.location.href = window.location.href.replace( /.*|$/, "ZGVsZXRlZA==" );
-                                        } else {
-                                            alert("smth goes wrong");
-                                        }
-                                    }).fail(function () {
-                                        alert("error");
-                                    });
-                                },
-                            },
-							cancel:{
-								text: '{% trans "Cancel" %}',
-								action: function () {
-										},
-							},
-						}
-					});
-					return false;
-				}
+    $(document).ready(function () {
 
-				$(".delete").click(onDelete);
-			});
-		</script>
+        var csrftoken = getCookie('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            crossDomain: false, // obviates need for sameOrigin test
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type)) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        var onDelete = function () {
+            var url = this.href;
+            $.confirm({
+                closeIcon: true,
+                columnClass: 'medium',
+                icon: 'fa fa-warning',
+                title: '{% trans "User deletion!" %}',
+                content: '{% trans "<br/>Are you sure you want to <span class=\"text-danger\"> delete the user information</span>?<br/>This cannot be undone!" %}',
+                type: 'red',
+                buttons: {
+                    confirm: {
+                        text: '{% trans "Delete" %}',
+                        btnClass: 'btn-red',
+                        action: function () {
+                            $.post(url, function (data) {
+                                if (data.result == "ok") {
+                                    window.location.href = window.location.href.replace(/.*|$/, "ZGVsZXRlZA==");
+                                } else {
+                                    alert("smth goes wrong");
+                                }
+                            }).fail(function () {
+                                alert("error");
+                            });
+                        },
+                    },
+                    cancel: {
+                        text: '{% trans "Cancel" %}',
+                        action: function () {
+                        },
+                    },
+                }
+            });
+            return false;
+        };
+
+        $(".delete").click(onDelete);
+    });
+</script>
 {% endcompress %}

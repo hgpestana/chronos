@@ -2,156 +2,166 @@
 {% load i18n widget_tweaks %}
 
 {% block content %}
-    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
-		<ul class="breadcrumb">
-			<li>
-				<i class="ace-icon fa fa-home home-icon"></i>
-				<a href="{% url "index:index" %}">{% trans "Home" %}</a>
-			</li>
-            <li>
-				<a href="{% url "task:index" %}">{% trans "Tasks" %}</a>
-			</li>
-			<li class="active">{{ title }}</li>
-		</ul><!-- /.breadcrumb -->
-	</div>
-    <div class="page-content">
-		<div class="page-header">
-			<h1>
-				{{ title }}
-			</h1>
-		</div><!-- /.page-header -->
-        <div class="row">
-            <div class="col-xs-12">
-                <!-- PAGE CONTENT BEGINS -->
-                <form method='POST' class="form-horizontal" role="form" action=''>
-                    {% csrf_token %}
-                    {{ form.non_field_errors }}
-                    <div class="widget-box">
-                        <div class="widget-header">
-                            <h4 class="widget-title">{% trans "Basic details" %}</h4>
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="{% url 'index:index' %}">{% trans "Home" %}</a>
+        </li>
+        <li>
+            <a href="{% url 'task:index' %}">{% trans "Tasks" %}</a>
+        </li>
+        <li class="active">{{ title }}</li>
+    </ul><!-- /.breadcrumb -->
+</div>
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            {{ title }}
+        </h1>
+    </div><!-- /.page-header -->
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <form method='POST' class="form-horizontal" role="form" action=''>
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="widget-title">{% trans "Basic details" %}</h4>
 
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.name.id_for_label }}'>{% trans "Name" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "Task name" as task_name %}
-                                        {% render_field form.name placeholder=task_name class="col-xs-10 col-sm-5" %}
-                                        {{ form.name.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.parenttask.id_for_label }}'>{% trans "Parent Task" %} </label>
-                                    <div class="col-sm-9">
-                                        {% render_field form.parenttask class="col-xs-10 col-sm-5" %}
-                                        {{ form.parenttask.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for='{{ form.is_visible.id_for_label }}'>{% trans "Is visible" %} </label>
-                                    <div class="col-sm-9">
-                                        <label>
-                                            {% trans "Is visible?" as visibility %}
-                                            {% render_field form.is_visible type="checkbox" class="ace ace-switch ace-switch-2" %}
-                                            <span class="lbl"></span>
-                                        </label>
-                                        {{ form.is_visible.errors }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="widget-box">
-                        <div class="widget-header">
-                            <h4 class="widget-title">{% trans "Price details" %}</h4>
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="{{ form.price.id_for_label }}">{% trans "Price" %} </label>
-                                    <div class="col-sm-9">
-                                        <span class="input-group-addon col-xs-10 col-sm-5"><i class="ace-icon fa fa-money"></i></span>
-                                        {% trans "Price" as price %}
-                                        {% render_field form.price placeholder=price class="col-xs-10 col-sm-2" type="text" %}
-                                        <br/><br/><small class="text-warning">0.00</small>
-                                        {{ form.price.errors }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="widget-box">
-                        <div class="widget-header">
-                            <h4 class="widget-title">{% trans "Additional information" %}</h4>
-
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="{{ form.description.id_for_label }}">{% trans "Description" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "Enter your description here" as description %}
-                                        {% render_field form.description placeholder=description class="form-control" %}
-                                        {{ form.description.errors }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="{{ form.comments.id_for_label }}">{% trans "Comments" %} </label>
-                                    <div class="col-sm-9">
-                                        {% trans "Enter your comments here" as comments %}
-                                        {% render_field form.comments placeholder=comments class="form-control" %}
-                                        {{ form.comments.errors }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clearfix form-actions">
-                        <div class="col-md-offset-3 col-md-9">
-                            <button class="btn btn-info" type="submit">
-                                <i class="ace-icon fa fa-check bigger-110"></i>
-                                {% if is_new_task %}
-                                    {% trans "Submit" %}
-                                {% else %}
-                                    {% trans "Update" %}
-                                {% endif %}
-                            </button>
-                            {% if is_new_task %}
-                            &nbsp; &nbsp; &nbsp;
-                            <button class="btn" type="reset">
-                                <i class="ace-icon fa fa-undo bigger-110"></i>
-                                {% trans "Reset" %}
-                            </button>
-                            {% endif %}
-                             &nbsp; &nbsp; &nbsp;
-                            <a class="btn btn-danger" href="{% url 'task:index' %}">
-                                <i class="ace-icon fa fa-times bigger-110"></i>
-                                {% trans "Cancel" %}
+                        <div class="widget-toolbar">
+                            <a href="#" data-action="collapse">
+                                <i class="ace-icon fa fa-chevron-up"></i>
                             </a>
                         </div>
                     </div>
-                </form><!-- PAGE CONTENT ENDS -->
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.page-content -->
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for='{{ form.name.id_for_label }}'>{% trans "Name" %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "Task name" as task_name %}
+                                    {% render_field form.name placeholder=task_name class="col-xs-10 col-sm-5" %}
+                                    {{ form.name.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for='{{ form.parenttask.id_for_label }}'>{% trans "Parent Task" %} </label>
+                                <div class="col-sm-9">
+                                    {% render_field form.parenttask class="col-xs-10 col-sm-5" %}
+                                    {{ form.parenttask.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for='{{ form.is_visible.id_for_label }}'>{% trans "Is visible" %} </label>
+                                <div class="col-sm-9">
+                                    <label>
+                                        {% trans "Is visible?" as visibility %}
+                                        {% render_field form.is_visible type="checkbox" class="ace ace-switch
+                                        ace-switch-2" %}
+                                        <span class="lbl"></span>
+                                    </label>
+                                    {{ form.is_visible.errors }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="widget-title">{% trans "Price details" %}</h4>
+                        <div class="widget-toolbar">
+                            <a href="#" data-action="collapse">
+                                <i class="ace-icon fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="{{ form.price.id_for_label }}">{% trans "Price" %} </label>
+                                <div class="col-sm-9">
+                                    <span class="input-group-addon col-xs-10 col-sm-5"><i
+                                            class="ace-icon fa fa-money"></i></span>
+                                    {% trans "Price" as price %}
+                                    {% render_field form.price placeholder=price class="col-xs-10 col-sm-2" type="text"
+                                    %}
+                                    <br/><br/>
+                                    <small class="text-warning">0.00</small>
+                                    {{ form.price.errors }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="widget-title">{% trans "Additional information" %}</h4>
+
+                        <div class="widget-toolbar">
+                            <a href="#" data-action="collapse">
+                                <i class="ace-icon fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="{{ form.description.id_for_label }}">{% trans "Description" %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "Enter your description here" as description %}
+                                    {% render_field form.description placeholder=description class="form-control" %}
+                                    {{ form.description.errors }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="{{ form.comments.id_for_label }}">{% trans "Comments" %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "Enter your comments here" as comments %}
+                                    {% render_field form.comments placeholder=comments class="form-control" %}
+                                    {{ form.comments.errors }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-info" type="submit">
+                            <i class="ace-icon fa fa-check bigger-110"></i>
+                            {% if is_new_task %}
+                            {% trans "Submit" %}
+                            {% else %}
+                            {% trans "Update" %}
+                            {% endif %}
+                        </button>
+                        {% if is_new_task %}
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn" type="reset">
+                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                            {% trans "Reset" %}
+                        </button>
+                        {% endif %}
+                        &nbsp; &nbsp; &nbsp;
+                        <a class="btn btn-danger" href="{% url 'task:index' %}">
+                            <i class="ace-icon fa fa-times bigger-110"></i>
+                            {% trans "Cancel" %}
+                        </a>
+                    </div>
+                </div>
+            </form><!-- PAGE CONTENT ENDS -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.page-content -->
 {% endblock %}
 
 {% block bottom %}
-	{% include "task/task_form_bottom_js.html" %}
+{% include "task/task_form_bottom_js.html" %}
 {% endblock %}
