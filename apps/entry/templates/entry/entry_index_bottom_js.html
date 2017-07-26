@@ -11,6 +11,9 @@
 <script src='{% static "core/js/buttons.print.min.js" %}'></script>
 <script src='{% static "core/js/buttons.colVis.min.js" %}'></script>
 <script src='{% static "core/js/dataTables.select.min.js" %}'></script>
+<script src='{% static "core/js/jszip.min.js" %}'></script>
+<script src='{% static "core/js/pdfmake.min.js" %}'></script>
+<script src='{% static "core/js/vfs_fonts.js" %}'></script>
 
 <!-- ace scripts -->
 <script src='{% static "core/js/ace-elements.min.js" %}'></script>
@@ -19,6 +22,23 @@
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
     jQuery(function ($) {
+
+        function getMonth(date) {
+          var month = date.getMonth() + 1;
+          return month < 10 ? '0' + month : '' + month; // ('' + month) for string result
+        }
+
+        //set date for daterange picker
+        var today = new Date();
+        var last_month = new Date();
+        last_month.setDate(last_month.getDate()-30);
+
+        today = today.getDate()+'/'+(getMonth(today))+'/'+today.getFullYear();
+        last_month = last_month.getDate()+'/'+(getMonth(last_month))+'/'+last_month.getFullYear();
+
+        $('#start_date').val(last_month);
+        $('#end_date').val(today);
+
         //initiate dataTables plugin
         var myTable =
             $('#entry-table')
@@ -55,6 +75,61 @@
                 });
 
 
+        // set filter variables
+        var user = '';
+        var task = '';
+        var client = '';
+        var project = '';
+        var start_date = '';
+        var end_date = '';
+
+        $.fn.dataTableExt.afnFiltering.push(
+          function(oSettings, aData, iDataIndex) {
+            var result = false;
+
+            if (typeof aData._startdate == 'undefined') {
+                aData._startdate = new Date(aData[4]).getTime();
+            }
+            if (typeof aData._enddate == 'undefined') {
+                aData._enddate = new Date(aData[5]).getTime();
+            }
+
+            if (start_date =='' && end_date == '') {
+                result = true;
+            }
+
+            if (aData._startdate >= start_date && aData._startdate <= end_date) {
+              result = true;
+            }
+
+            if (user != '') {
+                if (aData[7] != user) {
+                    result = result && false;
+                }
+            }
+
+            if (task != '') {
+                if (aData[2] != task) {
+                    result = result && false;
+                }
+            }
+
+            if (client != '') {
+                if (aData[8] != client) {
+                    result = result && false;
+                }
+            }
+
+            if (project != '') {
+                if (aData[9] != project) {
+                    result = result && false;
+                }
+            }
+
+            return result;
+          }
+        );
+
         $.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
 
         new $.fn.dataTable.Buttons(myTable, {
@@ -73,17 +148,12 @@
                     columns: ':not(:first):not(:last)'
                 },
                 {
-                    "extend": "copy",
-                    "text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
-                    "className": "btn btn-white btn-primary btn-bold"
-                },
-                {
                     "extend": "csv",
                     "text": "<i class='fa fa-database bigger-110 orange'></i> <span class='hidden'>Export to CSV</span>",
                     "className": "btn btn-white btn-primary btn-bold"
                 },
                 {
-                    "extend": "excel",
+                    "extend": "excelHtml5",
                     "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
                     "className": "btn btn-white btn-primary btn-bold"
                 },
@@ -97,7 +167,7 @@
                     "text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
                     "className": "btn btn-white btn-primary btn-bold",
                     autoPrint: false,
-                    message: 'This print was produced using the Print button for DataTables'
+                    message: '<h4>This print was produced using Chronos</h4>'
                 }
             ]
         });
@@ -197,27 +267,41 @@
 
 
         $('#search_update').on('click', function(){
-            var start_date = $('#start_date').val();
-            var end_date = $('#end_date').val();
-            var duration = $('#duration').val();
-            var task = $('#id_task').val();
-            var user = $('#id_user').val();
-            var client = $('#id_client').val();
-            var project = $('#id_project').val();
 
-            if (duration) {
-                myTable.columns(6).search(duration);
-            }
-            if (user){
-                myTable.columns(7).search(user);
-            }
+            var match_start = /(\d+)\/(\d+)\/(\d+)/.exec($('#start_date').val())
+            var match_end = /(\d+)\/(\d+)\/(\d+)/.exec($('#end_date').val())
+
+            start_date = new Date(match_start[3], match_start[2]-1, match_start[1],'00','00','00').getTime();
+            end_date = new Date(match_end[3], match_end[2]-1, match_end[1], '23', '59', '59').getTime();
+            user = $('#id_user').val();
+            task = $('#id_task').val();
+            client = $('#id_client').val();
+            project = $('#id_project').val();
+
             myTable.draw();
         });
 
-        
+        $('#search_reset').on('click', function(){
+
+            $('#start_date').val(last_month);
+            $('#end_date').val(today);
+            $('#id_user').val('');
+            $('#id_task').val('');
+            $('#id_client').val('');
+            $('#id_project').val('');
+
+            start_date = end_date = user = task = client = project = '';
+
+            myTable.draw();
+        });
+
+
 
         // add datepicker to input-daterange
-        $('.input-daterange').datepicker({autoclose:true});
+        $('.input-daterange').datepicker({
+            autoclose:true,
+            format:"dd/mm/yyyy",
+        });
 
         /********************************/
         //add tooltip for small view action buttons in dropdown menu

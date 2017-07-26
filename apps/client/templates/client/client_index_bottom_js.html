@@ -5,11 +5,15 @@
 <script src='{% static "core/js/jquery.dataTables.min.js" %}'></script>
 <script src='{% static "core/js/jquery.dataTables.bootstrap.min.js" %}'></script>
 <script src='{% static "core/js/dataTables.buttons.min.js" %}'></script>
+<script src='{% static "core/js/bootstrap-datepicker.min.js" %}'></script>
 <script src='{% static "core/js/buttons.flash.min.js" %}'></script>
 <script src='{% static "core/js/buttons.html5.min.js" %}'></script>
 <script src='{% static "core/js/buttons.print.min.js" %}'></script>
 <script src='{% static "core/js/buttons.colVis.min.js" %}'></script>
 <script src='{% static "core/js/dataTables.select.min.js" %}'></script>
+<script src='{% static "core/js/jszip.min.js" %}'></script>
+<script src='{% static "core/js/pdfmake.min.js" %}'></script>
+<script src='{% static "core/js/vfs_fonts.js" %}'></script>
 
 <!-- ace scripts -->
 <script src='{% static "core/js/ace-elements.min.js" %}'></script>
@@ -51,11 +55,6 @@
                     "text": "<i class='fa fa-eye bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
                     "className": "btn btn-white btn-primary btn-bold",
                     columns: ':not(:first):not(:last)'
-                },
-                {
-                    "extend": "copy",
-                    "text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
-                    "className": "btn btn-white btn-primary btn-bold"
                 },
                 {
                     "extend": "csv",

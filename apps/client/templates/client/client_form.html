@@ -62,8 +62,7 @@
                                 <div class="col-sm-9">
                                     <label>
                                         {% trans "Is visible?" as visibility %}
-                                        {% render_field form.is_visible type="checkbox" class="ace ace-switch
-                                        ace-switch-2" %}
+                                        {% render_field form.is_visible type="checkbox" class="ace ace-switch ace-switch-2" %}
                                         <span class="lbl"></span>
                                     </label>
                                     {{ form.is_visible.errors }}
@@ -85,12 +84,10 @@
                         <div class="widget-main">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right"
-                                       for="{{ form.contact_person.id_for_label }}">{% trans "Contact person"
-                                    %} </label>
+                                       for="{{ form.contact_person.id_for_label }}">{% trans "Contact person" %} </label>
                                 <div class="col-sm-9">
                                     {% trans "Contact person name" as contact_person_name %}
-                                    {% render_field form.contact_person placeholder=contact_person_name class="col-xs-10
-                                    col-sm-5" %}
+                                    {% render_field form.contact_person placeholder=contact_person_name class="col-xs-10 col-sm-5" %}
                                     {{ form.contact_person.errors }}
                                 </div>
                             </div>
@@ -125,8 +122,7 @@
                                     <span class="input-group-addon col-xs-10 col-sm-5"><i
                                             class="ace-icon fa fa-envelope"></i></span>
                                     {% trans "Enter email address" as email_address %}
-                                    {% render_field form.email placeholder=email_address class="col-xs-10 col-sm-2"
-                                    type="email" %}
+                                    {% render_field form.email placeholder=email_address class="col-xs-10 col-sm-2" type="email" %}
                                     <br/><br/>
                                     <small class="text-warning">johndoe@email.com</small>
                                     {{ form.email.errors }}
@@ -139,8 +135,7 @@
                                     <span class="input-group-addon col-xs-10 col-sm-5"><i
                                             class="ace-icon fa fa-cloud"></i></span>
                                     {% trans "Website URL" as website_url %}
-                                    {% render_field form.website placeholder=website_url class="col-xs-10 col-sm-2"
-                                    type="url" %}
+                                    {% render_field form.website placeholder=website_url class="col-xs-10 col-sm-2" type="url" %}
                                     <br/><br/>
                                     <small class="text-warning">www.yourcompanyurl.com</small>
                                     {{ form.website.errors }}

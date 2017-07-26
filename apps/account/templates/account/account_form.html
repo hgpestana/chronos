@@ -89,12 +89,10 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right"
-                                       for='{{ form.password_repeat.id_for_label }}'>{% trans "Password repeat"
-                                    %} </label>
+                                       for='{{ form.password_repeat.id_for_label }}'>{% trans "Password repeat" %} </label>
                                 <div class="col-sm-9">
                                     {% trans "Repeat password" as password_repeat %}
-                                    {% render_field form.password_repeat placeholder=password_repeat class="col-xs-10
-                                    col-sm-5" %}
+                                    {% render_field form.password_repeat placeholder=password_repeat class="col-xs-10 col-sm-5" %}
                                     {{ form.password_repeat.errors }}
                                 </div>
                             </div>
@@ -139,8 +137,7 @@
                                 <div class="col-sm-9">
                                     <label>
                                         {% trans "Is staff?" as is_staff %}
-                                        {% render_field form.is_staff type="checkbox" class="ace ace-switch
-                                        ace-switch-2" %}
+                                        {% render_field form.is_staff type="checkbox" class="ace ace-switch ace-switch-2" %}
                                         <span class="lbl"></span>
                                     </label>
                                     {{ form.is_staff.errors }}
@@ -152,8 +149,7 @@
                                 <div class="col-sm-9">
                                     <label>
                                         {% trans "Is superuser?" as is_superuser %}
-                                        {% render_field form.is_superuser type="checkbox" class="ace ace-switch
-                                        ace-switch-2" %}
+                                        {% render_field form.is_superuser type="checkbox" class="ace ace-switch ace-switch-2" %}
                                         <span class="lbl"></span>
                                     </label>
                                     {{ form.is_superuser.errors }}
@@ -165,8 +161,7 @@
                                 <div class="col-sm-9">
                                     <label>
                                         {% trans "Is active?" as is_active %}
-                                        {% render_field form.is_active type="checkbox" class="ace ace-switch
-                                        ace-switch-2" %}
+                                        {% render_field form.is_active type="checkbox" class="ace ace-switch ace-switch-2" %}
                                         <span class="lbl"></span>
                                     </label>
                                     {{ form.is_active.errors }}
@@ -189,12 +184,10 @@
                         <div class="widget-main">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right"
-                                       for="{{ accountform.description.id_for_label }}">{% trans "Description"
-                                    %} </label>
+                                       for="{{ accountform.description.id_for_label }}">{% trans "Description" %} </label>
                                 <div class="col-sm-9">
                                     {% trans "Enter your description here" as description %}
-                                    {% render_field accountform.description placeholder=description class="form-control"
-                                    %}
+                                    {% render_field accountform.description placeholder=description class="form-control" %}
                                     {{ accountform.description.errors }}
                                 </div>
                             </div>

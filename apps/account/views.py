@@ -118,8 +118,7 @@ class AccountAddView(LoginRequiredMixin, CreateView):
 		accountform = context['accountform']
 
 		if accountform.is_valid() and form.is_valid():
-			user = form.save(commit=False)
-			accountform.instance.user = user
+			accountform.instance.user = form.save()
 			accountform.save()
 
 		return super(AccountAddView, self).form_valid(form)
@@ -159,9 +158,7 @@ class AccountEditView(LoginRequiredMixin, UpdateView):
 		accountform = context['accountform']
 
 		if accountform.is_valid() and form.is_valid():
-			user = form.save(commit=False)
 			accountform.instance.last_updated = datetime.now()
-			accountform.instance.user = user
 			accountform.save()
 
 		return super(AccountEditView, self).form_valid(form)
