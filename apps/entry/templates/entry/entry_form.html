@@ -26,6 +26,7 @@
             <form method='POST' class="form-horizontal" role="form" action=''>
                 {% csrf_token %}
                 {{ form.non_field_errors }}
+                {{ form.user }}
                 <div class="widget-box">
                     <div class="widget-header">
                         <h4 class="widget-title">{% trans "Basic details" %}</h4>

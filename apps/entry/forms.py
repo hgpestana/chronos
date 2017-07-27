@@ -1,4 +1,4 @@
-from django.forms import ModelForm, ModelChoiceField
+from django.forms import ModelForm, ModelChoiceField, HiddenInput
 from django.utils.translation import ugettext_lazy as _
 
 from apps.client.models import Client
@@ -36,6 +36,8 @@ class EntryForm(ModelForm):
 		required=False,
 	)
 
+	user = HiddenInput()
+
 	class Meta:
 		model = Entry
-		fields = ['description', 'starttime', 'endtime', 'comments', 'duration', 'user']
+		fields = ['description', 'starttime', 'endtime', 'comments', 'duration']
