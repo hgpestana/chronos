@@ -9,7 +9,7 @@
             <a href="{% url 'index:index' %}">{% trans "Home" %}</a>
         </li>
         <li>
-            <a href="{% url 'entry:index' %}">{% trans "Entrys" %}</a>
+            <a href="{% url 'entry:index' %}">{% trans "Entries" %}</a>
         </li>
         <li class="active">{{ title }}</li>
     </ul><!-- /.breadcrumb -->
@@ -42,17 +42,8 @@
                                 <label class="col-sm-3 control-label no-padding-right"
                                        for='{{ form.task.id_for_label }}'>{% trans "Task" %} </label>
                                 <div class="col-sm-9">
-                                    {% render_field form.task class="col-xs-10 col-sm-5" %}
+                                    {% render_field form.task class="chosen-select col-xs-10 col-sm-5" %}
                                     {{ form.task.errors }}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right"
-                                       for='{{ form.description.id_for_label }}'>{% trans "Description" %} </label>
-                                <div class="col-sm-9">
-                                    {% trans "Enter a description" as description %}
-                                    {% render_field form.description placeholder=description class="col-xs-10 col-sm-5"%}
-                                    {{ form.description.errors }}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -73,6 +64,15 @@
                                     {{ form.endtime.errors }}
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for='{{ form.description.id_for_label }}'>{% trans "Description" %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "Enter a description" as description %}
+                                    {% render_field form.description placeholder=description class="col-xs-10 col-sm-5"%}
+                                    {{ form.description.errors }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                                 <label class="col-sm-3 control-label no-padding-right"
                                        for="{{ form.client.id_for_label }}">{% trans "Client" %} </label>
                                 <div class="col-sm-9">
-                                    {% render_field form.client class="col-xs-10 col-sm-5" %}
+                                    {% render_field form.client class="chosen-select col-xs-10 col-sm-5" %}
                                     {{ form.client.errors }}
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                                 <label class="col-sm-3 control-label no-padding-right"
                                        for="{{ form.project.id_for_label }}">{% trans "Project" %} </label>
                                 <div class="col-sm-9">
-                                    {% render_field form.project class="col-xs-10 col-sm-5" %}
+                                    {% render_field form.project class="chosen-select col-xs-10 col-sm-5" %}
                                     {{ form.project.errors }}
                                 </div>
                             </div>
@@ -109,7 +109,6 @@
                 <div class="widget-box">
                     <div class="widget-header">
                         <h4 class="widget-title">{% trans "Additional information" %}</h4>
-
                         <div class="widget-toolbar">
                             <a href="#" data-action="collapse">
                                 <i class="ace-icon fa fa-chevron-up"></i>
@@ -117,13 +116,15 @@
                         </div>
                     </div>
                     <div class="widget-body">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right"
-                                   for="{{ form.comments.id_for_label }}">{% trans "Comments" %} </label>
-                            <div class="col-sm-9">
-                                {% trans "Enter your comments here" as comments %}
-                                {% render_field form.comments placeholder=comments class="form-control" %}
-                                {{ form.comments.errors }}
+                        <div class="widget-main">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="{{ form.comments.id_for_label }}">{% trans "Comments" %} </label>
+                                <div class="col-sm-9">
+                                    {% trans "Enter your comments here" as comments %}
+                                    {% render_field form.comments placeholder=comments class="form-control" %}
+                                    {{ form.comments.errors }}
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -141,12 +141,27 @@
         </li>
 
         <li class="{{ entry_active }}">
-            <a href="{% url 'entry:index' %}">
-            <i class="menu-icon fa fa-calendar"></i>
-            <span class="menu-text"> {% trans "Entries" %} </span>
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-tasks"></i>
+                <span class="menu-text"> {% trans "Entry" %} </span>
+                <b class="arrow fa fa-angle-down"></b>
             </a>
 
             <b class="arrow"></b>
+            <ul class="submenu">
+                <li class="{{ entry_viewall_active }}">
+                    <a href="{% url 'entry:index' %}">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    <span class="menu-text"> {% trans "View all" %} </span>
+                    </a>
+                </li>
+                <li class="{{ entry_add_active }}">
+                    <a href="{% url 'entry:add' %}">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    <span class="menu-text"> {% trans "Add entry" %} </span>
+                    </a>
+                </li>
+            </ul>
         </li>
 
     </ul><!-- /.nav-list -->

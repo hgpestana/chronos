@@ -4,6 +4,7 @@
 <!-- page specific plugin scripts -->
 <script src='{% static "core/js/jquery.dataTables.min.js" %}'></script>
 <script src='{% static "core/js/jquery.dataTables.bootstrap.min.js" %}'></script>
+<script src='{% static "core/js/chosen.jquery.min.js" %}'></script>
 <script src='{% static "core/js/dataTables.buttons.min.js" %}'></script>
 <script src='{% static "core/js/bootstrap-datepicker.min.js" %}'></script>
 <script src='{% static "core/js/buttons.flash.min.js" %}'></script>
@@ -302,6 +303,15 @@
             autoclose:true,
             format:"dd/mm/yyyy",
         });
+
+        //chosen plugin activation
+        if (!ace.vars['touch']) {
+            $('.chosen-select').chosen({
+                allow_single_deselect: true,
+                width: '100%',
+            });
+        }
+
 
         /********************************/
         //add tooltip for small view action buttons in dropdown menu

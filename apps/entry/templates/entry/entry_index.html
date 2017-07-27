@@ -39,13 +39,13 @@
                         <div class="widget-box collapsed widget-color-blue">
                             <div class="widget-header widget-header-small">
                                 <h4 class="widget-title"><i class="ace-icon fa fa-sliders light-green bigger-130"></i>&nbsp;{% trans "Refine your search" %}</h4>
-                                <div class="widget-toolbar">
+                                <div class="widget-toolbar" id="search-widget-toolbar">
                                     <a href="#" data-action="collapse">
                                         <i class="ace-icon fa fa-chevron-up"></i>
                                     </a>
                                 </div>
                             </div>
-                            <div class="widget-body">
+                            <div class="widget-body" id="search-widget-body">
                                 <div class="widget-main no-padding">
                                     <form>
                                         <fieldset>
@@ -58,11 +58,11 @@
                                                         <div class="row">
                                                             <div class="col-xs-12">
                                                                 <div class="input-daterange input-group">
-                                                                    <input type="text" class="form-control" id="start_date" name="start" placeholder="Start date">
+                                                                    <input type="text" class="form-control" id="start_date" name="start">
                                                                     <span class="input-group-addon">
                                                                         <i class="fa fa-exchange"></i>
                                                                     </span>
-                                                                    <input type="text" class="form-control" id="end_date" name="end" placeholder="End date">
+                                                                    <input type="text" class="form-control" id="end_date" name="end">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -73,16 +73,16 @@
                                                         </h4>
                                                         <div class="row">
                                                             <div class="col-xs-6">
-                                                                <select class="form-control" id="id_task" name="task">
-                                                                    <option value="" selected="selected">Please select a task</option>
+                                                                <select class="chosen-select form-control" id="id_task" name="task">
+                                                                    <option value="" selected="selected">{% trans "Please select a task" %}</option>
                                                                     {% for task in tasks %}
                                                                     <option value="{{task.name}}">{{task.name}}</option>
                                                                     {% endfor %}
                                                                 </select>
                                                             </div>
                                                             <div class="col-xs-6">
-                                                               <select class="form-control" id="id_user" name="user">
-                                                                    <option value="" selected="selected">Please select a user</option>
+                                                               <select class="chosen-select form-control" id="id_user" name="user">
+                                                                    <option value="" selected="selected">{% trans "Please select a user" %}</option>
                                                                     {% for user in users %}
                                                                     <option value="{{user.username}}">{{user.username}}</option>
                                                                     {% endfor %}
@@ -96,16 +96,16 @@
                                                         </h4>
                                                         <div class="row">
                                                             <div class="col-xs-6">
-                                                                <select class="form-control" id="id_client" name="client">
-                                                                    <option value="" selected="selected">Please select a client</option>
+                                                                <select class="chosen-select col-xs-10 col-sm-5" id="id_client" name="client">
+                                                                    <option value="" selected="selected">{% trans "Please select a client" %}</option>
                                                                     {% for client in clients %}
                                                                     <option value="{{client.name}}">{{client.name}}</option>
                                                                     {% endfor %}
                                                                 </select>
                                                             </div>
                                                             <div class="col-xs-6">
-                                                                <select class="form-control" id="id_project" name="project">
-                                                                    <option value="" selected="selected">Please select a project</option>
+                                                                <select class="chosen-select form-control" id="id_project" name="project">
+                                                                    <option value="" selected="selected">{% trans "Please select a project" %}</option>
                                                                     {% for project in projects %}
                                                                     <option value="{{project.name}}">{{project.name}}</option>
                                                                     {% endfor %}
@@ -120,11 +120,11 @@
                                     <div class="form-actions left no-margin">
                                          <button id="search_update" type="button" class="btn btn-default btn-round btn-white">
                                             <i class="ace-icon fa fa-search green"></i>
-                                            Search
+                                            {% trans "Search" %}
                                         </button>
                                         <button id="search_reset" type="button" class="btn btn-default btn-round btn-white">
                                             <i class="ace-icon fa fa-remove red2"></i>
-                                            Reset
+                                            {% trans "Reset" %}
                                         </button>
                                     </div>
                                 </div>
