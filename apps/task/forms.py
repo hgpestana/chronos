@@ -15,12 +15,13 @@ class TaskForm(ModelForm):
 	TODO: Develop this form
 	"""
 
-	class Meta:
-		model = Task
-		fields = ['name', 'description', 'comments', 'price', 'parenttask', 'is_visible']
-
 	parenttask = FormChoiceField(
 		queryset=Task.objects.all().order_by('name'),
 		empty_label=_('Please select an option'),
 		required=False,
 	)
+
+	class Meta:
+		model = Task
+		fields = ['name', 'description', 'comments', 'price', 'parenttask', 'is_visible']
+

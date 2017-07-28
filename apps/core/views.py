@@ -70,17 +70,23 @@ class CoreIndexView(LoginRequiredMixin, TemplateView):
 			totals['user_clients_percent'] = 0
 
 		try:
-			totals['user_tasks_percent'] = (totals['user_projects'] / totals['projects']) * 100
-		except ZeroDivisionError:
-			totals['user_tasks_percent'] = 0
-
-		try:
-			totals['user_projects_percent'] = (totals['user_tasks'] / totals['tasks']) * 100
+			totals['user_projects_percent'] = (totals['user_projects'] / totals['projects']) * 100
 		except ZeroDivisionError:
 			totals['user_projects_percent'] = 0
 
-		totals['user_per_client_entries'] = Entry.objects.filter(user=self.request.user).filter(
-			client__isnull=False).values('client').annotate(Count('client', distinct=True))
+		try:
+			totals['user_tasks_percent'] = (totals['user_tasks'] / totals['tasks']) * 100
+		except ZeroDivisionError:
+			totals['user_tasks_percent'] = 0
+
+		totals['user_per_client_entries'] = Entry.objects.all().filter(user=self.request.user).filter(
+			client__isnull=False).values('client__name').annotate(Count('client', distinct=True))
+
+		totals['user_per_task_entries'] = Entry.objects.all().filter(user=self.request.user).filter(
+			task__isnull=False).values('task__name').annotate(Count('task', distinct=True))
+
+		totals['user_per_project_entries'] = Entry.objects.all().filter(user=self.request.user).filter(
+			project__isnull=False).values('project__name').annotate(Count('project', distinct=True))
 
 		return totals
 

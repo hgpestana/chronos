@@ -40,4 +40,4 @@ class EntryForm(ModelForm):
 
 	class Meta:
 		model = Entry
-		fields = ['description', 'starttime', 'endtime', 'comments', 'duration']
+		fields = ['description', 'starttime', 'endtime', 'comments', 'duration', 'client', 'project', 'task']
