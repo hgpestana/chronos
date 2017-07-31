@@ -27,8 +27,29 @@ class CoreIndexView(LoginRequiredMixin, TemplateView):
         context['dashboard'] = 'active'
         context['totals'] = self.get_totals_user()
         context['last_entry'] = self.get_last_entry()
+        context['latest'] = self.get_latest()
 
         return context
+
+    def get_latest(self):
+        latest = {}
+
+        try:
+            latest['tasks'] = Task.objects.order_by('id')[:10]
+        except IndexError:
+            latest['tasks'] = None
+
+        try:
+            latest['clients'] = Client.objects.order_by('id')[:10]
+        except IndexError:
+            latest['clients'] = None
+
+        try:
+            latest['projects'] = Project.objects.order_by('id')[:10]
+        except IndexError:
+            latest['projects'] = None
+
+        return latest
 
     def get_last_entry(self):
         try:
