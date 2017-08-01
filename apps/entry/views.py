@@ -115,6 +115,17 @@ class EntryAddView(LoginRequiredMixin, CreateView):
 
 		return context
 
+	def dispatch(self, request, *args, **kwargs):
+
+		response = super(EntryAddView, self).dispatch(*args, **kwargs)
+
+		if self.request.is_ajax():
+			response_data = {"result": "ok"}
+			return JsonResponse(response_data)
+		else:
+			# POST request (not ajax) will do a redirect to success_url
+			return response
+
 	def form_valid(self, form):
 		end_time = datetime.strptime(form.instance.endtime, settings.TIME_FORMAT)
 		start_time = datetime.strptime(form.instance.starttime, settings.TIME_FORMAT)

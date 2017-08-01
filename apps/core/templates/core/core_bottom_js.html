@@ -10,9 +10,11 @@
 <script src='{% static "core/js/jquery.ui.touch-punch.min.js" %}'></script>
 <script src='{% static "core/js/jquery.easypiechart.min.js" %}'></script>
 <script src='{% static "core/js/jquery.sparkline.index.min.js" %}'></script>
+<script src='{% static "core/js/summernote.min.js" %}'></script>
 <script src='{% static "core/js/jquery.flot.min.js" %}'></script>
 <script src='{% static "core/js/jquery.flot.pie.min.js" %}'></script>
 <script src='{% static "core/js/jquery.flot.resize.min.js" %}'></script>
+<script src='{% static "core/js/timecircles.js" %}'></script>
 
 <!-- ace scripts -->
 <script src='{% static "core/js/ace-elements.min.js" %}'></script>
@@ -20,6 +22,22 @@
 
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
+        function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
     jQuery(function ($) {
         $('.easy-pie-chart.percentage').each(function () {
             var $box = $(this).closest('.infobox');
@@ -90,8 +108,8 @@
         }
 
         drawPieChart(entriesperclient, dataentriesperclient);
-        drawPieChart(entriespertask, data);
-        drawPieChart(entriesperproject, data);
+        drawPieChart(entriespertask, dataentriespertask);
+        drawPieChart(entriesperproject, dataentriesperproject);
 
         //pie chart tooltip example
         var $tooltip = $("<div class='tooltip top in'><div class='tooltip-inner'></div></div>").hide().appendTo('body');
@@ -173,6 +191,101 @@
                 $(this).addClass('dropup');
             else $(this).removeClass('dropup');
         });
+
+        //Time circles
+        $("#timer").TimeCircles({start: false});
+
+        $("#start_timer").on('click', function(){
+
+            var starttime = new Date($.now())
+
+            $("#id_starttime").val(starttime);
+            $("#timer").TimeCircles().start();
+            $('#start_timer').prop('disabled', true);
+            $('#reset_timer').prop('disabled', true);
+            $('#stop_timer').prop('disabled', false);
+            $('#id_task').prop('disabled', true);
+            $('#id_project').prop('disabled', true);
+            $('#id_client').prop('disabled', true);
+        });
+
+        $("#stop_timer").on('click', function(){
+            $("#timer").TimeCircles().stop();
+
+            var starttime = new Date($("#id_starttime").val());
+            var endtime = new Date(starttime.getTime() + $("#timer").TimeCircles().getTime()*-1000);
+
+            $("#id_endtime").val(endtime);
+            $('#stop_timer').prop('disabled', true);
+            $('#submit_timer').prop('disabled', false);
+            $('#reset_timer').prop('disabled', false);
+        });
+
+        $("#stop_timer").on('click', function(){
+            $("#timer").TimeCircles().stop();
+
+            var starttime = new Date($("#id_starttime").val());
+            var endtime = new Date(starttime.getTime() + $("#timer").TimeCircles().getTime()*-1000);
+
+            $("#id_endtime").val(endtime);
+            $('#stop_timer').prop('disabled', true);
+            $('#submit_timer').prop('disabled', false);
+            $('#reset_timer').prop('disabled', false);
+        });
+
+        $("#reset_timer").on('click', function(){
+            $("#timer").TimeCircles().destroy();
+            $("#timer").TimeCircles({start: false});
+            $("#id_starttime").val('');
+            $("#id_endtime").val('');
+            $('#id_task').prop('disabled', false);
+            $('#id_project').prop('disabled', false);
+            $('#id_client').prop('disabled', false);
+            $('#stop_timer').prop('disabled', true);
+            $('#submit_timer').prop('disabled', true);
+            $('#start_timer').prop('disabled', false);
+        });
+
+        var csrftoken = getCookie('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            crossDomain: false, // obviates need for sameOrigin test
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type)) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        $("#submit_timer").on('click', function(e){
+
+            e.preventDefault();
+
+            var data = {
+                'id_startttime':$("#id_starttime").val(),
+                'id_endtime':$("#id_endtime").val(),
+                'id_project':$("#id_project").val(),
+                'id_client':$("#id_client").val(),
+                'id_task':$("#id_task").val(),
+                'id_description':$("#id_description").val(),
+            }
+
+            $.post("{% url 'entry:add' %}", data, function (e) {
+               console.log(e);
+            }).fail(function () {
+                console.log("Error");
+            });
+        });
+
+        // Summernote
+        //$('textarea').summernote({
+            //minHeight:200,
+        //});
 
     })
 </script>

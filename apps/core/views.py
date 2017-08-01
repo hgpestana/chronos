@@ -28,6 +28,9 @@ class CoreIndexView(LoginRequiredMixin, TemplateView):
         context['totals'] = self.get_totals_user()
         context['last_entry'] = self.get_last_entry()
         context['latest'] = self.get_latest()
+        context['clients'] = Client.objects.all()
+        context['tasks'] = Task.objects.all()
+        context['projects'] = Project.objects.all()
 
         return context
 

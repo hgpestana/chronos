@@ -350,156 +350,75 @@
                     <div class="widget-box">
                         <div class="widget-header">
                             <h4 class="widget-title lighter smaller">
-                                <i class="ace-icon fa fa-comment blue"></i>
-                                Conversation
+                                <i class="ace-icon fa fa-clock-o blue"></i>
+                                Record a new entry
                             </h4>
                         </div>
 
                         <div class="widget-body">
-                            <div class="widget-main no-padding">
-                                <div class="dialogs">
-                                    <div class="itemdiv dialogdiv">
-                                        <div class="user">
-                                            <img alt="Alexa's Avatar" src="assets/images/avatars/avatar1.png"/>
+                            <div class="widget-main">
+                                <form method='POST' class="form-group" role="form" action=''>
+                                    {% csrf_token %}
+                                    <input id="id_starttime" type="hidden"/>
+                                    <input id="id_endtime" type="hidden"/>
+                                    <div id="timer"></div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <select class="chosen-select form-control" id="id_task" name="task">
+                                                    <option value="" selected="selected">
+                                                        {% trans "Please select a task" %}</option>
+                                                    {% for task in tasks %}
+                                                    <option value="{{task.name}}">{{task.name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <select class="chosen-select form-control" id="id_client"
+                                                        name="client">
+                                                    <option value="" selected="selected">
+                                                        {% trans "Please select a client" %}</option>
+                                                    {% for client in clients %}
+                                                    <option value="{{client.name}}">{{client.name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <select class="chosen-select form-control" id="id_project" name="project">
+                                                    <option value="" selected="selected">
+                                                        {% trans "Please select a project" %}</option>
+                                                    {% for project in projects %}
+                                                    <option value="{{project.name}}">{{project.name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
                                         </div>
-
-                                        <div class="body">
-                                            <div class="time">
-                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                <span class="green">4 sec</span>
-                                            </div>
-
-                                            <div class="name">
-                                                <a href="#">Alexa</a>
-                                            </div>
-                                            <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                                Quisque commodo massa sed ipsum porttitor facilisis.
-                                            </div>
-
-                                            <div class="tools">
-                                                <a href="#" class="btn btn-minier btn-info">
-                                                    <i class="icon-only ace-icon fa fa-share"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="itemdiv dialogdiv">
-                                        <div class="user">
-                                            <img alt="John's Avatar" src="assets/images/avatars/avatar.png"/>
-                                        </div>
-
-                                        <div class="body">
-                                            <div class="time">
-                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                <span class="blue">38 sec</span>
-                                            </div>
-
-                                            <div class="name">
-                                                <a href="#">John</a>
-                                            </div>
-                                            <div class="text">Raw denim you probably haven&#39;t heard of them jean
-                                                shorts Austin.
-                                            </div>
-
-                                            <div class="tools">
-                                                <a href="#" class="btn btn-minier btn-info">
-                                                    <i class="icon-only ace-icon fa fa-share"></i>
-                                                </a>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <textarea class="form-control" cols="40" id="id_description"
+                                                          name="description" placeholder="Enter a description" rows="10"
+                                                          required=""></textarea>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="itemdiv dialogdiv">
-                                        <div class="user">
-                                            <img alt="Bob's Avatar" src="assets/images/avatars/user.jpg"/>
-                                        </div>
-
-                                        <div class="body">
-                                            <div class="time">
-                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                <span class="orange">2 min</span>
-                                            </div>
-
-                                            <div class="name">
-                                                <a href="#">Bob</a>
-                                                <span class="label label-info arrowed arrowed-in-right">admin</span>
-                                            </div>
-                                            <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                                Quisque commodo massa sed ipsum porttitor facilisis.
-                                            </div>
-
-                                            <div class="tools">
-                                                <a href="#" class="btn btn-minier btn-info">
-                                                    <i class="icon-only ace-icon fa fa-share"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="itemdiv dialogdiv">
-                                        <div class="user">
-                                            <img alt="Jim's Avatar" src="assets/images/avatars/avatar4.png"/>
-                                        </div>
-
-                                        <div class="body">
-                                            <div class="time">
-                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                <span class="grey">3 min</span>
-                                            </div>
-
-                                            <div class="name">
-                                                <a href="#">Jim</a>
-                                            </div>
-                                            <div class="text">Raw denim you probably haven&#39;t heard of them jean
-                                                shorts Austin.
-                                            </div>
-
-                                            <div class="tools">
-                                                <a href="#" class="btn btn-minier btn-info">
-                                                    <i class="icon-only ace-icon fa fa-share"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="itemdiv dialogdiv">
-                                        <div class="user">
-                                            <img alt="Alexa's Avatar" src="assets/images/avatars/avatar1.png"/>
-                                        </div>
-
-                                        <div class="body">
-                                            <div class="time">
-                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                <span class="green">4 min</span>
-                                            </div>
-
-                                            <div class="name">
-                                                <a href="#">Alexa</a>
-                                            </div>
-                                            <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                            </div>
-
-                                            <div class="tools">
-                                                <a href="#" class="btn btn-minier btn-info">
-                                                    <i class="icon-only ace-icon fa fa-share"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <form>
-                                    <div class="form-actions">
-                                        <div class="input-group">
-                                            <input placeholder="Type your message here ..." type="text"
-                                                   class="form-control" name="message"/>
-                                            <span class="input-group-btn">
-													<button class="btn btn-sm btn-info no-radius" type="button">
-														<i class="ace-icon fa fa-share"></i>
-														Send
-													</button>
-												</span>
+                                    <div class="clearfix form-actions">
+                                        <div class="col-md-12 center">
+                                            <button id="start_timer" class="btn btn-success" type="button">
+                                                <i class="ace-icon fa fa-play"></i>
+                                                Start
+                                            </button>
+                                            <button id="reset_timer" class="btn" type="reset">
+                                                <i class="ace-icon fa fa-undo"></i>
+                                                Reset
+                                            </button>
+                                            <button id="stop_timer" class="btn btn-danger" type="button" disabled>
+                                                <i class="ace-icon fa fa-stop"></i>
+                                                Stop
+                                            </button>
+                                            <button id="submit_timer" class="btn btn-info" type="submit" disabled>
+                                                <i class="ace-icon fa fa-check"></i>
+                                                Submit
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
