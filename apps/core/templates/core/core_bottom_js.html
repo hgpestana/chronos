@@ -38,6 +38,24 @@
         return cookieValue;
     }
 
+    function getFormattedDateTime(date) {
+      var year = date.getFullYear();
+
+      var month = (1 + date.getMonth()).toString();
+      month = month.length > 1 ? month : '0' + month;
+
+      var day = date.getDate().toString();
+      day = day.length > 1 ? day : '0' + day;
+
+      var hour = date.getHours().toString();
+      hour = hour.length > 1 ? hour : '0' + hour;
+
+      var minutes = date.getMinutes().toString();
+      minutes = minutes.length > 1 ? minutes : '0' + minutes;
+
+      return year + '/' + month + '/' + day + ' ' + hour + ':' + minutes;
+    }
+
     jQuery(function ($) {
         $('.easy-pie-chart.percentage').each(function () {
             var $box = $(this).closest('.infobox');
@@ -197,7 +215,7 @@
 
         $("#start_timer").on('click', function(){
 
-            var starttime = new Date($.now())
+            var starttime = getFormattedDateTime(new Date($.now()));
 
             $("#id_starttime").val(starttime);
             $("#timer").TimeCircles().start();
@@ -213,19 +231,7 @@
             $("#timer").TimeCircles().stop();
 
             var starttime = new Date($("#id_starttime").val());
-            var endtime = new Date(starttime.getTime() + $("#timer").TimeCircles().getTime()*-1000);
-
-            $("#id_endtime").val(endtime);
-            $('#stop_timer').prop('disabled', true);
-            $('#submit_timer').prop('disabled', false);
-            $('#reset_timer').prop('disabled', false);
-        });
-
-        $("#stop_timer").on('click', function(){
-            $("#timer").TimeCircles().stop();
-
-            var starttime = new Date($("#id_starttime").val());
-            var endtime = new Date(starttime.getTime() + $("#timer").TimeCircles().getTime()*-1000);
+            var endtime = getFormattedDateTime(new Date(starttime.getTime() + $("#timer").TimeCircles().getTime()*-1000));
 
             $("#id_endtime").val(endtime);
             $('#stop_timer').prop('disabled', true);
@@ -262,24 +268,25 @@
             }
         });
 
-        $("#submit_timer").on('click', function(e){
 
-            e.preventDefault();
+        $('#timer_form').submit(function() {
+            $.ajax({
+                data:{
+                    'task':$('#id_task').val(),
+                    'client':$('#id_client').val(),
+                    'project':$('#id_project').val(),
+                    'description':$('#id_description').val(),
+                    'starttime':$('#id_starttime').val(),
+                    'endtime':$('#id_endtime').val(),
 
-            var data = {
-                'id_startttime':$("#id_starttime").val(),
-                'id_endtime':$("#id_endtime").val(),
-                'id_project':$("#id_project").val(),
-                'id_client':$("#id_client").val(),
-                'id_task':$("#id_task").val(),
-                'id_description':$("#id_description").val(),
-            }
-
-            $.post("{% url 'entry:add' %}", data, function (e) {
-               console.log(e);
-            }).fail(function () {
-                console.log("Error");
+                },
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                success: function(response) {
+                    console.log("Success");
+                }
             });
+            return false;
         });
 
         // Summernote
