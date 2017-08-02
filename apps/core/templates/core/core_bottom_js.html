@@ -1,4 +1,4 @@
-{% load staticfiles compress %}
+{% load staticfiles compress i18n %}
 
 {% compress js %}
 <!-- page specific plugin scripts -->
@@ -85,13 +85,13 @@
 
         var dataentriespertask = [
             {% for entry in totals.user_per_task_entries %}
-                {label: "{{entry.client__name}}", data: "{{entry.client__count}}"},
+                {label: "{{entry.task__name}}", data: "{{entry.task__count}}"},
             {% endfor %}
         ];
 
         var dataentriesperproject = [
             {% for entry in totals.user_per_project_entries %}
-                {label: "{{entry.client__name}}", data: "{{entry.client__count}}"},
+                {label: "{{entry.project__name}}", data: "{{entry.project__count}}"},
             {% endfor %}
         ];
 
@@ -134,6 +134,36 @@
         var previousPoint = null;
 
         entriesperclient.on('plothover', function (event, pos, item) {
+            if (item) {
+                if (previousPoint != item.seriesIndex) {
+                    previousPoint = item.seriesIndex;
+                    var tip = item.series['label'] + " : " + item.series['percent'] + '%';
+                    $tooltip.show().children(0).text(tip);
+                }
+                $tooltip.css({top: pos.pageY + 10, left: pos.pageX + 10});
+            } else {
+                $tooltip.hide();
+                previousPoint = null;
+            }
+
+        });
+
+        entriespertask.on('plothover', function (event, pos, item) {
+            if (item) {
+                if (previousPoint != item.seriesIndex) {
+                    previousPoint = item.seriesIndex;
+                    var tip = item.series['label'] + " : " + item.series['percent'] + '%';
+                    $tooltip.show().children(0).text(tip);
+                }
+                $tooltip.css({top: pos.pageY + 10, left: pos.pageX + 10});
+            } else {
+                $tooltip.hide();
+                previousPoint = null;
+            }
+
+        });
+
+        entriesperproject.on('plothover', function (event, pos, item) {
             if (item) {
                 if (previousPoint != item.seriesIndex) {
                     previousPoint = item.seriesIndex;
@@ -283,7 +313,23 @@
                 type: $(this).attr('method'),
                 url: $(this).attr('action'),
                 success: function(response) {
-                    console.log("Success");
+                    $.confirm({
+                        closeIcon: true,
+                        columnClass: 'medium',
+                        icon: 'fa fa-info',
+                        title: '{% trans "Entry submitted" %}',
+                        content: '{% trans "<br/>Your entry was submitted with <span class=\"text-success\">success</span>!" %}',
+                        type: 'green',
+                        buttons: {
+                            confirm: {
+                                text: '{% trans "OK" %}',
+                                btnClass: 'btn-green',
+                                action: function () {
+                                    window.location.reload()
+                                },
+                            },
+                        }
+                    });
                 }
             });
             return false;

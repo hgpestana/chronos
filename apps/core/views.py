@@ -56,7 +56,7 @@ class CoreIndexView(LoginRequiredMixin, TemplateView):
 
     def get_last_entry(self):
         try:
-            return Entry.objects.filter(user=self.request.user).order_by('starttime')[0]
+            return Entry.objects.filter(user=self.request.user).order_by('-starttime')[0]
         except IndexError:
             return None
 
@@ -93,33 +93,33 @@ class CoreIndexView(LoginRequiredMixin, TemplateView):
         totals['tasks'] = Task.objects.all().count()
 
         try:
-            totals['user_entries_percent'] = (totals['user_entries'] / totals['entries']) * 100
+            totals['user_entries_percent'] = int(round((totals['user_entries'] / totals['entries']) * 100))
         except ZeroDivisionError:
             totals['user_entries_percent'] = 0
 
         try:
-            totals['user_clients_percent'] = (totals['user_clients'] / totals['clients']) * 100
+            totals['user_clients_percent'] = int(round((totals['user_clients'] / totals['clients']) * 100))
         except ZeroDivisionError:
             totals['user_clients_percent'] = 0
 
         try:
-            totals['user_projects_percent'] = (totals['user_projects'] / totals['projects']) * 100
+            totals['user_projects_percent'] = int(round((totals['user_projects'] / totals['projects']) * 100))
         except ZeroDivisionError:
             totals['user_projects_percent'] = 0
 
         try:
-            totals['user_tasks_percent'] = (totals['user_tasks'] / totals['tasks']) * 100
+            totals['user_tasks_percent'] = int(round((totals['user_tasks'] / totals['tasks']) * 100))
         except ZeroDivisionError:
             totals['user_tasks_percent'] = 0
 
         totals['user_per_client_entries'] = Entry.objects.all().filter(user=self.request.user).filter(
-            client__isnull=False).values('client__name').annotate(Count('client', distinct=True))
+            client__isnull=False).values('client__name').annotate(Count('client'))
 
         totals['user_per_task_entries'] = Entry.objects.all().filter(user=self.request.user).filter(
-            task__isnull=False).values('task__name').annotate(Count('task', distinct=True))
+            task__isnull=False).values('task__name').annotate(Count('task'))
 
         totals['user_per_project_entries'] = Entry.objects.all().filter(user=self.request.user).filter(
-            project__isnull=False).values('project__name').annotate(Count('project', distinct=True))
+            project__isnull=False).values('project__name').annotate(Count('project'))
 
         return totals
 
