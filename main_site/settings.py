@@ -146,6 +146,7 @@ INSTALLED_APPS = [
     'apps.entry',
     'apps.login',
     'apps.project',
+    'apps.report',
     'apps.task',
 
 ]

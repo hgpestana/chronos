@@ -1,0 +1,174 @@
+{% load staticfiles compress i18n %}
+
+{% compress js %}
+<!-- page specific plugin scripts -->
+<script src='{% static "core/js/jquery.dataTables.min.js" %}'></script>
+<script src='{% static "core/js/jquery.dataTables.bootstrap.min.js" %}'></script>
+<script src='{% static "core/js/chosen.jquery.min.js" %}'></script>
+<script src='{% static "core/js/dataTables.buttons.min.js" %}'></script>
+<script src='{% static "core/js/bootstrap-datepicker.min.js" %}'></script>
+<script src='{% static "core/js/buttons.flash.min.js" %}'></script>
+<script src='{% static "core/js/buttons.html5.min.js" %}'></script>
+<script src='{% static "core/js/buttons.print.min.js" %}'></script>
+<script src='{% static "core/js/buttons.colVis.min.js" %}'></script>
+<script src='{% static "core/js/dataTables.select.min.js" %}'></script>
+<script src='{% static "core/js/jszip.min.js" %}'></script>
+<script src='{% static "core/js/pdfmake.min.js" %}'></script>
+<script src='{% static "core/js/vfs_fonts.js" %}'></script>
+
+<!-- ace scripts -->
+<script src='{% static "core/js/ace-elements.min.js" %}'></script>
+<script src='{% static "core/js/ace.min.js" %}'></script>
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    jQuery(function ($) {
+
+        function getMonth(date) {
+          var month = date.getMonth() + 1;
+          return month < 10 ? '0' + month : '' + month; // ('' + month) for string result
+        }
+
+        //set date for daterange picker
+        var today = new Date();
+        var last_month = new Date();
+        last_month.setDate(last_month.getDate()-30);
+
+        today = today.getDate()+'/'+(getMonth(today))+'/'+today.getFullYear();
+        last_month = last_month.getDate()+'/'+(getMonth(last_month))+'/'+last_month.getFullYear();
+
+        $('#start_date').val(last_month);
+        $('#end_date').val(today);
+
+
+        // add datepicker to input-daterange
+        $('.input-daterange').datepicker({
+            autoclose:true,
+            format:"dd/mm/yyyy",
+        });
+
+        //chosen plugin activation
+        if (!ace.vars['touch']) {
+            $('.chosen-select').chosen({
+                allow_single_deselect: true,
+                width: '100%',
+            });
+        }
+
+
+        /********************************/
+        //add tooltip for small view action buttons in dropdown menu
+        $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+
+        //tooltip placement on right or left
+        function tooltip_placement(context, source) {
+            var $source = $(source);
+            var $parent = $source.closest('table');
+            var off1 = $parent.offset();
+            var w1 = $parent.width();
+
+            var off2 = $source.offset();
+            //var w2 = $source.width();
+
+            if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
+            return 'left';
+        }
+
+        /***************/
+        $('.show-details-btn').on('click', function (e) {
+            e.preventDefault();
+            $(this).closest('tr').next().toggleClass('open');
+            $(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
+        });
+        /***************/
+    })
+</script>
+<script type="text/javascript">
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    $(document).ready(function () {
+
+        var csrftoken = getCookie('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            crossDomain: false, // obviates need for sameOrigin test
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type)) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        $('#report_form').submit(function() {
+            if($('#id_report_type').val() != '') {
+                $.ajax({
+                    data: {
+                        'task': $('#id_task').val(),
+                        'client': $('#id_client').val(),
+                        'project': $('#id_project').val(),
+                        'user': $('#id_user').val(),
+                        'start_date': $('#id_start_date').val(),
+                        'end_date': $('#id_end_date').val(),
+                        'report_type': $('#id_report_type').val(),
+
+                    },
+                    type: $(this).attr('method'),
+                    url: $(this).attr('action'),
+                    success: function () {
+                        $.confirm({
+                            closeIcon: true,
+                            columnClass: 'medium',
+                            icon: 'fa fa-info',
+                            title: '{% trans "Report requested" %}',
+                            content: '{% trans "<br/>Your report request was submitted with <span class=\"text-success\">success</span>!" %}',
+                            type: 'green',
+                            buttons: {
+                                confirm: {
+                                    text: '{% trans "OK" %}',
+                                    btnClass: 'btn-green',
+                                },
+                            }
+                        });
+                    }
+                });
+            } else {
+                $.confirm({
+                        closeIcon: true,
+                        columnClass: 'medium',
+                        icon: 'fa fa-warning',
+                        title: '{% trans "Report type missing" %}',
+                        content: '{% trans "<br/> You did not select the intended <span class=\"text-danger\">report type</span>! Please select a report type." %}',
+                        type: 'red',
+                        buttons: {
+                            confirm: {
+                                text: '{% trans "OK" %}',
+                                btnClass: 'btn-red',
+                            },
+                        }
+                    });
+                return false;
+            };
+            return true;
+        });
+    });
+</script>
+{% endcompress %}

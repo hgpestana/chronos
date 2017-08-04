@@ -28,5 +28,6 @@ urlpatterns = [
 	url(r'^entry/', include('apps.entry.urls', namespace='entry')),
 	url(r'^login/', include('apps.login.urls', namespace='login')),
 	url(r'^task/', include('apps.task.urls', namespace='task')),
+	url(r'^report/', include('apps.report.urls', namespace='report')),
 	url(r'^', include('apps.core.urls', namespace='index')),
 ]

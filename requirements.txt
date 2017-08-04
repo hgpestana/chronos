@@ -8,9 +8,12 @@ django-widget-tweaks==1.4.1
 isort==4.2.5
 lazy-object-proxy==1.2.2
 mccabe==0.6.0
+olefile==0.44
+Pillow==4.2.1
 pycparser==2.18
 pylint==1.6.5
 rcssmin==1.0.6
+reportlab==3.4.0
 rjsmin==1.0.12
 six==1.10.0
 Unipath==1.1
