@@ -12,9 +12,9 @@ class Account(models.Model):
 	"""
 
 	user = models.OneToOneField(User, db_column='User', on_delete=models.CASCADE)
-	description = models.TextField(_('Description'), blank=True, null=True)
-	created = models.DateTimeField(_('Created'), default=now, blank=True, null=True)
-	last_updated = models.DateTimeField(_('Last Updated'), default=now, blank=True, null=True)
+	description = models.TextField('Description', blank=True, null=True)
+	created = models.DateTimeField('Created', default=now, blank=True, null=True)
+	last_updated = models.DateTimeField('Last Updated', default=now, blank=True, null=True)
 
 	class Meta:
 		# Translators: This string is used to identify the Account table name

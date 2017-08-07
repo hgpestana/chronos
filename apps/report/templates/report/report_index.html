@@ -69,11 +69,11 @@
                                                         <div class="row">
                                                             <div class="col-xs-12">
                                                                 <div class="input-daterange input-group">
-                                                                    <input type="text" class="form-control" id="id_start_date" name="start">
+                                                                    <input type="text" class="form-control" id="id_start_date" name="starttime">
                                                                     <span class="input-group-addon">
                                                                         <i class="fa fa-exchange"></i>
                                                                     </span>
-                                                                    <input type="text" class="form-control" id="id_end_date" name="end">
+                                                                    <input type="text" class="form-control" id="id_end_date" name="endtime">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -87,7 +87,7 @@
                                                                 <select class="chosen-select form-control" id="id_task" name="task">
                                                                     <option value="" selected="selected">{% trans "Please select a task" %}</option>
                                                                     {% for task in tasks %}
-                                                                    <option value="{{task.name}}">{{task.name}}</option>
+                                                                    <option value="{{task.id}}">{{task.name}}</option>
                                                                     {% endfor %}
                                                                 </select>
                                                             </div>
@@ -95,7 +95,7 @@
                                                                <select class="chosen-select form-control" id="id_user" name="user">
                                                                     <option value="" selected="selected">{% trans "Please select a user" %}</option>
                                                                     {% for user in users %}
-                                                                    <option value="{{user.username}}">{{user.username}}</option>
+                                                                    <option value="{{user.id}}">{{user.username}}</option>
                                                                     {% endfor %}
                                                                 </select>
                                                             </div>
@@ -106,7 +106,7 @@
                                                                 <select class="chosen-select col-xs-10 col-sm-5" id="id_client" name="client">
                                                                     <option value="" selected="selected">{% trans "Please select a client" %}</option>
                                                                     {% for client in clients %}
-                                                                    <option value="{{client.name}}">{{client.name}}</option>
+                                                                    <option value="{{client.id}}">{{client.name}}</option>
                                                                     {% endfor %}
                                                                 </select>
                                                             </div>
@@ -114,7 +114,7 @@
                                                                 <select class="chosen-select form-control" id="id_project" name="project">
                                                                     <option value="" selected="selected">{% trans "Please select a project" %}</option>
                                                                     {% for project in projects %}
-                                                                    <option value="{{project.name}}">{{project.name}}</option>
+                                                                    <option value="{{project.id}}">{{project.name}}</option>
                                                                     {% endfor %}
                                                                 </select>
                                                             </div>
@@ -137,6 +137,73 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="space-10"></div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="pull-right tableTools-container"></div>
+                    </div>
+                    <div class="table-header">
+                        {% trans "Results for Report listing" %}
+                    </div>
+
+                    <!-- div.table-responsive -->
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="report-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th class="center">
+                                    <label class="pos-rel">
+                                        <input type="checkbox" class="ace"/>
+                                        <span class="lbl"></span>
+                                    </label>
+                                </th>
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Created by" %}</th>
+                                <th class="hidden-480">{% trans "File type" %}</th>
+                                <th>{% trans "Created at" %}</th>
+                                <th>{% trans "File" %}</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+
+                            <tbody id="report-table-body">
+
+                            {% for report in object_list %}
+                            <tr id="pk-{{report.id}}">
+                                <td class="center">
+                                    <label class="pos-rel">
+                                        <input type="checkbox" class="ace"/>
+                                        <span class="lbl"></span>
+                                    </label>
+                                </td>
+
+                                <td>{{report.name}}</td>
+                                <td>{{report.user.username}}</td>
+                                <td class="hidden-480">{{report.filetype}}</td>
+                                <td>{{report.created | date:'Y-m-d H:i'}}</td>
+                                <td>
+                                    {% if report.file %}
+                                    <form method='POST' class="form-group" role="form" action='{% url 'report:download'%}'>
+                                        {% csrf_token %}
+                                        <input type="hidden" value="{{report.id}}" name="pk"/>
+                                        <button type="submit" class="btn btn-info">
+                                            <i class="ace-icon fa fa-download bigger-125"></i>&nbsp;Download
+                                        </button>
+                                    </form>
+                                    {% else %}
+                                    <p class="small"> (no file available) </p>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

@@ -29,13 +29,18 @@
           return month < 10 ? '0' + month : '' + month; // ('' + month) for string result
         }
 
+        function getDay(date) {
+          var day = date.getDate();
+          return day < 10 ? '0' + day : '' + day; // ('' + day) for string result
+        }
+
         //set date for daterange picker
         var today = new Date();
         var last_month = new Date();
         last_month.setDate(last_month.getDate()-30);
 
-        today = today.getDate()+'/'+(getMonth(today))+'/'+today.getFullYear();
-        last_month = last_month.getDate()+'/'+(getMonth(last_month))+'/'+last_month.getFullYear();
+        today = today.getFullYear()+'-'+getMonth(today)+'-'+getDay(today);
+        last_month = last_month.getFullYear()+'-'+getMonth(last_month)+'-'+getDay(last_month);
 
         $('#start_date').val(last_month);
         $('#end_date').val(today);
@@ -269,11 +274,11 @@
 
         $('#search_update').on('click', function(){
 
-            var match_start = /(\d+)\/(\d+)\/(\d+)/.exec($('#start_date').val())
-            var match_end = /(\d+)\/(\d+)\/(\d+)/.exec($('#end_date').val())
+            var match_start = /(\d+)-(\d+)-(\d+)/.exec($('#start_date').val())
+            var match_end = /(\d+)-(\d+)-(\d+)/.exec($('#end_date').val())
 
-            start_date = new Date(match_start[3], match_start[2]-1, match_start[1],'00','00','00').getTime();
-            end_date = new Date(match_end[3], match_end[2]-1, match_end[1], '23', '59', '59').getTime();
+            start_date = new Date(match_start[1], match_start[2]-1, match_start[3],'00','00','00').getTime();
+            end_date = new Date(match_end[1], match_end[2]-1, match_end[3], '23', '59', '59').getTime();
             user = $('#id_user').val();
             task = $('#id_task').val();
             client = $('#id_client').val();
@@ -301,7 +306,7 @@
         // add datepicker to input-daterange
         $('.input-daterange').datepicker({
             autoclose:true,
-            format:"dd/mm/yyyy",
+            format:"yyyy-mm-dd",
         });
 
         //chosen plugin activation

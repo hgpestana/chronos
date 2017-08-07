@@ -1,3 +1,6 @@
+import os
+
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils.timezone import now
@@ -11,11 +14,12 @@ class Report(models.Model):
 	TODO: Develop this table
 	"""
 
-	name = models.CharField(_('Name'), max_length=255)
-	type = models.CharField(_('Type'), max_length=255, blank=True, null=True)
-	filetype = models.CharField(_('File type'), max_length=255, blank=True, null=True)
+	name = models.CharField('Name', max_length=255)
+	type = models.CharField('Type', max_length=255, blank=True, null=True)
 	user = models.ForeignKey(User, on_delete=models.SET_NULL, db_column='User', blank=True, null=True)
-	created = models.DateTimeField(_('Created'), default=now, blank=True, null=True)
+	file = models.FileField(upload_to='reports',blank=True, null=True)
+	filetype = models.CharField('File type', max_length=255, blank=True, null=True)
+	created = models.DateTimeField('Created', default=now, blank=True, null=True)
 
 	class Meta:
 		# Translators: This string is used to identify the Report table name
@@ -36,11 +40,11 @@ class ReportType(models.Model):
 	Report type table to be used by the Chronos platform.
 	TODO: Develop this table
 	"""
-	code = models.CharField(_('Code'), max_length=255)
-	name = models.CharField(_('Name'), max_length=255)
-	description = models.TextField(_('Comments'), blank=True, null=True)
-	filetype = models.CharField(_('File type'), max_length=255, blank=True, null=True)
-	created = models.DateTimeField(_('Created'), default=now, blank=True, null=True)
+	code = models.CharField('Code', max_length=255)
+	name = models.CharField('Name', max_length=255)
+	description = models.TextField('Comments', blank=True, null=True)
+	filetype = models.CharField('File type', max_length=255, blank=True, null=True)
+	created = models.DateTimeField('Created', default=now, blank=True, null=True)
 
 	class Meta:
 		# Translators: This string is used to identify the Report type table name

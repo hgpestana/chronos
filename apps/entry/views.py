@@ -1,7 +1,6 @@
 from datetime import datetime
 from math import floor
 
-from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.urls import reverse_lazy
@@ -143,8 +142,8 @@ class EntryAddView(LoginRequiredMixin, AjaxableResponseMixin,  CreateView):
         return context
 
     def form_valid(self, form):
-        end_time = datetime.strptime(form.instance.endtime, settings.TIME_FORMAT)
-        start_time = datetime.strptime(form.instance.starttime, settings.TIME_FORMAT)
+        end_time = form.instance.endtime
+        start_time = form.instance.starttime
 
         form.instance.duration = (end_time - start_time).seconds / 60
         form.instance.user = self.request.user
@@ -176,8 +175,8 @@ class EntryEditView(LoginRequiredMixin, UpdateView):
         return context
 
     def form_valid(self, form):
-        end_time = datetime.strptime(form.instance.endtime, settings.TIME_FORMAT)
-        start_time = datetime.strptime(form.instance.starttime, settings.TIME_FORMAT)
+        end_time = form.instance.endtime
+        start_time = form.instance.starttime
 
         form.instance.duration = (end_time - start_time).seconds / 60
         form.instance.last_updated = datetime.now()

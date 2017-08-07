@@ -1,4 +1,4 @@
-from django.forms import ModelForm, ModelChoiceField, HiddenInput, CharField
+from django.forms import ModelForm, ModelChoiceField, DateTimeField, DateTimeInput
 from django.utils.translation import ugettext_lazy as _
 
 from apps.client.models import Client
@@ -34,6 +34,16 @@ class EntryForm(ModelForm):
         queryset=Client.objects.all().order_by('name'),
         empty_label=_('Please select an option'),
         required=False,
+    )
+
+    starttime = DateTimeField(
+        input_formats=['%Y-%m-%d %H:%M'],
+        widget=DateTimeInput(format='%Y-%m-%d %H:%M')
+    )
+
+    endtime = DateTimeField(
+        input_formats=['%Y-%m-%d %H:%M'],
+        widget=DateTimeInput(format='%Y-%m-%d %H:%M')
     )
 
     class Meta:

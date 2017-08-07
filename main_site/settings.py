@@ -30,7 +30,7 @@ MANAGERS = ADMINS
 SITE_NAME = 'Chronos'
 
 # Time format string
-TIME_FORMAT = '%Y/%m/%d %H:%M'
+TIME_FORMAT = 'Y-m-d H:i'
 
 # This is how you can define name of your site
 SITE_DIR = 'main_site'

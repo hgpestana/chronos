@@ -1,5 +1,5 @@
 {% extends "core/base.html" %}
-{% load i18n %}
+{% load i18n l10n %}
 
 {% block content %}
 <div class="breadcrumbs ace-save-state" id="breadcrumbs">
@@ -144,7 +144,7 @@
                     <div class="well">
                         {% if last_entry %}
                         <h5>
-                            {% trans "Your last entry was on the " %} {{ last_entry.starttime }}
+                            {% trans "Your last entry was on the " %} {{ last_entry.starttime | date:'Y-m-d H:i' }}
                         </h5>
                         <p class="small">{% trans "Do you want to add a new entry now?" %}<br/> <a href='{% url "entry:add" %}'>
                             {% trans "Click here" %}</a></p>

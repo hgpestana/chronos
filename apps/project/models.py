@@ -9,12 +9,12 @@ class Project(models.Model):
 	TODO: Develop this table
 	"""
 
-	name = models.CharField(_('Name'), max_length=255)
-	description = models.TextField(_('Description'), blank=True, null=True)
-	comments = models.TextField(_('Comments'), blank=True, null=True)
-	created = models.DateTimeField(_('Created'), default=now, blank=True, null=True)
-	last_updated = models.DateTimeField(_('Last Updated'), default=now, blank=True, null=True)
-	is_visible = models.BooleanField(_('Is Visible'))
+	name = models.CharField('Name', max_length=255)
+	description = models.TextField('Description', blank=True, null=True)
+	comments = models.TextField('Comments', blank=True, null=True)
+	created = models.DateTimeField('Created', default=now, blank=True, null=True)
+	last_updated = models.DateTimeField('Last Updated', default=now, blank=True, null=True)
+	is_visible = models.BooleanField('Is Visible')
 
 	class Meta:
 		# Translators: This string is used to identify the Client table name

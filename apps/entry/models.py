@@ -14,17 +14,19 @@ class Entry(models.Model):
 	TODO: Develop this table
 	"""
 
-	description = models.TextField(_('Description'))
-	starttime = models.CharField(_('Start date / time'), max_length=20)
-	endtime = models.CharField(_('End date / time'), max_length=20)
-	duration = models.IntegerField(_('Duration'), blank=True, null=True)
-	comments = models.TextField(_('Comments'), blank=True, null=True)
+	description = models.TextField('Description')
+	#starttime = models.CharField('Start date / time', max_length=20)
+	starttime = models.DateTimeField('Start date / time', blank=True, null=True)
+	#endtime = models.CharField('End date / time', max_length=20)
+	endtime = models.DateTimeField('End date / time', blank=True, null=True)
+	duration = models.IntegerField('Duration', blank=True, null=True)
+	comments = models.TextField('Comments', blank=True, null=True)
 	project = models.ForeignKey(Project, on_delete=models.SET_NULL, db_column='Project', blank=True, null=True)
 	client = models.ForeignKey(Client, on_delete=models.SET_NULL, db_column='Client', blank=True, null=True)
 	user = models.ForeignKey(User, on_delete=models.SET_NULL, db_column='User', blank=True, null=True)
 	task = models.ForeignKey(Task, on_delete=models.SET_NULL, db_column='Task', blank=True, null=True)
-	created = models.DateTimeField(_('Created'), default=now, blank=True, null=True)
-	last_updated = models.DateTimeField(_('Last Updated'), default=now, blank=True, null=True)
+	created = models.DateTimeField('Created', default=now, blank=True, null=True)
+	last_updated = models.DateTimeField('Last Updated', default=now, blank=True, null=True)
 
 	class Meta:
 		# Translators: This string is used to identify the Account table name

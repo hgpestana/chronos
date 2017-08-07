@@ -10,22 +10,22 @@ class Client(models.Model):
 	TODO: Develop this table
 	"""
 
-	name = models.CharField(_('Name'), max_length=255)
-	description = models.TextField(_('Description'), blank=True, null=True)
-	comments = models.TextField(_('Comments'), blank=True, null=True)
-	vat = models.CharField(_('VAT'), max_length=15, blank=True, null=True)
-	street = models.CharField(_('Street Address'), max_length=255, blank=True, null=True)
-	postal_code = models.CharField(_('Postal Code'), max_length=15, blank=True, null=True)
-	city = models.CharField(_('City'), max_length=50, blank=True, null=True)
-	country = models.CharField(_('Country'), max_length=50, blank=True, null=True)
-	contact_person = models.CharField(_('Contact Person'), max_length=255, blank=True, null=True)
-	email = models.CharField(_('Email'), max_length=50, blank=True, null=True)
-	phone = models.CharField(_('Phone'), max_length=50, blank=True, null=True)
-	mobile = models.CharField(_('Mobile'), max_length=50, blank=True, null=True)
-	website = models.CharField(_('Website'), max_length=50, blank=True, null=True)
-	created = models.DateTimeField(_('Created'), default=now, blank=True, null=True)
-	last_updated = models.DateTimeField(_('Last Updated'), default=now, blank=True, null=True)
-	is_visible = models.BooleanField(_('Is Visible'))
+	name = models.CharField('Name', max_length=255)
+	description = models.TextField('Description', blank=True, null=True)
+	comments = models.TextField('Comments', blank=True, null=True)
+	vat = models.CharField('VAT', max_length=15, blank=True, null=True)
+	street = models.CharField('Street Address', max_length=255, blank=True, null=True)
+	postal_code = models.CharField('Postal Code', max_length=15, blank=True, null=True)
+	city = models.CharField('City', max_length=50, blank=True, null=True)
+	country = models.CharField('Country', max_length=50, blank=True, null=True)
+	contact_person = models.CharField('Contact Person', max_length=255, blank=True, null=True)
+	email = models.CharField('Email', max_length=50, blank=True, null=True)
+	phone = models.CharField('Phone', max_length=50, blank=True, null=True)
+	mobile = models.CharField('Mobile', max_length=50, blank=True, null=True)
+	website = models.CharField('Website', max_length=50, blank=True, null=True)
+	created = models.DateTimeField('Created', default=now, blank=True, null=True)
+	last_updated = models.DateTimeField('Last Updated', default=now, blank=True, null=True)
+	is_visible = models.BooleanField('Is Visible')
 
 	class Meta:
 		# Translators: This string is used to identify the Client table name

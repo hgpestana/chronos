@@ -1,5 +1,5 @@
 {% extends "core/base.html" %}
-{% load i18n widget_tweaks %}
+{% load i18n l10n widget_tweaks %}
 
 {% block content %}
 <div class="breadcrumbs ace-save-state" id="breadcrumbs">
@@ -184,8 +184,8 @@
                                 <td><a href="#">{{entry.id}}</a></td>
                                 <td>{{entry.task.name}}</td>
                                 <td>{{entry.description}}</td>
-                                <td class="hidden-480">{{entry.starttime}}</td>
-                                <td class="hidden-480">{{entry.endtime}}</td>
+                                <td class="hidden-480">{{entry.starttime | date:'Y-m-d H:i'}}</td>
+                                <td class="hidden-480">{{entry.endtime | date:'Y-m-d H:i'}}</td>
                                 <td>{{entry.duration}}</td>
                                 <td>{{entry.user.username}}</td>
                                 <td>{{entry.client.name}}</td>

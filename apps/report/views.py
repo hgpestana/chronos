@@ -1,16 +1,21 @@
 import time
+import os
 
-from reportlab.platypus import SimpleDocTemplate
-from reportlab.platypus.tables import Table
-from reportlab.lib.pagesizes import A4
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.platypus.tables import Table, TableStyle
+from reportlab.lib.pagesizes import landscape, A4
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import cm
+from reportlab.lib.colors import grey, white, black
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView
 from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
+from django.db.models import Q
 
 from apps.report.models import Report
 from apps.report.models import ReportType
@@ -55,62 +60,35 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
     """
     template_name = 'report/report_index.html'
 
-    def switch(self, report_type):
-
-        method_name = 'report_' + str(report_type)
-
-        def default(x, y):
-            return "no report defined"
-
-        # Get the method from 'self'. Default to a lambda.
-        method = getattr(self, method_name, default)
-
-        # Call the method as we return it
-        return method(report_type)
-
     def report_entryreportpdf(self, report_type):
 
-        # Get the POST variables
-        start_date = self.request.POST.get('start_date')
-        end_date = self.request.POST.get('end_date')
-        task = self.request.POST.get('task')
-        user = self.request.POST.get('user')
-        client = self.request.POST.get('client')
-        project = self.request.POST.get('project')
-
         # standard distance for report
-        cm = 2.54
+        margin = 1.5
 
         # Create the PDF object
         timestamp = int(time.time())
         filename = report_type + str(timestamp)
-        pdf_report = SimpleDocTemplate('reports/{0}.pdf'.format(filename), rightMargin=cm, leftMargin=cm, topMargin=cm, bottomMargin=cm,
-                                       pagesize=A4)
+        pdf_report = SimpleDocTemplate('reports/{0}.pdf'.format(filename), author="Chronos Platform",
+                                       rightMargin=margin*cm, leftMargin=margin*cm, topMargin=margin*cm,
+                                       bottomMargin=margin*cm, pagesize=landscape(A4))
+        request = self.request
+
+        qdict = {'starttime': 'starttime__gte',
+                 'endtime': 'endtime__lte',
+                 'task': 'task',
+                 'user': 'user',
+                 'client': 'client',
+                 'project': 'project',
+                 }
+
+        q_objs = [Q(**{qdict[k]: request.POST.get(k)}) for k in qdict.keys() if request.POST.get(k, None)]
 
         # Fetch all entries
-        entries = Entry.objects.select_related()
-
-        # Apply filters to entries
-        if start_date:
-            entries.filter(starttime__gte=start_date)
-
-        if end_date:
-            entries.filter(starttime__lte=end_date)
-
-        if task:
-            entries.filter(task=task)
-
-        if user:
-            entries.filter(user=user)
-
-        if client:
-            entries.filter(client=client)
-
-        if project:
-            entries.filter(project=project)
+        entries = Entry.objects.select_related().filter(*q_objs)
 
         # Generate the table
-        table_data = [['Description', 'Start time', 'End time', 'Duration', 'Comments', 'Project', 'Client', 'User']]
+        table_data = [['Description', 'Start time', 'End time', 'Duration (min.)', 'Comments', 'Project', 'Client',
+                       'User']]
 
         for entry in entries:
 
@@ -134,22 +112,75 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
                 username
             ])
 
-        elements = []
         table = Table(table_data)
+        table.setStyle(TableStyle(
+            [
+                ('BACKGROUND', (0, 0), (7, 0), grey),
+                ('TEXTCOLOR', (0, 0), (7, 0), white),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+                ('INNERGRID', (0, 0), (-1, -1), 0.25, black),
+                ('BOX', (0, 0), (-1, -1), 0.25, black),
+            ]
+        ))
+        styles = getSampleStyleSheet()
+
+        elements = []
+
+        elements.append(Paragraph(_('Chronos entries report'), styles['Heading1']))
+        elements.append(Spacer(36, 20))
+        elements.append(Paragraph(_('Report created using Chronos platform'), styles['Heading2']))
+        elements.append(Paragraph(_('Generated on %s') % time.ctime(time.time()), styles['Normal']))
+        elements.append(Spacer(36, 20))
         elements.append(table)
 
         # Build the report
         pdf_report.build(elements)
 
-        Report.objects.create(name="{0}.pdf".format(filename), type=report_type, filetype='pdf', user=self.request.user)
-
         fs = FileSystemStorage("reports")
+
         with fs.open("{0}.pdf".format(filename)) as pdf_report:
-            response = HttpResponse(pdf_report, content_type='application/pdf')
-            response['Content-Disposition'] = 'attachment; filename="{0}.pdf"'.format(filename)
-            return response
+            Report.objects.create(
+                name="{0}.pdf".format(filename),
+                type=report_type,
+                file=pdf_report,
+                filetype='pdf',
+                user=self.request.user
+            )
+
+        os.remove("reports/{0}.pdf".format(filename))
+        data = {
+            'result': 'report_generated',
+        }
+        return JsonResponse(data)
+
+    def switch(self, report_type):
+
+        method_name = 'report_' + str(report_type)
+
+        def default(x, y):
+            return "no report defined"
+
+        # Get the method from 'self'. Default to a lambda.
+        method = getattr(self, method_name, default)
+
+        # Call the method as we return it
+        return method(report_type)
 
     def post(self, request, *args, **kwargs):
 
         report_type = request.POST.get('report_type')
         return self.switch(report_type)
+
+
+class DownloadReportView (LoginRequiredMixin, TemplateView):
+
+    def post(self, request, *args, **kwargs):
+
+        report = Report.objects.get(pk=self.request.POST.get('pk'))
+
+        fs = FileSystemStorage('/')
+        with fs.open(report.file.url) as pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="{0}"'.format(report.name)
+            return response
