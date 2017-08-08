@@ -4,7 +4,7 @@ CHRONOS is a simple time control application that intends to facilitate the reco
 
 ## Getting Started
 
-Download all the files, extract them into a folder. Run pip3 install -r requirements.txt (if you prefer to use virtualenv, feel free to do so).
+Download all the files, extract them into a folder. Run sudo pip3 install -r requirements.txt (if you prefer to use virtualenv, feel free to do so).
 After installing all the required Python3 libraries, run python3 manage.py migrate to create the database. When the migration process finishes, use the python3 manage.py loaddata initial_data.json to load the initial data.
 Afterwards you can run python3 manage.py runserver to run the server.
 
@@ -13,7 +13,7 @@ Access using localhost:8000. Default username is chronos and default password is
 
 ### Prerequisites
 
-Python 3 is a requirement. After that just run pip3 install -r requirements.txt to install the remaining requirements:
+Python 3 is a requirement. After that just run sudo pip3 install -r requirements.txt to install the remaining requirements:
 
 argon2-cffi==16.3.0
 astroid==1.4.9
