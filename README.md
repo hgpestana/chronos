@@ -13,7 +13,7 @@ Access using localhost:8000. Default username is chronos and default password is
 
 ### Prerequisites
 
-Python 3 is a requirement. After that just run pip3 install -u requirements.txt to install the remaining requirements:
+Python 3 is a requirement. After that just run pip3 install -r requirements.txt to install the remaining requirements:
 
 argon2-cffi==16.3.0
 astroid==1.4.9
