@@ -35,6 +35,10 @@ class AccountIndexView(LoginRequiredMixin, ListView):
 	model = User
 
 	def get_alert_information(self):
+		"""
+		Function used to generate the alert string based on the return result by URL
+		:return: String containing the result message
+		"""
 		if 'result' in self.kwargs:
 			if self.kwargs['result'] == 'YWRkZWQ=':
 				return _("A new user was added with success!")
@@ -71,8 +75,11 @@ class AccountDetailView(LoginRequiredMixin, DetailView):
 
 		return context
 
-	# This function is used to calculate the total percentage of the account's profile completion.
 	def get_profile_completion(self):
+		"""
+		This function is used to calculate the total percentage of the account's profile completion.
+		:return: the calculated percentage
+		"""
 		account = self.get_object()
 		filled_fields = 0
 		total_fields = len(account._meta.fields)
@@ -129,7 +136,7 @@ class AccountAddView(LoginRequiredMixin, CreateView):
 
 class AccountEditView(LoginRequiredMixin, UpdateView):
 	"""
-	View that is used to add a new account in the Chronos platform.
+	View that is used to edit an account in the Chronos platform.
 	TODO: Develop this view
 	"""
 
@@ -168,15 +175,18 @@ class AccountEditView(LoginRequiredMixin, UpdateView):
 
 
 class AccountDeleteView(LoginRequiredMixin, DeleteView):
+	"""
+	View that is used to delete an account in the Chronos platform. Accessed via AJAX call
+	TODO: Develop this view
+	"""
 	model = User
 	template_name = 'account/account_delete_modal.html'
 
 	def dispatch(self, *args, **kwargs):
-		id = self.get_object().id
 
 		response = super(AccountDeleteView, self).dispatch(*args, **kwargs)
 		if self.request.is_ajax():
-			response_data = {"result": "ok", "id": id}
+			response_data = {"result": "ok"}
 			return JsonResponse(response_data)
 		else:
 			# POST request (not ajax) will do a redirect to success_url

@@ -34,6 +34,10 @@ class ProjectIndexView(LoginRequiredMixin, ListView):
 	model = Project
 
 	def get_alert_information(self):
+		"""
+		Function used to generate the alert string based on the return result by URL
+		:return: String containing the result message
+		"""
 		if 'result' in self.kwargs:
 			if self.kwargs['result'] == 'YWRkZWQ=':
 				return _("A new project was added with success!")
@@ -70,8 +74,11 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
 
 		return context
 
-	# This function is used to calculate the total percentage of the project's profile completion.
 	def get_profile_completion(self):
+		"""
+		This function is used to calculate the total percentage of the project's profile completion.
+		:return: the calculated percentage
+		"""
 		project = self.get_object()
 		filled_fields = 0
 		total_fields = len(project._meta.fields)
@@ -115,7 +122,7 @@ class ProjectAddView(LoginRequiredMixin, CreateView):
 
 class ProjectEditView(LoginRequiredMixin, UpdateView):
 	"""
-	View that is used to add a new project in the Chronos platform.
+	View that is used to edit a project in the Chronos platform.
 	TODO: Develop this view
 	"""
 
@@ -142,6 +149,10 @@ class ProjectEditView(LoginRequiredMixin, UpdateView):
 
 
 class ProjectDeleteView(LoginRequiredMixin, DeleteView):
+	"""
+	View that is used to delete a project in the Chronos platform. Accessed via AJAX call
+	TODO: Develop this view
+	"""
 	model = Project
 	template_name = 'project/project_delete_modal.html'
 

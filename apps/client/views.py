@@ -34,6 +34,10 @@ class ClientIndexView(LoginRequiredMixin, ListView):
 	model = Client
 
 	def get_alert_information(self):
+		"""
+		Function used to generate the alert string based on the return result by URL
+		:return: String containing the result message
+		"""
 		if 'result' in self.kwargs:
 			if self.kwargs['result'] == 'YWRkZWQ=':
 				return _("A new client was added with success!")
@@ -70,8 +74,11 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
 
 		return context
 
-	# This function is used to calculate the total percentage of the client's profile completion.
 	def get_profile_completion(self):
+		"""
+		This function is used to calculate the total percentage of the client's profile completion.
+		:return: the calculated percentage
+		"""
 		client = self.get_object()
 		filled_fields = 0
 		total_fields = len(client._meta.fields)
@@ -115,7 +122,7 @@ class ClientAddView(LoginRequiredMixin, CreateView):
 
 class ClientEditView(LoginRequiredMixin, UpdateView):
 	"""
-	View that is used to add a new client in the Chronos platform.
+	View that is used to edit a client in the Chronos platform.
 	TODO: Develop this view
 	"""
 
@@ -142,6 +149,10 @@ class ClientEditView(LoginRequiredMixin, UpdateView):
 
 
 class ClientDeleteView(LoginRequiredMixin, DeleteView):
+	"""
+	View that is used to delete a client in the Chronos platform. Accessed via AJAX call
+	TODO: Develop this view
+	"""
 	model = Client
 	template_name = 'client/client_delete_modal.html'
 

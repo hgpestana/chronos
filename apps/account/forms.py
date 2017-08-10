@@ -33,6 +33,11 @@ class UserForm(ModelForm):
 		fields = ['username', 'first_name', 'last_name', 'email', 'is_staff', 'is_superuser', 'is_active']
 
 	def clean(self):
+		"""
+		Function that adds additional functionality to the parent function clean() by
+		validating the inputted passwords before returning the cleaned data.
+		:return: The cleaned data
+		"""
 
 		cleaned_data = super(UserForm, self).clean()
 
@@ -52,6 +57,12 @@ class UserForm(ModelForm):
 		return cleaned_data
 
 	def save(self, commit=True):
+
+		"""
+		Function that adds additional functionality to the parent function save() by
+		encrypting the user password before saving it in the database.
+		:return: The cleaned data
+		"""
 
 		user = super(UserForm, self).save(commit=False)
 		if self.cleaned_data["password"]:

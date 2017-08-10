@@ -62,6 +62,10 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
 	model = Task
 
 	def get_context_data(self, **kwargs):
+		"""
+		Function used to generate the alert string based on the return result by URL
+		:return: String containing the result message
+		"""
 		context = super(TaskDetailView, self).get_context_data(**kwargs)
 		context['page_title'] = _('Task detail - CHRONOS')
 		context['task_active'] = 'active open'
@@ -70,8 +74,11 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
 
 		return context
 
-	# This function is used to calculate the total percentage of the task's profile completion.
 	def get_profile_completion(self):
+		"""
+		This function is used to calculate the total percentage of the task's profile completion.
+		:return: the calculated percentage
+		"""
 		task = self.get_object()
 		filled_fields = 0
 		total_fields = len(task._meta.fields)
@@ -116,7 +123,7 @@ class TaskAddView(LoginRequiredMixin, CreateView):
 
 class TaskEditView(LoginRequiredMixin, UpdateView):
 	"""
-	View that is used to add a new task in the Chronos platform.
+	View that is used to edit a task in the Chronos platform.
 	TODO: Develop this view
 	"""
 
@@ -143,6 +150,10 @@ class TaskEditView(LoginRequiredMixin, UpdateView):
 
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
+	"""
+	View that is used to delete a task in the Chronos platform. Accessed via AJAX call
+	TODO: Develop this view
+	"""
 	model = Task
 	template_name = 'task/task_delete_modal.html'
 

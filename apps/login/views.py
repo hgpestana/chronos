@@ -11,7 +11,7 @@ from django.views.generic import FormView, RedirectView
 
 class LoginView(FormView):
 	"""
-	Provides the ability to login as a user with a username and password
+	View that handles the login details and process in the Chronos platform.
 	"""
 
 	form_class = AuthenticationForm
@@ -46,7 +46,7 @@ class LoginView(FormView):
 
 class LogoutView(RedirectView):
 	"""
-	Provides users the ability to logout
+	View that handles the logout process in the Chronos platform.
 	"""
 
 	url = reverse_lazy('login:index')

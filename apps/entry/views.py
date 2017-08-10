@@ -74,6 +74,10 @@ class EntryIndexView(LoginRequiredMixin, ListView):
         )
 
     def get_alert_information(self):
+        """
+        Function used to generate the alert string based on the return result by URL
+        :return: String containing the result message
+        """
         if 'result' in self.kwargs:
             if self.kwargs['result'] == 'YWRkZWQ=':
                 return _("A new entry was added with success!")
@@ -114,8 +118,11 @@ class EntryDetailView(LoginRequiredMixin, DetailView):
 
         return context
 
-    # This function is used to calculate the total percentage of the entry's profile completion.
     def get_profile_completion(self):
+        """
+        This function is used to calculate the total percentage of the entry's profile completion.
+        :return: the calculated percentage
+        """
         entry = self.get_object()
         filled_fields = 0
         total_fields = len(entry._meta.fields)
@@ -164,7 +171,7 @@ class EntryAddView(LoginRequiredMixin, AjaxableResponseMixin,  CreateView):
 
 class EntryEditView(LoginRequiredMixin, UpdateView):
     """
-    View that is used to add a new entry in the Chronos platform.
+    View that is used to edit an entry in the Chronos platform.
     TODO: Develop this view
     """
 
@@ -196,6 +203,10 @@ class EntryEditView(LoginRequiredMixin, UpdateView):
 
 
 class EntryDeleteView(LoginRequiredMixin, DeleteView):
+    """
+    View that is used to delete an entry in the Chronos platform. Accessed via AJAX call
+    TODO: Develop this view
+    """
     model = Entry
     template_name = 'entry/entry_delete_modal.html'
 
