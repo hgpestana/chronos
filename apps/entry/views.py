@@ -9,6 +9,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 from apps.entry.forms import EntryForm
 from apps.entry.models import Entry
@@ -64,6 +65,13 @@ class EntryIndexView(LoginRequiredMixin, ListView):
 
     template_name = 'entry/entry_index.html'
     model = Entry
+
+    def get_queryset(self):
+        return Entry.objects.filter(
+            Q(task__is_visible=True) | Q(task__isnull=True),
+            Q(project__is_visible=True) | Q(project__isnull=True),
+            Q(client__is_visible=True) | Q(client__isnull=True)
+        )
 
     def get_alert_information(self):
         if 'result' in self.kwargs:

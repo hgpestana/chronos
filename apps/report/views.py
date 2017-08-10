@@ -43,10 +43,10 @@ class ReportIndexView(LoginRequiredMixin, ListView):
 		context['report_active'] = 'active open'
 		context['report_viewall_active'] = 'active'
 		context['report_types'] = ReportType.objects.all().order_by('name')
-		context['users'] = User.objects.all().order_by('username')
-		context['clients'] = Client.objects.all().order_by('name')
-		context['tasks'] = Task.objects.all().order_by('name')
-		context['projects'] = Project.objects.all().order_by('name')
+		context['users'] = User.objects.all().filter(is_active=True).order_by('username')
+		context['clients'] = Client.objects.filter(is_visible=True).all().order_by('name')
+		context['tasks'] = Task.objects.all().filter(is_visible=True).order_by('name')
+		context['projects'] = Project.objects.all().filter(is_visible=True).order_by('name')
 
 		return context
 
@@ -75,6 +75,14 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 		         }
 
 		q_objs = [Q(**{qdict[k]: request.POST.get(k)}) for k in qdict.keys() if request.POST.get(k, None)]
+
+		q_objs_visibility = [
+			Q(task__is_visible=True) | Q(task__isnull=True),
+			Q(project__is_visible=True) | Q(project__isnull=True),
+			Q(client__is_visible=True) | Q(client__isnull=True),
+		]
+
+		q_objs = q_objs + q_objs_visibility
 
 		return q_objs
 

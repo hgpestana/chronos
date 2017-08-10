@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
-from django.db.models import Count
+from django.db.models import Count, Q
 
 from apps.entry.models import Entry
 from apps.client.models import Client
@@ -28,27 +28,40 @@ class CoreIndexView(LoginRequiredMixin, TemplateView):
         context['totals'] = self.get_totals_user()
         context['last_entry'] = self.get_last_entry()
         context['latest'] = self.get_latest()
-        context['clients'] = Client.objects.all()
-        context['tasks'] = Task.objects.all()
-        context['projects'] = Project.objects.all()
+        context['clients'] = Client.objects.all().filter(is_visible=True)
+        context['tasks'] = Task.objects.all().filter(is_visible=True)
+        context['projects'] = Project.objects.all().filter(is_visible=True)
 
         return context
+
+    @staticmethod
+    def entry_filter(request=None):
+        q_objs = [
+            Q(task__is_visible=True) | Q(task__isnull=True),
+            Q(project__is_visible=True) | Q(project__isnull=True),
+            Q(client__is_visible=True) | Q(client__isnull=True),
+        ]
+
+        if request:
+            q_objs.append(Q(user=request.user))
+
+        return q_objs
 
     def get_latest(self):
         latest = {}
 
         try:
-            latest['tasks'] = Task.objects.order_by('id')[:10]
+            latest['tasks'] = Task.objects.order_by('id').filter(is_visible=True)[:10]
         except IndexError:
             latest['tasks'] = None
 
         try:
-            latest['clients'] = Client.objects.order_by('id')[:10]
+            latest['clients'] = Client.objects.order_by('id').filter(is_visible=True)[:10]
         except IndexError:
             latest['clients'] = None
 
         try:
-            latest['projects'] = Project.objects.order_by('id')[:10]
+            latest['projects'] = Project.objects.order_by('id').filter(is_visible=True)[:10]
         except IndexError:
             latest['projects'] = None
 
@@ -56,7 +69,7 @@ class CoreIndexView(LoginRequiredMixin, TemplateView):
 
     def get_last_entry(self):
         try:
-            return Entry.objects.filter(user=self.request.user).order_by('-starttime')[0]
+            return Entry.objects.filter(*self.entry_filter(self.request)).order_by('-starttime')[0]
         except IndexError:
             return None
 
@@ -65,32 +78,32 @@ class CoreIndexView(LoginRequiredMixin, TemplateView):
         totals = {}
 
         try:
-            totals['user_entries'] = Entry.objects.filter(user=self.request.user).count()
+            totals['user_entries'] = Entry.objects.filter(*self.entry_filter(self.request)).count()
         except Entry.DoesNotExist:
             totals['user_entries'] = 0
 
         try:
-            totals['user_clients'] = Entry.objects.filter(user=self.request.user).filter(client__isnull=False).values(
-                'client').distinct().count()
+            totals['user_clients'] = Entry.objects.filter(*self.entry_filter(self.request)).filter(client__isnull=False)\
+                .values('client').distinct().count()
         except Entry.DoesNotExist:
             totals['user_clients'] = 0
 
         try:
-            totals['user_projects'] = Entry.objects.filter(user=self.request.user).filter(project__isnull=False).values(
-                'project').distinct().count()
+            totals['user_projects'] = Entry.objects.filter(*self.entry_filter(self.request)).filter(project__isnull=False)\
+                .values('project').distinct().count()
         except Entry.DoesNotExist:
             totals['user_projects'] = 0
 
         try:
-            totals['user_tasks'] = Entry.objects.filter(user=self.request.user).filter(task__isnull=False).values(
-                'task').distinct().count()
+            totals['user_tasks'] = Entry.objects.filter(*self.entry_filter(self.request)).filter(task__isnull=False)\
+                .values('task').distinct().count()
         except Entry.DoesNotExist:
             totals['user_tasks'] = 0
 
-        totals['entries'] = Entry.objects.all().count()
-        totals['clients'] = Client.objects.all().count()
-        totals['projects'] = Project.objects.all().count()
-        totals['tasks'] = Task.objects.all().count()
+        totals['entries'] = Entry.objects.all().filter(*self.entry_filter()).count()
+        totals['clients'] = Client.objects.all().filter(is_visible=True).count()
+        totals['projects'] = Project.objects.all().filter(is_visible=True).count()
+        totals['tasks'] = Task.objects.all().filter(is_visible=True).count()
 
         try:
             totals['user_entries_percent'] = int(round((totals['user_entries'] / totals['entries']) * 100))
@@ -112,13 +125,13 @@ class CoreIndexView(LoginRequiredMixin, TemplateView):
         except ZeroDivisionError:
             totals['user_tasks_percent'] = 0
 
-        totals['user_per_client_entries'] = Entry.objects.all().filter(user=self.request.user).filter(
+        totals['user_per_client_entries'] = Entry.objects.all().filter(*self.entry_filter(self.request)).filter(
             client__isnull=False).values('client__name').annotate(Count('client'))
 
-        totals['user_per_task_entries'] = Entry.objects.all().filter(user=self.request.user).filter(
+        totals['user_per_task_entries'] = Entry.objects.all().filter(*self.entry_filter(self.request)).filter(
             task__isnull=False).values('task__name').annotate(Count('task'))
 
-        totals['user_per_project_entries'] = Entry.objects.all().filter(user=self.request.user).filter(
+        totals['user_per_project_entries'] = Entry.objects.all().filter(*self.entry_filter(self.request)).filter(
             project__isnull=False).values('project__name').annotate(Count('project'))
 
         return totals

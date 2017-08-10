@@ -19,19 +19,19 @@ class EntryForm(ModelForm):
     """
 
     task = FormChoiceField(
-        queryset=Task.objects.all().order_by('name'),
+        queryset=Task.objects.all().filter(is_visible=True).order_by('name'),
         empty_label=_('Please select an option'),
         required=False,
     )
 
     project = FormChoiceField(
-        queryset=Project.objects.all().order_by('name'),
+        queryset=Project.objects.all().filter(is_visible=True).order_by('name'),
         empty_label=_('Please select an option'),
         required=False,
     )
 
     client = FormChoiceField(
-        queryset=Client.objects.all().order_by('name'),
+        queryset=Client.objects.all().filter(is_visible=True).order_by('name'),
         empty_label=_('Please select an option'),
         required=False,
     )
