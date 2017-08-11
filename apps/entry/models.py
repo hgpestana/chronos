@@ -23,7 +23,7 @@ class Entry(models.Model):
 	client = models.ForeignKey(Client, on_delete=models.SET_NULL, db_column='Client', blank=True, null=True)
 	user = models.ForeignKey(User, on_delete=models.SET_NULL, db_column='User', blank=True, null=True)
 	task = models.ForeignKey(Task, on_delete=models.SET_NULL, db_column='Task', blank=True, null=True)
-	cost = models.DecimalField('Cost', blank=True, null=True, default=0, max_digits=4, decimal_places=2)
+	cost = models.DecimalField('Cost', blank=True, null=True, default=0, max_digits=8, decimal_places=2)
 	created = models.DateTimeField('Created', default=now, blank=True, null=True)
 	last_updated = models.DateTimeField('Last Updated', default=now, blank=True, null=True)
 

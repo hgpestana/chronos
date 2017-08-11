@@ -1,4 +1,4 @@
-{% load staticfiles compress %}
+{% load i18n staticfiles compress %}
 
 {% compress js %}
 <!-- page specific plugin scripts -->
@@ -72,6 +72,28 @@
             //minHeight:200,
         //});
 
+
+        $('#entry_form').on('submit', function(){
+            if ($('#id_starttime').val() > $('#id_endtime').val()) {
+                $.confirm({
+                    closeIcon: true,
+                    columnClass: 'medium',
+                    icon: 'fa fa-warning',
+                    title: '{% trans "Invalid time interval!" %}',
+                    content: '{% trans "<br/>The selected <span class=\"text-danger\">end time</span> is inferior to the selected <span class=\"text-danger\">start time.</span><br/>Please correct this to proceed!" %}',
+                    type: 'red',
+                    buttons: {
+                        confirm: {
+                            text: '{% trans "OK" %}',
+                            btnClass: 'btn-red',
+                        },
+                    }
+                });
+                $('#id_starttime').addClass('red');
+                $('#id_endtime').addClass('red');
+                return false;
+            }
+        });
 
         $('[data-rel=tooltip]').tooltip({container: 'body'});
         $('[data-rel=popover]').popover({container: 'body'});

@@ -161,12 +161,21 @@ class EntryAddView(LoginRequiredMixin, AjaxableResponseMixin,  CreateView):
         end_time = form.instance.endtime
         start_time = form.instance.starttime
 
-        form.instance.duration = (end_time - start_time).seconds / 60
+        if end_time > start_time:
+            form.instance.duration = (end_time - start_time).seconds / 60
+        else:
+            form.instance.duration = 0
+
         form.instance.user = self.request.user
 
         if form.instance.task:
-            task_price_min = form.instance.task.price / 60
-            form.instance.cost = Decimal.from_float(form.instance.duration) * task_price_min
+            if form.instance.duration > 0:
+                task_price_min = form.instance.task.price / 60
+                form.instance.cost = Decimal.from_float(form.instance.duration) * task_price_min
+            else:
+                form.instance.cost = 0
+        else:
+            form.instance.cost = 0
 
         return super(EntryAddView, self).form_valid(form)
 
@@ -198,12 +207,21 @@ class EntryEditView(LoginRequiredMixin, UpdateView):
         end_time = form.instance.endtime
         start_time = form.instance.starttime
 
-        form.instance.duration = (end_time - start_time).seconds / 60
+        if end_time > start_time:
+            form.instance.duration = (end_time - start_time).seconds / 60
+        else:
+            form.instance.duration = 0
+
         form.instance.last_updated = datetime.now()
 
         if form.instance.task:
-            task_price_min = form.instance.task.price / 60
-            form.instance.cost = Decimal.from_float(form.instance.duration) * task_price_min
+            if form.instance.duration > 0:
+                task_price_min = form.instance.task.price / 60
+                form.instance.cost = Decimal.from_float(form.instance.duration) * task_price_min
+            else:
+                form.instance.cost = 0
+        else:
+            form.instance.cost = 0
 
         return super(EntryEditView, self).form_valid(form)
 

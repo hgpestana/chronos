@@ -39,130 +39,104 @@
             </div>
 
             <div class="row">
-                <div class="space-6"></div>
-                <div class="col-sm-9 infobox-container">
+                <div class="col-sm-7">
 
-                    <div class="infobox infobox-green">
-                        <div class="infobox-icon">
-                            <i class="ace-icon fa fa-calendar-check-o"></i>
-                        </div>
-                        <div class="infobox-data">
-                            <span class="infobox-data-number">{{totals.user_entries}}</span>
-                            <div class="infobox-content">{% trans "entries launched" %}</div>
-                        </div>
-                    </div>
+                    <div class="space-6"></div>
 
-                    <div class="infobox infobox-blue">
-                        <div class="infobox-icon">
-                            <i class="ace-icon fa fa-building"></i>
+                    <div class="infobox-container">
+                        <div class="infobox infobox-green">
+                            <div class="infobox-icon">
+                                <i class="ace-icon fa fa-calendar-check-o"></i>
+                            </div>
+                            <div class="infobox-data">
+                                <span class="infobox-data-number">{{totals.user_entries}}</span>
+                                <div class="infobox-content">{% trans "entries launched" %}</div>
+                            </div>
                         </div>
-                        <div class="infobox-data">
-                            <span class="infobox-data-number">{{totals.user_clients}}</span>
-                            <div class="infobox-content">{% trans "clients worked with" %}</div>
+                        <div class="infobox infobox-blue">
+                            <div class="infobox-icon">
+                                <i class="ace-icon fa fa-building"></i>
+                            </div>
+                            <div class="infobox-data">
+                                <span class="infobox-data-number">{{totals.user_clients}}</span>
+                                <div class="infobox-content">{% trans "clients worked with" %}</div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="infobox infobox-purple">
+                            <div class="infobox-icon">
+                                <i class="ace-icon fa fa-tasks"></i>
+                            </div>
+                            <div class="infobox-data">
+                                <span class="infobox-data-number">{{totals.user_tasks}}</span>
+                                <div class="infobox-content">{% trans "tasks performed" %}</div>
+                            </div>
+                        </div>
+                        <div class="infobox infobox-red">
+                            <div class="infobox-icon">
+                                <i class="ace-icon fa fa-industry"></i>
+                            </div>
+                            <div class="infobox-data">
+                                <span class="infobox-data-number">{{totals.user_projects}}</span>
+                                <div class="infobox-content">{% trans "projects worked in" %}</div>
+                            </div>
+                        </div>
 
-                    <div class="infobox infobox-purple">
-                        <div class="infobox-icon">
-                            <i class="ace-icon fa fa-tasks"></i>
-                        </div>
-                        <div class="infobox-data">
-                            <span class="infobox-data-number">{{totals.user_tasks}}</span>
-                            <div class="infobox-content">{% trans "tasks performed" %}</div>
-                        </div>
-                    </div>
+                        <div class="space-6"></div>
 
+                        <div class="infobox infobox-green2 infobox-dark">
+                            <div class="infobox-progress">
+                                <div class="easy-pie-chart percentage" data-percent="{{totals.user_entries_percent}}" data-size="50">
+                                    <span class="percent small">{{totals.user_entries_percent}}</span>%
+                                </div>
+                            </div>
 
-                    <div class="infobox infobox-red">
-                        <div class="infobox-icon">
-                            <i class="ace-icon fa fa-industry"></i>
+                            <div class="infobox-data">
+                                <div class="infobox-content">&nbsp;Your total entries</div>
+                                <div class="infobox-content">&nbsp;in Chronos</div>
+                            </div>
                         </div>
-                        <div class="infobox-data">
-                            <span class="infobox-data-number">{{totals.user_projects}}</span>
-                            <div class="infobox-content">{% trans "projects worked in" %}</div>
+                        <div class="infobox infobox-blue2 infobox-dark">
+                            <div class="infobox-progress">
+                                <div class="easy-pie-chart percentage" data-percent="{{totals.user_clients_percent}}" data-size="50">
+                                    <span class="percent small">{{totals.user_clients_percent}}</span>%
+                                </div>
+                            </div>
+
+                            <div class="infobox-data">
+                                <div class="infobox-content">&nbsp;Your total clients</div>
+                                <div class="infobox-content">&nbsp;in Chronos</div>
+                            </div>
+                        </div>
+                        <div class="infobox infobox-purple2 infobox-dark">
+                            <div class="infobox-progress">
+                                <div class="easy-pie-chart percentage" data-percent="{{totals.user_tasks_percent}}" data-size="50">
+                                    <span class="percent small">{{totals.user_tasks_percent}}</span>%
+                                </div>
+                            </div>
+
+                            <div class="infobox-data">
+                                <div class="infobox-content">&nbsp;Your total tasks</div>
+                                <div class="infobox-content">&nbsp;in Chronos</div>
+                            </div>
+                        </div>
+                        <div class="infobox infobox-light-brown infobox-dark">
+                            <div class="infobox-progress">
+                                <div class="easy-pie-chart percentage" data-percent="{{totals.user_projects_percent}}" data-size="50">
+                                    <span class="percent small">{{totals.user_projects_percent}}</span>%
+                                </div>
+                            </div>
+
+                            <div class="infobox-data">
+                                <div class="infobox-content">&nbsp;Your total projects</div>
+                                <div class="infobox-content">&nbsp;in Chronos</div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="space-6"></div>
 
-                    <div class="infobox infobox-green2 infobox-dark">
-                        <div class="infobox-progress">
-                            <div class="easy-pie-chart percentage" data-percent="{{totals.user_entries_percent}}" data-size="50">
-                                <span class="percent small">{{totals.user_entries_percent}}</span>%
-                            </div>
-                        </div>
+                    <div class="hr hr32 hr-dotted"></div>
 
-                        <div class="infobox-data">
-                            <div class="infobox-content">&nbsp;Your total entries</div>
-                            <div class="infobox-content">&nbsp;in Chronos</div>
-                        </div>
-                    </div>
-
-                    <div class="infobox infobox-blue2 infobox-dark">
-                        <div class="infobox-progress">
-                            <div class="easy-pie-chart percentage" data-percent="{{totals.user_clients_percent}}" data-size="50">
-                                <span class="percent small">{{totals.user_clients_percent}}</span>%
-                            </div>
-                        </div>
-
-                        <div class="infobox-data">
-                            <div class="infobox-content">&nbsp;Your total clients</div>
-                            <div class="infobox-content">&nbsp;in Chronos</div>
-                        </div>
-                    </div>
-
-                    <div class="infobox infobox-purple2 infobox-dark">
-                        <div class="infobox-progress">
-                            <div class="easy-pie-chart percentage" data-percent="{{totals.user_tasks_percent}}" data-size="50">
-                                <span class="percent small">{{totals.user_tasks_percent}}</span>%
-                            </div>
-                        </div>
-
-                        <div class="infobox-data">
-                            <div class="infobox-content">&nbsp;Your total tasks</div>
-                            <div class="infobox-content">&nbsp;in Chronos</div>
-                        </div>
-                    </div>
-
-                    <div class="infobox infobox-light-brown infobox-dark">
-                        <div class="infobox-progress">
-                            <div class="easy-pie-chart percentage" data-percent="{{totals.user_projects_percent}}" data-size="50">
-                                <span class="percent small">{{totals.user_projects_percent}}</span>%
-                            </div>
-                        </div>
-
-                        <div class="infobox-data">
-                            <div class="infobox-content">&nbsp;Your total projects</div>
-                            <div class="infobox-content">&nbsp;in Chronos</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="vspace-10-sm"></div>
-
-                <div class="col-sm-3">
-                    <div class="well">
-                        {% if last_entry %}
-                        <h5>
-                            {% trans "Your last entry was on the " %} {{ last_entry.starttime | date:'Y-m-d H:i' }}
-                        </h5>
-                        <p class="small">{% trans "Do you want to add a new entry now?" %}<br/> <a href='{% url "entry:add" %}'>
-                            {% trans "Click here" %}</a></p>
-                        {% else %}
-                        <h5>
-                            {% trans "You still haven't added an entry in the plaftorm!"%}
-                        </h5>
-                        <p class="small">{% trans "Do you want to add your first entry now?" %}<br/> <a href='{% url "entry:add" %}'>
-                            {% trans "Click here" %}</a></p>
-                        {% endif %}
-                    </div>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-
-            <div class="hr hr32 hr-dotted"></div>
-
-            <div class="row">
-                <div class="col-sm-6">
                     <div class="widget-box transparent" id="recent-box">
                         <div class="widget-header">
                             <h4 class="widget-title lighter smaller">
@@ -276,9 +250,101 @@
                             </div><!-- /.widget-main -->
                         </div><!-- /.widget-body -->
                     </div><!-- /.widget-box -->
+
+                    <div class="space-6"></div>
+
+                    <div class="hr hr32 hr-dotted"></div>
+
+                    <div class="col-sm-12">
+                        <div class="col-sm-4">
+                    <div class="widget-box transparent">
+                        <div class="widget-header widget-header-flat widget-header-small">
+                            <h5 class="widget-title">
+                                <i class="ace-icon fa fa-building"></i>
+                                Entries per client
+                            </h5>
+                            <div class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div id="entriesperclient"></div>
+                            </div><!-- /.widget-main -->
+                        </div><!-- /.widget-body -->
+                    </div><!-- /.widget-box -->
+                </div><!-- /.col -->
+                        <div class="col-sm-4">
+                            <div class="widget-box transparent">
+                                <div class="widget-header widget-header-flat widget-header-small">
+                                    <h5 class="widget-title">
+                                        <i class="ace-icon fa fa-tasks"></i>
+                                        Entries per task
+                                    </h5>
+
+                                    <div class="widget-toolbar">
+                                        <a href="#" data-action="collapse">
+                                            <i class="ace-icon fa fa-chevron-up"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <div id="entriespertask"></div>
+                                    </div><!-- /.widget-main -->
+                                </div><!-- /.widget-body -->
+                            </div><!-- /.widget-box -->
+                        </div><!-- /.col -->
+                        <div class="col-sm-4">
+                            <div class="widget-box transparent">
+                                <div class="widget-header widget-header-flat widget-header-small">
+                                    <h5 class="widget-title">
+                                        <i class="ace-icon fa fa-industry"></i>
+                                        Entries per project
+                                    </h5>
+                                    <div class="widget-toolbar">
+                                        <a href="#" data-action="collapse">
+                                            <i class="ace-icon fa fa-chevron-up"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <div id="entriesperproject"></div>
+                                    </div><!-- /.widget-main -->
+                                </div><!-- /.widget-body -->
+                            </div><!-- /.widget-box -->
+                        </div><!-- /.col -->
+                    </div>
+
                 </div><!-- /.col -->
 
-                <div class="col-sm-6">
+                <div class="vspace-10-sm"></div>
+
+                <div class="col-sm-5">
+
+                    <div class="space-6"></div>
+
+                    <div class="well">
+                        {% if last_entry %}
+                        <h5>
+                            {% trans "Your last entry was on the " %} {{ last_entry.starttime | date:'Y-m-d H:i' }}
+                        </h5>
+                        <p class="small">{% trans "Do you want to add a new entry now?" %} <a href='{% url "entry:add" %}'>
+                            {% trans "Click here" %}</a></p>
+                        {% else %}
+                        <h5>
+                            {% trans "You still haven't added an entry in the plaftorm!"%}
+                        </h5>
+                        <p class="small">{% trans "Do you want to add your first entry now?" %} <a href='{% url "entry:add" %}'>
+                            {% trans "Click here" %}</a></p>
+                        {% endif %}
+                    </div>
+
                     <div class="widget-box">
                         <div class="widget-header">
                             <h4 class="widget-title lighter smaller">
@@ -357,75 +423,9 @@
                             </div><!-- /.widget-main -->
                         </div><!-- /.widget-body -->
                     </div><!-- /.widget-box -->
-                </div><!-- /.col -->
-            </div><!-- /.row -->
 
-            <div class="hr hr32 hr-dotted"></div>
+                </div>
 
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="widget-box transparent">
-                        <div class="widget-header widget-header-flat widget-header-small">
-                            <h5 class="widget-title">
-                                <i class="ace-icon fa fa-building"></i>
-                                Entries per client
-                            </h5>
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                <div id="entriesperclient"></div>
-                            </div><!-- /.widget-main -->
-                        </div><!-- /.widget-body -->
-                    </div><!-- /.widget-box -->
-                </div><!-- /.col -->
-                <div class="col-sm-4">
-                    <div class="widget-box transparent">
-                        <div class="widget-header widget-header-flat widget-header-small">
-                            <h5 class="widget-title">
-                                <i class="ace-icon fa fa-tasks"></i>
-                                Entries per task
-                            </h5>
-
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                <div id="entriespertask"></div>
-                            </div><!-- /.widget-main -->
-                        </div><!-- /.widget-body -->
-                    </div><!-- /.widget-box -->
-                </div><!-- /.col -->
-                <div class="col-sm-4">
-                    <div class="widget-box transparent">
-                        <div class="widget-header widget-header-flat widget-header-small">
-                            <h5 class="widget-title">
-                                <i class="ace-icon fa fa-industry"></i>
-                                Entries per project
-                            </h5>
-                            <div class="widget-toolbar">
-                                <a href="#" data-action="collapse">
-                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                <div id="entriesperproject"></div>
-                            </div><!-- /.widget-main -->
-                        </div><!-- /.widget-body -->
-                    </div><!-- /.widget-box -->
-                </div><!-- /.col -->
             </div><!-- /.row -->
 
             <!-- PAGE CONTENT ENDS -->

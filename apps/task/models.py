@@ -12,7 +12,7 @@ class Task(models.Model):
 	name = models.CharField('Name', max_length=255)
 	description = models.TextField('Description', blank=True, null=True)
 	comments = models.TextField('Comments', blank=True, null=True)
-	price = models.DecimalField('Price', blank=True, null=True, default=0, max_digits=4, decimal_places=2)
+	price = models.DecimalField('Price', blank=True, null=True, default=0, max_digits=8, decimal_places=2)
 	parenttask = models.ForeignKey('self', on_delete=models.SET_NULL, db_column='Parent task', blank=True, null=True)
 	created = models.DateTimeField('Created', default=now, blank=True, null=True)
 	last_updated = models.DateTimeField('Last Updated', default=now, blank=True, null=True)
