@@ -8,7 +8,7 @@ Download all the files, extract them into a folder. Run sudo pip3 install -r req
 After installing all the required Python3 libraries, run python3 manage.py migrate to create the database. When the migration process finishes, use the python3 manage.py loaddata initial_data.json to load the initial data.
 Afterwards you can run python3 manage.py runserver to run the server.
 
-Access using localhost:8000. Default username is chronos and default password is 123.abc.
+Access using localhost:8000. Default username is chronos and default password is 1234.abcd.
 
 
 ### Prerequisites
