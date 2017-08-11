@@ -162,6 +162,7 @@
                                 <th class="hidden-480">{% trans "Start time" %}</th>
                                 <th class="hidden-480">{% trans "End time" %}</th>
                                 <th>{% trans "Duration (min.)" %}</th>
+                                <th>{% trans "Cost (EUR)" %}</th>
                                 <th>{% trans "User" %}</th>
                                 <th>{% trans "Client" %}</th>
                                 <th>{% trans "Project" %}</th>
@@ -187,6 +188,7 @@
                                 <td class="hidden-480">{{entry.starttime | date:'Y-m-d H:i'}}</td>
                                 <td class="hidden-480">{{entry.endtime | date:'Y-m-d H:i'}}</td>
                                 <td>{{entry.duration}}</td>
+                                <td>{{entry.cost}}</td>
                                 <td>{{entry.user.username}}</td>
                                 <td>{{entry.client.name}}</td>
                                 <td>{{entry.project.name}}</td>

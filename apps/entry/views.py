@@ -1,5 +1,6 @@
 from datetime import datetime
 from math import floor
+from decimal import Decimal
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
@@ -163,6 +164,10 @@ class EntryAddView(LoginRequiredMixin, AjaxableResponseMixin,  CreateView):
         form.instance.duration = (end_time - start_time).seconds / 60
         form.instance.user = self.request.user
 
+        if form.instance.task:
+            task_price_min = form.instance.task.price / 60
+            form.instance.cost = Decimal.from_float(form.instance.duration) * task_price_min
+
         return super(EntryAddView, self).form_valid(form)
 
     def get_success_url(self):
@@ -195,6 +200,10 @@ class EntryEditView(LoginRequiredMixin, UpdateView):
 
         form.instance.duration = (end_time - start_time).seconds / 60
         form.instance.last_updated = datetime.now()
+
+        if form.instance.task:
+            task_price_min = form.instance.task.price / 60
+            form.instance.cost = Decimal.from_float(form.instance.duration) * task_price_min
 
         return super(EntryEditView, self).form_valid(form)
 

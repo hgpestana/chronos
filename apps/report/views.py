@@ -1,6 +1,8 @@
 import os
 import time
 
+from decimal import Decimal
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
@@ -134,8 +136,11 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 				name = Project.objects.get(id=project).name
 				elements.append(Paragraph(_('Entries for project "{0}"').format(name), styles['Heading2']))
 			elements.append(Spacer(36, 20))
-			table_data = [['Description', 'Start time', 'End time', 'Duration (min.)', 'Comments', 'Task', 'Project',
-			               'Client', 'User']]
+			table_data = [['Description', 'Start time', 'End time', 'Duration (min.)', 'Cost(EUR)', 'Comments', 'Task',
+			               'Project', 'Client', 'User']]
+
+			# Variable used to calculate the total cost for the sheet.
+			total_cost = Decimal.from_float(0.00)
 
 			# Iterates per entry in order to find the entry that corresponds to the project. When found, the entry
 			# is added to the table
@@ -153,11 +158,14 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 					if entry.user:
 						username = entry.user.username
 
+					total_cost += entry.cost
+
 					table_data.append([
 						entry.description,
 						entry.starttime,
 						entry.endtime,
 						entry.duration,
+						entry.cost,
 						entry.comments,
 						task_name,
 						project_name,
@@ -176,11 +184,14 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 					if entry.user:
 						username = entry.user.username
 
+					total_cost += entry.cost
+
 					table_data.append([
 						entry.description,
 						entry.starttime,
 						entry.endtime,
 						entry.duration,
+						entry.cost,
 						entry.comments,
 						task_name,
 						project_name,
@@ -192,8 +203,8 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 			table = Table(table_data)
 			table.setStyle(TableStyle(
 				[
-					('BACKGROUND', (0, 0), (8, 0), grey),
-					('TEXTCOLOR', (0, 0), (8, 0), white),
+					('BACKGROUND', (0, 0), (9, 0), grey),
+					('TEXTCOLOR', (0, 0), (9, 0), white),
 					('ALIGN', (0, 0), (-1, -1), 'CENTER'),
 					('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
 					('INNERGRID', (0, 0), (-1, -1), 0.25, black),
@@ -203,6 +214,8 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 
 			# Appends the table to the report
 			elements.append(table)
+			elements.append(Spacer(36, 20))
+			elements.append(Paragraph(_('Total cost: %s EUR') % total_cost, styles['Heading2']))
 			elements.append(PageBreak())
 
 		# Builds the report
@@ -274,8 +287,11 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 				name = Task.objects.get(id=task).name
 				elements.append(Paragraph(_('Entries for task "{0}"').format(name), styles['Heading2']))
 			elements.append(Spacer(36, 20))
-			table_data = [['Description', 'Start time', 'End time', 'Duration (min.)', 'Comments', 'Task', 'Project',
-			               'Client', 'User']]
+			table_data = [['Description', 'Start time', 'End time', 'Duration (min.)', 'Cost(EUR)', 'Comments', 'Task',
+			               'Project', 'Client', 'User']]
+
+			# Variable used to calculate the total cost for the sheet.
+			total_cost = Decimal.from_float(0.00)
 
 			# Iterates per entry in order to find the entry that corresponds to the task. When found, the entry
 			# is added to the table
@@ -293,11 +309,14 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 					if entry.user:
 						username = entry.user.username
 
+					total_cost += entry.cost
+
 					table_data.append([
 						entry.description,
 						entry.starttime,
 						entry.endtime,
 						entry.duration,
+						entry.cost,
 						entry.comments,
 						task_name,
 						project_name,
@@ -316,11 +335,14 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 					if entry.user:
 						username = entry.user.username
 
+					total_cost += entry.cost
+
 					table_data.append([
 						entry.description,
 						entry.starttime,
 						entry.endtime,
 						entry.duration,
+						entry.cost,
 						entry.comments,
 						task_name,
 						project_name,
@@ -332,8 +354,8 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 			table = Table(table_data)
 			table.setStyle(TableStyle(
 				[
-					('BACKGROUND', (0, 0), (8, 0), grey),
-					('TEXTCOLOR', (0, 0), (8, 0), white),
+					('BACKGROUND', (0, 0), (9, 0), grey),
+					('TEXTCOLOR', (0, 0), (9, 0), white),
 					('ALIGN', (0, 0), (-1, -1), 'CENTER'),
 					('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
 					('INNERGRID', (0, 0), (-1, -1), 0.25, black),
@@ -343,6 +365,8 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 
 			# Appends the table to the report
 			elements.append(table)
+			elements.append(Spacer(36, 20))
+			elements.append(Paragraph(_('Total cost: %s EUR') % total_cost, styles['Heading2']))
 			elements.append(PageBreak())
 
 		# Builds the report
@@ -414,8 +438,11 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 				name = User.objects.get(id=user).username
 				elements.append(Paragraph(_('Entries for user "{0}"').format(name), styles['Heading2']))
 			elements.append(Spacer(36, 20))
-			table_data = [['Description', 'Start time', 'End time', 'Duration (min.)', 'Comments', 'Task', 'Project',
-			               'Client', 'User']]
+			table_data = [['Description', 'Start time', 'End time', 'Duration (min.)', 'Cost(EUR)', 'Comments', 'Task',
+			               'Project', 'Client', 'User']]
+
+			# Variable used to calculate the total cost for the sheet.
+			total_cost = Decimal.from_float(0.00)
 
 			# Iterates per entry in order to find the entry that corresponds to the user. When found, the entry
 			# is added to the table
@@ -433,11 +460,14 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 					if entry.client:
 						client_name = entry.client.name
 
+					total_cost += entry.cost
+
 					table_data.append([
 						entry.description,
 						entry.starttime,
 						entry.endtime,
 						entry.duration,
+						entry.cost,
 						entry.comments,
 						task_name,
 						project_name,
@@ -456,11 +486,14 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 					if entry.client:
 						client_name = entry.client.name
 
+					total_cost += entry.cost
+
 					table_data.append([
 						entry.description,
 						entry.starttime,
 						entry.endtime,
 						entry.duration,
+						entry.cost,
 						entry.comments,
 						task_name,
 						project_name,
@@ -472,8 +505,8 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 			table = Table(table_data)
 			table.setStyle(TableStyle(
 				[
-					('BACKGROUND', (0, 0), (8, 0), grey),
-					('TEXTCOLOR', (0, 0), (8, 0), white),
+					('BACKGROUND', (0, 0), (9, 0), grey),
+					('TEXTCOLOR', (0, 0), (9, 0), white),
 					('ALIGN', (0, 0), (-1, -1), 'CENTER'),
 					('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
 					('INNERGRID', (0, 0), (-1, -1), 0.25, black),
@@ -483,6 +516,8 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 
 			# Appends the table to the report
 			elements.append(table)
+			elements.append(Spacer(36, 20))
+			elements.append(Paragraph(_('Total cost: %s EUR') % total_cost, styles['Heading2']))
 			elements.append(PageBreak())
 
 		# Builds the report
@@ -554,8 +589,11 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 				name = Client.objects.get(id=client).name
 				elements.append(Paragraph(_('Entries for client "{0}"').format(name), styles['Heading2']))
 			elements.append(Spacer(36, 20))
-			table_data = [['Description', 'Start time', 'End time', 'Duration (min.)', 'Comments', 'Task', 'Project',
-			               'Client', 'User']]
+			table_data = [['Description', 'Start time', 'End time', 'Duration (min.)', 'Cost(EUR)', 'Comments', 'Task',
+			               'Project', 'Client', 'User']]
+
+			# Variable used to calculate the total cost for the sheet.
+			total_cost = Decimal.from_float(0.00)
 
 			# Iterates per entry in order to find the entry that corresponds to the client. When found, the entry
 			# is added to the table
@@ -573,11 +611,14 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 					if entry.user:
 						username = entry.user.username
 
+					total_cost += entry.cost
+
 					table_data.append([
 						entry.description,
 						entry.starttime,
 						entry.endtime,
 						entry.duration,
+						entry.cost,
 						entry.comments,
 						task_name,
 						project_name,
@@ -596,11 +637,14 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 					if entry.user:
 						username = entry.user.username
 
+					total_cost += entry.cost
+
 					table_data.append([
 						entry.description,
 						entry.starttime,
 						entry.endtime,
 						entry.duration,
+						entry.cost,
 						entry.comments,
 						task_name,
 						project_name,
@@ -612,8 +656,8 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 			table = Table(table_data)
 			table.setStyle(TableStyle(
 				[
-					('BACKGROUND', (0, 0), (8, 0), grey),
-					('TEXTCOLOR', (0, 0), (8, 0), white),
+					('BACKGROUND', (0, 0), (9, 0), grey),
+					('TEXTCOLOR', (0, 0), (9, 0), white),
 					('ALIGN', (0, 0), (-1, -1), 'CENTER'),
 					('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
 					('INNERGRID', (0, 0), (-1, -1), 0.25, black),
@@ -623,6 +667,8 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 
 			# Appends the table to the report
 			elements.append(table)
+			elements.append(Spacer(36, 20))
+			elements.append(Paragraph(_('Total cost: %s EUR') % total_cost, styles['Heading2']))
 			elements.append(PageBreak())
 
 		# Builds the report
@@ -669,8 +715,11 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 		entries = Entry.objects.select_related().filter(*q_objs)
 
 		# Generates the table header
-		table_data = [['Description', 'Start time', 'End time', 'Duration (min.)', 'Comments', 'Task', 'Project',
-		               'Client', 'User']]
+		table_data = [['Description', 'Start time', 'End time', 'Duration (min.)', 'Cost(EUR)', 'Comments', 'Task',
+		               'Project', 'Client', 'User']]
+
+		# Variable used to calculate the total cost for the sheet.
+		total_cost = Decimal.from_float(0.00)
 
 		# Generates the table data using the fetch data.
 		for entry in entries:
@@ -686,11 +735,14 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 			if entry.user:
 				username = entry.user.username
 
+			total_cost += entry.cost
+
 			table_data.append([
 				entry.description,
 				entry.starttime,
 				entry.endtime,
 				entry.duration,
+				entry.cost,
 				entry.comments,
 				task_name,
 				project_name,
@@ -702,8 +754,8 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 		table = Table(table_data)
 		table.setStyle(TableStyle(
 			[
-				('BACKGROUND', (0, 0), (8, 0), grey),
-				('TEXTCOLOR', (0, 0), (8, 0), white),
+				('BACKGROUND', (0, 0), (9, 0), grey),
+				('TEXTCOLOR', (0, 0), (9, 0), white),
 				('ALIGN', (0, 0), (-1, -1), 'CENTER'),
 				('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
 				('INNERGRID', (0, 0), (-1, -1), 0.25, black),
@@ -724,6 +776,8 @@ class GenerateReportView(LoginRequiredMixin, TemplateView):
 		elements.append(Paragraph(_('Generated on %s') % time.ctime(time.time()), styles['Normal']))
 		elements.append(PageBreak())
 		elements.append(table)
+		elements.append(Spacer(36, 20))
+		elements.append(Paragraph(_('Total cost: %s EUR') % total_cost, styles['Heading2']))
 
 		# Build the report
 		pdf_report.build(elements)
