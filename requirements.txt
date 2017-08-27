@@ -5,13 +5,10 @@ django-compressor
 django-widget-tweaks
 isort
 lazy-object-proxy
-mccabe==0.6.0
-olefile==0.44
-Pillow==4.2.1
 pycparser
 rcssmin==1.0.6
 reportlab
 rjsmin==1.0.12
 six
-Unipath==1.1
-wrapt==1.10.8
+Unipath
+wrapt
